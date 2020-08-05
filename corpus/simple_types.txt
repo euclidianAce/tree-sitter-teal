@@ -1,0 +1,55 @@
+
+==============================
+Local declaration
+==============================
+
+local x: number
+
+---
+
+(program
+  (var_declaration (identifier) (type_annotation (simple_type (identifier)))))
+
+==============================
+Local declaration with initialization
+==============================
+
+local x: number = 5
+
+---
+
+(program
+  (var_declaration (identifier) (type_annotation (simple_type (identifier))) (number)))
+
+==============================
+Local declaration of multiple variables
+==============================
+
+local x, y: number, string
+
+---
+
+(program
+  (var_declaration (identifier) (identifier) (type_annotation (simple_type (identifier)) (simple_type (identifier)))))
+
+==============================
+Local declaration of multiple variables with initialization
+==============================
+
+local x, y: number, string = 23, "hi"
+
+---
+
+(program
+  (var_declaration (identifier) (identifier) (type_annotation (simple_type (identifier)) (simple_type (identifier))) (number) (string)))
+
+==============================
+Union
+==============================
+
+local x: string | number
+
+---
+
+(program
+  (var_declaration (identifier) (type_annotation (simple_type (identifier) (simple_type (identifier))))))

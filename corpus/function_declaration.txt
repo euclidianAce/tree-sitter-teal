@@ -1,0 +1,82 @@
+==============================
+Anonymous
+==============================
+
+local foo = function()
+end
+
+---
+
+(program
+  (var_declaration (identifier) (anon_function)))
+
+==============================
+Named
+==============================
+
+local function foo()
+
+end
+
+---
+
+(program
+  (function_declaration function_name: (identifier)))
+
+==============================
+A function that actually does something
+==============================
+
+local function bar()
+   local x = 3
+   local y = {
+      z = function()
+         local x = 1
+      end,
+      w = function()
+      end,
+   }
+end
+
+---
+
+(program
+  (function_declaration function_name: (identifier)
+    (var_declaration (identifier) (number))
+    (var_declaration (identifier) (table_constructor
+      table_key: (identifier) (anon_function
+        (var_declaration (identifier) (number)))
+      table_key: (identifier) (anon_function)))))
+
+
+==============================
+A function that returns
+==============================
+
+local function bar()
+   local x = "hello"
+   return x
+end
+
+---
+
+(program
+  (function_declaration function_name: (identifier)
+    (var_declaration (identifier) (string))
+    (retstat (identifier))))
+
+
+==============================
+A function with args
+==============================
+
+local function foo(bar, baz)
+   return bar, baz
+end
+
+---
+
+(program 
+  (function_declaration function_name: (identifier)
+    arg: (identifier) (identifier)
+    (retstat (identifier) (identifier))))

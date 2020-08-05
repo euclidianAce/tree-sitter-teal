@@ -1,53 +1,85 @@
 [
   {
-    "type": "global_declaration",
+    "type": "anon_function",
     "named": true,
-    "fields": {},
+    "fields": {
+      "arg": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
+        {
+          "type": "function_declaration",
+          "named": true
+        },
         {
           "type": "identifier",
           "named": true
         },
         {
-          "type": "number",
+          "type": "retstat",
           "named": true
         },
         {
-          "type": "string",
-          "named": true
-        },
-        {
-          "type": "table_constructor",
+          "type": "var_declaration",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "local_declaration",
+    "type": "function_declaration",
     "named": true,
-    "fields": {},
+    "fields": {
+      "arg": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "function_name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
+        {
+          "type": "function_declaration",
+          "named": true
+        },
         {
           "type": "identifier",
           "named": true
         },
         {
-          "type": "number",
+          "type": "retstat",
           "named": true
         },
         {
-          "type": "string",
-          "named": true
-        },
-        {
-          "type": "table_constructor",
+          "type": "var_declaration",
           "named": true
         }
       ]
@@ -62,11 +94,61 @@
       "required": false,
       "types": [
         {
-          "type": "global_declaration",
+          "type": "function_declaration",
           "named": true
         },
         {
-          "type": "local_declaration",
+          "type": "retstat",
+          "named": true
+        },
+        {
+          "type": "var_declaration",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "retstat",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "anon_function",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "table_constructor",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "simple_type",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
           "named": true
         }
       ]
@@ -80,6 +162,10 @@
         "multiple": true,
         "required": false,
         "types": [
+          {
+            "type": "anon_function",
+            "named": true
+          },
           {
             "type": "identifier",
             "named": true
@@ -114,6 +200,10 @@
       "required": false,
       "types": [
         {
+          "type": "anon_function",
+          "named": true
+        },
+        {
           "type": "identifier",
           "named": true
         },
@@ -133,7 +223,96 @@
     }
   },
   {
+    "type": "table_type",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "simple_type",
+          "named": true
+        },
+        {
+          "type": "table_type",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "type_annotation",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "simple_type",
+          "named": true
+        },
+        {
+          "type": "table_type",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "var_declaration",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "anon_function",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "table_constructor",
+          "named": true
+        },
+        {
+          "type": "type_annotation",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "(",
+    "named": false
+  },
+  {
+    "type": ")",
+    "named": false
+  },
+  {
     "type": ",",
+    "named": false
+  },
+  {
+    "type": ".",
+    "named": false
+  },
+  {
+    "type": ":",
     "named": false
   },
   {
@@ -153,6 +332,14 @@
     "named": false
   },
   {
+    "type": "end",
+    "named": false
+  },
+  {
+    "type": "function",
+    "named": false
+  },
+  {
     "type": "global",
     "named": false
   },
@@ -167,6 +354,10 @@
   {
     "type": "number",
     "named": true
+  },
+  {
+    "type": "return",
+    "named": false
   },
   {
     "type": "string",
