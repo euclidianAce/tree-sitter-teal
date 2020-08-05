@@ -1,0 +1,50 @@
+==============================
+Local Variable Declaration
+==============================
+
+local x = 5
+
+---
+
+(program
+  (local_declaration (identifier) (number)))
+
+==============================
+Global Variable Declaration
+==============================
+
+global x = 5
+
+---
+
+(program
+  (global_declaration (identifier) (number)))
+
+
+==============================
+Local Variable List Declaration
+==============================
+
+local x, y, z = 1, 2, 3
+
+---
+
+(program
+  (local_declaration 
+    (identifier) (identifier) (identifier)
+    (number) (number) (number)))
+
+==============================
+Global Variable List Declaration
+==============================
+
+global x, y, z = 1, 2, "hey"
+
+---
+
+(program
+  (global_declaration 
+    (identifier) (identifier) (identifier)
+    (number) (number) (string)))
+
+
