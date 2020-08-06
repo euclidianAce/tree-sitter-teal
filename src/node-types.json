@@ -27,6 +27,10 @@
           "named": true
         },
         {
+          "type": "function_call",
+          "named": true
+        },
+        {
           "type": "function_declaration",
           "named": true
         },
@@ -301,6 +305,10 @@
           "named": true
         },
         {
+          "type": "function_call",
+          "named": true
+        },
+        {
           "type": "function_type",
           "named": true
         },
@@ -352,6 +360,10 @@
           "named": true
         },
         {
+          "type": "function_call",
+          "named": true
+        },
+        {
           "type": "function_declaration",
           "named": true
         },
@@ -392,6 +404,64 @@
         },
         {
           "type": "do_statement",
+          "named": true
+        },
+        {
+          "type": "function_call",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "table_constructor",
+          "named": true
+        },
+        {
+          "type": "unary_op",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "function_call",
+    "named": true,
+    "fields": {
+      "function_name": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "anon_function",
+          "named": true
+        },
+        {
+          "type": "bin_op",
+          "named": true
+        },
+        {
+          "type": "function_call",
           "named": true
         },
         {
@@ -452,6 +522,10 @@
         },
         {
           "type": "for_statement",
+          "named": true
+        },
+        {
+          "type": "function_call",
           "named": true
         },
         {
@@ -548,6 +622,10 @@
           "named": true
         },
         {
+          "type": "function_call",
+          "named": true
+        },
+        {
           "type": "function_declaration",
           "named": true
         },
@@ -592,6 +670,10 @@
         },
         {
           "type": "for_statement",
+          "named": true
+        },
+        {
+          "type": "function_call",
           "named": true
         },
         {
@@ -654,6 +736,10 @@
           "named": true
         },
         {
+          "type": "function_call",
+          "named": true
+        },
+        {
           "type": "identifier",
           "named": true
         },
@@ -708,6 +794,10 @@
             "named": true
           },
           {
+            "type": "function_call",
+            "named": true
+          },
+          {
             "type": "identifier",
             "named": true
           },
@@ -750,6 +840,10 @@
         },
         {
           "type": "bin_op",
+          "named": true
+        },
+        {
+          "type": "function_call",
           "named": true
         },
         {
@@ -865,6 +959,10 @@
           "named": true
         },
         {
+          "type": "function_call",
+          "named": true
+        },
+        {
           "type": "identifier",
           "named": true
         },
@@ -901,6 +999,10 @@
         },
         {
           "type": "bin_op",
+          "named": true
+        },
+        {
+          "type": "function_call",
           "named": true
         },
         {
@@ -948,6 +1050,10 @@
         },
         {
           "type": "do_statement",
+          "named": true
+        },
+        {
+          "type": "function_call",
           "named": true
         },
         {

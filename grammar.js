@@ -26,7 +26,8 @@ module.exports = grammar({
     [$.type_annotation, $._type],
     [$.type_annotation],
     [$._type],
-    [$.function_type]
+    [$.function_type],
+    [$.retstat]
   ],
 
   rules: {
@@ -38,7 +39,8 @@ module.exports = grammar({
       $.for_statement,
       $.do_statement,
       $.while_statement,
-      $.repeat_statement
+      $.repeat_statement,
+      $.function_call
     ),
 
     retstat: $ => seq('return', optional(list($._expression))),
@@ -72,6 +74,7 @@ module.exports = grammar({
       $.string,
       $.table_constructor,
       $.anon_function,
+      $.function_call,
       $.bin_op,
       $.unary_op
     ),
@@ -135,6 +138,21 @@ module.exports = grammar({
       optional($.type_annotation),
       optional(seq("=", list($._expression)))
     ),
+
+    _prefix_expression: $ => prec(10, choice(
+      field("function_name", $.identifier),
+      $.function_call,
+      seq("(", $._expression, ")")
+    )),
+    function_call: $ => prec(10, seq(
+      $._prefix_expression,
+      optional(seq(":", $.identifier)),
+      choice(
+        seq("(", optional(list($._expression)), ")"),
+        $.string,
+        $.table_constructor
+      )
+    )),
 
     table_constructor: $ => seq(
       "{",
