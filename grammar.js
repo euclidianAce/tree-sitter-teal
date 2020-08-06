@@ -89,6 +89,7 @@ module.exports = grammar({
 
     _expression: $ => choice(
       $.identifier,
+      $._var,
       $.number,
       $.string,
       $.table_constructor,

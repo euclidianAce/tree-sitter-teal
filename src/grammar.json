@@ -390,6 +390,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "_var"
+        },
+        {
+          "type": "SYMBOL",
           "name": "number"
         },
         {
