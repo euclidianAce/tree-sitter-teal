@@ -41,10 +41,22 @@ module.exports = grammar({
       $.while_statement,
       $.repeat_statement,
       $.function_call,
-      $.function_statement
+      $.function_statement,
+      $.if_statement
     ),
 
     retstat: $ => seq('return', optional(list($._expression))),
+
+    if_statement: $ => seq(
+      "if", $._expression, "then",
+      repeat($._statement),
+      repeat($.elseif_block),
+      optional($.else_block),
+      "end"
+    ),
+
+    elseif_block: $ => seq("elseif", $._expression, "then", repeat($._statement)),
+    else_block: $ => seq("else", repeat($._statement)),
 
     for_statement: $ => choice(
       seq(

@@ -1,0 +1,101 @@
+
+==============================
+Basic if
+==============================
+
+if thing then
+
+end
+
+---
+
+(program
+  (if_statement (identifier)))
+
+==============================
+Basic if+else
+==============================
+
+if thing then
+
+else
+
+end
+
+---
+
+(program
+  (if_statement (identifier)
+    (else_block)))
+
+==============================
+Basic if+elseif
+==============================
+
+if thing then
+
+elseif other_thing then
+
+end
+
+---
+
+(program
+  (if_statement (identifier)
+    (elseif_block (identifier))))
+
+==============================
+Basic if+multiple elseif
+==============================
+
+if thing then
+elseif other_thing1 then
+elseif other_thing2 then
+elseif other_thing3 then
+end
+
+---
+
+(program
+  (if_statement (identifier)
+    (elseif_block (identifier))
+    (elseif_block (identifier))
+    (elseif_block (identifier))))
+
+==============================
+Basic if+elseif+else
+==============================
+
+if thing then
+elseif other_thing then
+else
+end
+
+---
+
+(program
+  (if_statement (identifier)
+    (elseif_block (identifier))
+    (else_block)))
+
+==============================
+Basic if+elseif+else with statements
+==============================
+
+if thing then
+   local x = 2
+elseif other_thing then
+   local y = "hey"
+else
+   local z = {}
+end
+
+---
+
+(program
+  (if_statement (identifier)
+    (var_declaration (identifier) (number))
+    (elseif_block (identifier)
+      (var_declaration (identifier) (string)))
+    (else_block
+      (var_declaration (identifier) (table_constructor)))))
