@@ -40,6 +40,7 @@ module.exports = grammar({
       $.var_assignment,
       $.type_declaration,
       $.record_declaration,
+      $.enum_declaration,
       $.retstat,
       $.for_statement,
       $.do_statement,
@@ -267,8 +268,21 @@ module.exports = grammar({
       alias($._record_body, $.record_block)
     ),
 
+    _enum_body: $ => seq(
+      repeat($.string),
+      "end"
+    ),
+
+    enum_declaration: $ => seq(
+      choice("local", "global"),
+      "enum",
+      alias($.identifier, $.simple_type),
+      alias($._enum_body, $.enum_block)
+    ),
+
     _newtype: $ => choice(
-      seq("record", alias($._record_body, $.record_block))
+      seq("record", alias($._record_body, $.record_block)),
+      seq("enum", alias($._enum_body, $.enum_block))
     ),
 
     type_annotation: $ => seq(

@@ -1,0 +1,40 @@
+
+==============================
+Empty enum
+==============================
+
+local type foo = enum
+end
+
+---
+
+(program (type_declaration (simple_type) (enum_block)))
+
+==============================
+Enum with stuff
+==============================
+
+local type foo = enum
+   "hello"
+   "world"
+end
+
+---
+
+(program (type_declaration (simple_type) (enum_block (string) (string))))
+
+==============================
+Enum declaration
+==============================
+
+local enum foo
+   "foo"
+   "bar"
+   "baz"
+end
+
+---
+
+(program (enum_declaration (simple_type) (enum_block
+  (string) (string) (string))))
+

@@ -341,6 +341,10 @@
           "named": true
         },
         {
+          "type": "enum_declaration",
+          "named": true
+        },
+        {
           "type": "for_statement",
           "named": true
         },
@@ -397,6 +401,10 @@
       "types": [
         {
           "type": "do_statement",
+          "named": true
+        },
+        {
+          "type": "enum_declaration",
           "named": true
         },
         {
@@ -460,6 +468,10 @@
         },
         {
           "type": "do_statement",
+          "named": true
+        },
+        {
+          "type": "enum_declaration",
           "named": true
         },
         {
@@ -528,6 +540,40 @@
         },
         {
           "type": "while_statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "enum_block",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "string",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "enum_declaration",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "enum_block",
+          "named": true
+        },
+        {
+          "type": "simple_type",
           "named": true
         }
       ]
@@ -641,6 +687,10 @@
         },
         {
           "type": "do_statement",
+          "named": true
+        },
+        {
+          "type": "enum_declaration",
           "named": true
         },
         {
@@ -777,6 +827,10 @@
           "named": true
         },
         {
+          "type": "enum_declaration",
+          "named": true
+        },
+        {
           "type": "for_statement",
           "named": true
         },
@@ -864,6 +918,10 @@
           "named": true
         },
         {
+          "type": "enum_declaration",
+          "named": true
+        },
+        {
           "type": "for_statement",
           "named": true
         },
@@ -947,6 +1005,10 @@
           "named": true
         },
         {
+          "type": "enum_declaration",
+          "named": true
+        },
+        {
           "type": "for_statement",
           "named": true
         },
@@ -1025,6 +1087,10 @@
       "required": false,
       "types": [
         {
+          "type": "enum_block",
+          "named": true
+        },
+        {
           "type": "function_type",
           "named": true
         },
@@ -1092,6 +1158,10 @@
         },
         {
           "type": "do_statement",
+          "named": true
+        },
+        {
+          "type": "enum_declaration",
           "named": true
         },
         {
@@ -1421,6 +1491,10 @@
       "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "enum_block",
+          "named": true
+        },
         {
           "type": "function_type",
           "named": true
@@ -1785,11 +1859,11 @@
   },
   {
     "type": "arg_name",
-    "named": true
+    "named": false
   },
   {
     "type": "arg_name",
-    "named": false
+    "named": true
   },
   {
     "type": "as",
@@ -1809,6 +1883,10 @@
   },
   {
     "type": "end",
+    "named": false
+  },
+  {
+    "type": "enum",
     "named": false
   },
   {
