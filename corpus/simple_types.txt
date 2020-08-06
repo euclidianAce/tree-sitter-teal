@@ -8,7 +8,7 @@ local x: number
 ---
 
 (program
-  (var_declaration (identifier) (type_annotation (simple_type (identifier)))))
+  (var_declaration (identifier) (type_annotation (simple_type))))
 
 ==============================
 Local declaration with initialization
@@ -19,7 +19,7 @@ local x: number = 5
 ---
 
 (program
-  (var_declaration (identifier) (type_annotation (simple_type (identifier))) (number)))
+  (var_declaration (identifier) (type_annotation (simple_type)) (number)))
 
 ==============================
 Local declaration of multiple variables
@@ -30,7 +30,7 @@ local x, y: number, string
 ---
 
 (program
-  (var_declaration (identifier) (identifier) (type_annotation (simple_type (identifier)) (simple_type (identifier)))))
+  (var_declaration (identifier) (identifier) (type_annotation (simple_type) (simple_type))))
 
 ==============================
 Local declaration of multiple variables with initialization
@@ -41,7 +41,7 @@ local x, y: number, string = 23, "hi"
 ---
 
 (program
-  (var_declaration (identifier) (identifier) (type_annotation (simple_type (identifier)) (simple_type (identifier))) (number) (string)))
+  (var_declaration (identifier) (identifier) (type_annotation (simple_type) (simple_type)) (number) (string)))
 
 ==============================
 Union
@@ -52,7 +52,7 @@ local x: string | number
 ---
 
 (program
-  (var_declaration (identifier) (type_annotation (simple_type (identifier)) (simple_type (identifier)))))
+  (var_declaration (identifier) (type_annotation (simple_type) (simple_type))))
 
 ==============================
 Array type
@@ -63,7 +63,7 @@ local x: {string}
 ---
 
 (program
-  (var_declaration (identifier) (type_annotation (table_type (simple_type (identifier))))))
+  (var_declaration (identifier) (type_annotation (table_type (simple_type)))))
 
 ==============================
 Array type with initialization
@@ -74,7 +74,8 @@ local x: {string} = {}
 ---
 
 (program
-  (var_declaration (identifier) (type_annotation (table_type (simple_type (identifier))))
+  (var_declaration (identifier) (type_annotation
+    (table_type value_type: (simple_type)))
     (table_constructor)))
 
 ==============================
@@ -86,7 +87,7 @@ local x: {string:number}
 ---
 
 (program
-  (var_declaration (identifier) (type_annotation (table_type (simple_type (identifier)) (simple_type (identifier))))))
+  (var_declaration (identifier) (type_annotation (table_type (simple_type) (simple_type)))))
 
 ==============================
 Map type with initialization
@@ -97,7 +98,7 @@ local x: {string:number} = {}
 ---
 
 (program
-  (var_declaration (identifier) (type_annotation (table_type (simple_type (identifier)) (simple_type (identifier))))
+  (var_declaration (identifier) (type_annotation (table_type (simple_type) (simple_type)))
     (table_constructor)))
 
 ==============================
@@ -109,5 +110,9 @@ local x: thread | {string:number} = {}
 ---
 
 (program
-  (var_declaration (identifier) (type_annotation (simple_type (identifier)) (table_type (simple_type (identifier)) (simple_type (identifier))))
-    (table_constructor)))
+  (var_declaration (identifier) (type_annotation
+    (simple_type)
+    (table_type
+      key_type: (simple_type)
+      value_type: (simple_type)))
+        (table_constructor)))

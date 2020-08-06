@@ -30,7 +30,7 @@ return 4 as string .. 5 as string / 2 + {}
 ---
 
 (program (retstat (bin_op
-  (bin_op (number) (simple_type (identifier)))
+  (bin_op (number) (simple_type))
   (bin_op
-    (bin_op (bin_op (number) (simple_type (identifier))) (number))
+    (bin_op (bin_op (number) (simple_type)) (number))
     (table_constructor)))))

@@ -485,7 +485,7 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "identifier",
@@ -581,24 +581,51 @@
   {
     "type": "table_type",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "function_type",
-          "named": true
-        },
-        {
-          "type": "simple_type",
-          "named": true
-        },
-        {
-          "type": "table_type",
-          "named": true
-        }
-      ]
+    "fields": {
+      "key_type": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "function_type",
+            "named": true
+          },
+          {
+            "type": "simple_type",
+            "named": true
+          },
+          {
+            "type": "table_type",
+            "named": true
+          },
+          {
+            "type": "|",
+            "named": false
+          }
+        ]
+      },
+      "value_type": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "function_type",
+            "named": true
+          },
+          {
+            "type": "simple_type",
+            "named": true
+          },
+          {
+            "type": "table_type",
+            "named": true
+          },
+          {
+            "type": "|",
+            "named": false
+          }
+        ]
+      }
     }
   },
   {
@@ -856,6 +883,10 @@
   },
   {
     "type": "return",
+    "named": false
+  },
+  {
+    "type": "simple_type",
     "named": false
   },
   {

@@ -182,15 +182,23 @@ module.exports = grammar({
       ))
     ),
 
-    simple_type: $ => seq(
+    simple_type: $ => alias(seq(
       $.identifier, repeat(seq(".", $.identifier)),
-    ),
+    ), 'simple_type'),
 
-    table_type: $ => seq(
-      "{",
-      $._type, //array
-      optional(seq(":", $._type)), //map
-      "}"
+    table_type: $ => choice(
+      seq( // array
+        "{",
+        field('value_type', $._type),
+        "}"
+      ),
+      seq( // map
+        "{",
+        field('key_type', $._type),
+        ":",
+        field('value_type', $._type),
+        "}"
+      )
     ),
 
     function_type: $ => seq(
