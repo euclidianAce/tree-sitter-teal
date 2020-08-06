@@ -19,7 +19,7 @@ const prec_op = {
 }
 
 module.exports = grammar({
-  name: 'Teal',
+  name: 'teal',
 
   conflicts: $ => [
     [$.table_constructor],
@@ -31,6 +31,16 @@ module.exports = grammar({
     [$._parnamelist],
     [$._expression, $._var],
     [$._table_field, $._var],
+  ],
+
+  extras: $ => [
+    $.comment,
+    /[\s\n]/
+  ],
+
+  externals: $ => [
+    $.comment,
+    $.string
   ],
 
   rules: {

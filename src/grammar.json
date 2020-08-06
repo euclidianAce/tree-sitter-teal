@@ -1,5 +1,5 @@
 {
-  "name": "Teal",
+  "name": "teal",
   "rules": {
     "program": {
       "type": "REPEAT",
@@ -2665,8 +2665,12 @@
   },
   "extras": [
     {
+      "type": "SYMBOL",
+      "name": "comment"
+    },
+    {
       "type": "PATTERN",
-      "value": "\\s"
+      "value": "[\\s\\n]"
     }
   ],
   "conflicts": [
@@ -2701,7 +2705,16 @@
       "_var"
     ]
   ],
-  "externals": [],
+  "externals": [
+    {
+      "type": "SYMBOL",
+      "name": "comment"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "string"
+    }
+  ],
   "inline": [],
   "supertypes": []
 }
