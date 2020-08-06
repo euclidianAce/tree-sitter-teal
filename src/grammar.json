@@ -402,6 +402,14 @@
         },
         {
           "type": "SYMBOL",
+          "name": "boolean"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "nil"
+        },
+        {
+          "type": "SYMBOL",
           "name": "table_constructor"
         },
         {

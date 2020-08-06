@@ -243,6 +243,10 @@
           "named": true
         },
         {
+          "type": "boolean",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -256,6 +260,10 @@
         },
         {
           "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "nil",
           "named": true
         },
         {
@@ -286,6 +294,11 @@
     }
   },
   {
+    "type": "boolean",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "called_object",
     "named": true,
     "fields": {},
@@ -298,6 +311,10 @@
           "named": true
         },
         {
+          "type": "boolean",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -307,6 +324,10 @@
         },
         {
           "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "nil",
           "named": true
         },
         {
@@ -467,6 +488,10 @@
           "named": true
         },
         {
+          "type": "boolean",
+          "named": true
+        },
+        {
           "type": "do_statement",
           "named": true
         },
@@ -496,6 +521,10 @@
         },
         {
           "type": "if_statement",
+          "named": true
+        },
+        {
+          "type": "nil",
           "named": true
         },
         {
@@ -592,6 +621,10 @@
           "named": true
         },
         {
+          "type": "boolean",
+          "named": true
+        },
+        {
           "type": "do_statement",
           "named": true
         },
@@ -605,6 +638,10 @@
         },
         {
           "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "nil",
           "named": true
         },
         {
@@ -639,6 +676,10 @@
           "named": true
         },
         {
+          "type": "boolean",
+          "named": true
+        },
+        {
           "type": "called_object",
           "named": true
         },
@@ -652,6 +693,10 @@
         },
         {
           "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "nil",
           "named": true
         },
         {
@@ -906,6 +951,10 @@
           "named": true
         },
         {
+          "type": "boolean",
+          "named": true
+        },
+        {
           "type": "do_statement",
           "named": true
         },
@@ -943,6 +992,10 @@
         },
         {
           "type": "if_statement",
+          "named": true
+        },
+        {
+          "type": "nil",
           "named": true
         },
         {
@@ -1157,6 +1210,10 @@
           "named": true
         },
         {
+          "type": "boolean",
+          "named": true
+        },
+        {
           "type": "do_statement",
           "named": true
         },
@@ -1186,6 +1243,10 @@
         },
         {
           "type": "if_statement",
+          "named": true
+        },
+        {
+          "type": "nil",
           "named": true
         },
         {
@@ -1248,6 +1309,10 @@
           "named": true
         },
         {
+          "type": "boolean",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -1257,6 +1322,10 @@
         },
         {
           "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "nil",
           "named": true
         },
         {
@@ -1337,6 +1406,10 @@
           "named": true
         },
         {
+          "type": "boolean",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -1346,6 +1419,10 @@
         },
         {
           "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "nil",
           "named": true
         },
         {
@@ -1430,6 +1507,10 @@
           "named": true
         },
         {
+          "type": "boolean",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -1439,6 +1520,10 @@
         },
         {
           "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "nil",
           "named": true
         },
         {
@@ -1527,6 +1612,10 @@
           "named": true
         },
         {
+          "type": "boolean",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -1536,6 +1625,10 @@
         },
         {
           "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "nil",
           "named": true
         },
         {
@@ -1570,6 +1663,10 @@
           "named": true
         },
         {
+          "type": "boolean",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -1579,6 +1676,10 @@
         },
         {
           "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "nil",
           "named": true
         },
         {
@@ -1613,6 +1714,10 @@
           "named": true
         },
         {
+          "type": "boolean",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -1622,6 +1727,10 @@
         },
         {
           "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "nil",
           "named": true
         },
         {
@@ -1660,6 +1769,10 @@
           "named": true
         },
         {
+          "type": "boolean",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -1669,6 +1782,10 @@
         },
         {
           "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "nil",
           "named": true
         },
         {
@@ -1711,6 +1828,10 @@
           "named": true
         },
         {
+          "type": "boolean",
+          "named": true
+        },
+        {
           "type": "do_statement",
           "named": true
         },
@@ -1724,6 +1845,10 @@
         },
         {
           "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "nil",
           "named": true
         },
         {
@@ -1859,11 +1984,11 @@
   },
   {
     "type": "arg_name",
-    "named": false
+    "named": true
   },
   {
     "type": "arg_name",
-    "named": true
+    "named": false
   },
   {
     "type": "as",
@@ -1928,6 +2053,10 @@
   {
     "type": "local",
     "named": false
+  },
+  {
+    "type": "nil",
+    "named": true
   },
   {
     "type": "not",

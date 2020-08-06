@@ -92,6 +92,8 @@ module.exports = grammar({
       $._var,
       $.number,
       $.string,
+      $.boolean,
+      $.nil,
       $.table_constructor,
       $.functiondef,
       $.function_call,
