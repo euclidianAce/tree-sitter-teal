@@ -29,6 +29,7 @@ module.exports = grammar({
     [$.function_type],
     [$.retstat],
     [$._parnamelist],
+    [$._expression, $._var],
   ],
 
   rules: {
@@ -153,13 +154,15 @@ module.exports = grammar({
     ),
 
     _prefix_expression: $ => prec(10, choice(
-      field("function_name", $.identifier),
+      $._var,
       $.function_call,
       seq("(", $._expression, ")")
     )),
     function_call: $ => prec(10, seq(
-      $._prefix_expression,
-      optional(seq(":", $.identifier)),
+      alias(seq(
+        $._prefix_expression,
+        optional(seq(":", $.identifier))
+      ), $.called_object),
       choice(
         seq("(", optional(list($._expression)), ")"),
         $.string,
@@ -296,9 +299,24 @@ module.exports = grammar({
       ))
     ),
 
+    _var: $ => choice(
+      $.identifier,
+      seq(
+        $._prefix_expression,
+        choice(
+          seq("[", $._expression, "]"),
+          seq(".", $.identifier)
+        )
+      ),
+    ),
+
     identifier: $ => /[a-zA-Z_][a-zA-Z_0-9]*/,
     number: $ => /\d+/, //TODO: hex and stuff
-    string: $ => /"[^"]*"/ //TODO: [==[multiline strings]==] externally, 'single quote strings'
+    string: $ => /"[^"]*"/, //TODO: [==[multiline strings]==] externally, 'single quote strings'
+    boolean: $ => choice("true", "false"),
+    nil: $ => "nil"
 
   }
 })
+
+// vim: sw=2:ts=2:set expandtab:
