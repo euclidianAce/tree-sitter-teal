@@ -365,6 +365,10 @@
           "named": true
         },
         {
+          "type": "var_assignment",
+          "named": true
+        },
+        {
           "type": "var_declaration",
           "named": true
         },
@@ -409,6 +413,10 @@
         },
         {
           "type": "retstat",
+          "named": true
+        },
+        {
+          "type": "var_assignment",
           "named": true
         },
         {
@@ -484,6 +492,10 @@
         },
         {
           "type": "unary_op",
+          "named": true
+        },
+        {
+          "type": "var_assignment",
           "named": true
         },
         {
@@ -652,6 +664,10 @@
           "named": true
         },
         {
+          "type": "var_assignment",
+          "named": true
+        },
+        {
           "type": "var_declaration",
           "named": true
         },
@@ -769,6 +785,10 @@
           "named": true
         },
         {
+          "type": "var_assignment",
+          "named": true
+        },
+        {
           "type": "var_declaration",
           "named": true
         },
@@ -852,6 +872,10 @@
           "named": true
         },
         {
+          "type": "var_assignment",
+          "named": true
+        },
+        {
           "type": "var_declaration",
           "named": true
         },
@@ -896,6 +920,10 @@
         },
         {
           "type": "retstat",
+          "named": true
+        },
+        {
+          "type": "var_assignment",
           "named": true
         },
         {
@@ -971,6 +999,10 @@
         },
         {
           "type": "unary_op",
+          "named": true
+        },
+        {
+          "type": "var_assignment",
           "named": true
         },
         {
@@ -1251,6 +1283,96 @@
     }
   },
   {
+    "type": "var",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "bin_op",
+          "named": true
+        },
+        {
+          "type": "function_call",
+          "named": true
+        },
+        {
+          "type": "functiondef",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "table_constructor",
+          "named": true
+        },
+        {
+          "type": "unary_op",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "var_assignment",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "bin_op",
+          "named": true
+        },
+        {
+          "type": "function_call",
+          "named": true
+        },
+        {
+          "type": "functiondef",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "table_constructor",
+          "named": true
+        },
+        {
+          "type": "unary_op",
+          "named": true
+        },
+        {
+          "type": "var",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "var_declaration",
     "named": true,
     "fields": {},
@@ -1292,6 +1414,10 @@
         },
         {
           "type": "unary_op",
+          "named": true
+        },
+        {
+          "type": "var",
           "named": true
         }
       ]
@@ -1458,11 +1584,11 @@
   },
   {
     "type": "arg_name",
-    "named": true
+    "named": false
   },
   {
     "type": "arg_name",
-    "named": false
+    "named": true
   },
   {
     "type": "as",

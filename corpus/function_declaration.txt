@@ -8,7 +8,7 @@ end
 ---
 
 (program
-  (var_declaration (identifier) (functiondef)))
+  (var_declaration (var) (functiondef)))
 
 ==============================
 Named
@@ -42,10 +42,10 @@ end
 
 (program
   (function_statement (function_name)
-    (var_declaration (identifier) (number))
-    (var_declaration (identifier) (table_constructor
+    (var_declaration (var) (number))
+    (var_declaration (var) (table_constructor
       table_key: (identifier) (functiondef
-        (var_declaration (identifier) (number)))
+        (var_declaration (var) (number)))
       table_key: (identifier) (functiondef)))))
 
 
@@ -62,7 +62,7 @@ end
 
 (program
   (function_statement (function_name)
-    (var_declaration (identifier) (string))
+    (var_declaration (var) (string))
     (retstat (identifier))))
 
 

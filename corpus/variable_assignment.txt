@@ -7,7 +7,7 @@ local x = 5
 ---
 
 (program
-  (var_declaration (identifier) (number)))
+  (var_declaration (var) (number)))
 
 ==============================
 Global Variable Declaration
@@ -18,7 +18,7 @@ global x = 5
 ---
 
 (program
-  (var_declaration (identifier) (number)))
+  (var_declaration (var) (number)))
 
 
 ==============================
@@ -31,7 +31,7 @@ local x, y, z = 1, 2, 3
 
 (program
   (var_declaration 
-    (identifier) (identifier) (identifier)
+    (var) (var) (var)
     (number) (number) (number)))
 
 ==============================
@@ -44,7 +44,30 @@ global x, y, z = 1, 2, "hey"
 
 (program
   (var_declaration 
-    (identifier) (identifier) (identifier)
+    (var) (var) (var)
     (number) (number) (string)))
 
 
+==============================
+Variable reassignment
+==============================
+
+local x = "hey"
+x = "hi"
+
+---
+
+(program
+  (var_declaration (var) (string))
+  (var_assignment (var (identifier)) (string)))
+
+==============================
+Table entry reassignment
+==============================
+
+foo.bar = "hi"
+
+---
+
+(program
+  (var_assignment (var (identifier) (identifier)) (string)))

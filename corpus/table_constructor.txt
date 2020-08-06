@@ -8,7 +8,7 @@ local t = {}
 ---
 
 (program
-  (var_declaration (identifier) (table_constructor)))
+  (var_declaration (var) (table_constructor)))
 
 ==============================
 Array
@@ -19,7 +19,7 @@ local arr = {1, 2, 3}
 ---
 
 (program
-  (var_declaration (identifier)
+  (var_declaration (var)
     (table_constructor
       (number) (number) (number))))
 
@@ -35,7 +35,7 @@ local arr = {
 ---
 
 (program
-  (var_declaration (identifier)
+  (var_declaration (var)
     (table_constructor
       table_key: (identifier) (number)
       table_key: (identifier) (number))))
@@ -52,7 +52,7 @@ local arr = {
 ---
 
 (program
-  (var_declaration (identifier)
+  (var_declaration (var)
     (table_constructor
       table_expr_key: (string) (number)
       table_expr_key: (identifier) (number))))
@@ -72,7 +72,7 @@ local arr = {
 ---
 
 (program
-  (var_declaration (identifier)
+  (var_declaration (var)
     (table_constructor
       table_key: (identifier) (table_constructor
         table_key: (identifier) (string)

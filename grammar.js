@@ -36,6 +36,7 @@ module.exports = grammar({
     program: $ => repeat($._statement),
     _statement: $ => choice(
       $.var_declaration,
+      $.var_assignment,
       $.retstat,
       $.for_statement,
       $.do_statement,
@@ -144,13 +145,13 @@ module.exports = grammar({
 
     var_declaration: $ => seq(
       choice("local", "global"),
-      $.identifier,
-      repeat(seq(
-        ",",
-        $.identifier
-      )),
+      list(alias($.identifier, $.var)),
       optional($.type_annotation),
       optional(seq("=", list($._expression)))
+    ),
+
+    var_assignment: $ => seq(
+      list(alias($._var, $.var)), "=", list($._expression)
     ),
 
     _prefix_expression: $ => prec(10, choice(

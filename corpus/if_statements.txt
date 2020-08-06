@@ -94,8 +94,8 @@ end
 
 (program
   (if_statement (identifier)
-    (var_declaration (identifier) (number))
+    (var_declaration (var) (number))
     (elseif_block (identifier)
-      (var_declaration (identifier) (string)))
+      (var_declaration (var) (string)))
     (else_block
-      (var_declaration (identifier) (table_constructor)))))
+      (var_declaration (var) (table_constructor)))))

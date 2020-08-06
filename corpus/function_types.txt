@@ -7,7 +7,7 @@ local foo: function()
 ---
 
 (program 
-  (var_declaration (identifier) (type_annotation (function_type))))
+  (var_declaration (var) (type_annotation (function_type))))
 
 ==============================
 One arg, no returns
@@ -18,7 +18,7 @@ local foo: function(string)
 ---
 
 (program 
-  (var_declaration (identifier)
+  (var_declaration (var)
     (type_annotation (function_type
        arg_type: (simple_type)))))
 
@@ -31,7 +31,7 @@ local foo: function(): string
 ---
 
 (program 
-  (var_declaration (identifier)
+  (var_declaration (var)
     (type_annotation (function_type
       ret_type: (simple_type)))))
 
@@ -44,7 +44,7 @@ local foo: function(number): string
 ---
 
 (program 
-  (var_declaration (identifier)
+  (var_declaration (var)
     (type_annotation (function_type
       arg_type: (simple_type)
       ret_type: (simple_type)))))
@@ -58,7 +58,7 @@ local foo: function(number, {string}, string)
 ---
 
 (program 
-  (var_declaration (identifier)
+  (var_declaration (var)
     (type_annotation (function_type
       arg_type: (simple_type)
       arg_type: (table_type
@@ -74,7 +74,7 @@ local foo: function(): string, {number}, number, thread
 ---
 
 (program 
-  (var_declaration (identifier)
+  (var_declaration (var)
     (type_annotation (function_type
       ret_type: (simple_type)
       ret_type: (table_type
@@ -91,7 +91,7 @@ local foo: function(number, {string}, string): string, {number}, number, thread
 ---
 
 (program 
-  (var_declaration (identifier)
+  (var_declaration (var)
     (type_annotation (function_type
       arg_type: (simple_type)
       arg_type: (table_type
