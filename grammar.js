@@ -1,5 +1,22 @@
 
 const list = (item) => seq(item, repeat(seq(",", item)))
+const prec_op = {
+  or: 1,
+  and: 2,
+  is: 3,
+  comp: 4,
+  bor: 5,
+  bnot: 6,
+  band: 7,
+  bshift: 8,
+  concat: 9,
+  plus: 10,
+  mult: 11,
+  unary: 12,
+  power: 13,
+
+  as: 100,
+}
 
 module.exports = grammar({
   name: 'Teal',
@@ -27,7 +44,58 @@ module.exports = grammar({
       $.number,
       $.string,
       $.table_constructor,
-      $.anon_function
+      $.anon_function,
+      $.bin_op,
+      $.unary_op
+    ),
+
+    unary_op: $ => prec.left(prec_op.unary, seq(
+      choice('not', '#', '-', '~'),
+      $._expression
+    )),
+
+    bin_op: $ => choice(
+      ...[
+        ['or', 'or', prec_op.or],
+        ['and', 'and', prec_op.and],
+        ['lt', '<', prec_op.comp],
+        ['le', '<=', prec_op.comp],
+        ['eq', '==', prec_op.comp],
+        ['ne', '~=', prec_op.comp],
+        ['ge', '>=', prec_op.comp],
+        ['gt', '>', prec_op.comp],
+        ['bor', '|', prec_op.bor],
+        ['bnot', '~', prec_op.bnot],
+        ['band', '&', prec_op.band],
+        ['bls', '<<', prec_op.bshift],
+        ['brs', '>>', prec_op.bshift],
+        ['add', '+', prec_op.plus],
+        ['sub', '-', prec_op.plus],
+        ['mul', '*', prec_op.mult],
+        ['div', '/', prec_op.mult],
+        ['idiv', '//', prec_op.mult],
+        ['mod', '%', prec_op.mult],
+      ].map(([name, operator, precedence]) => prec.left(precedence, seq(
+        $._expression,
+        field(name + '_op', operator),
+        $._expression
+      ))),
+      ...[
+        ['concat', '..', prec_op.concat],
+        ['pow', '^', prec_op.power],
+      ].map(([name, operator, precedence]) => prec.right(precedence, seq(
+        $._expression,
+        field(name + '_op', operator),
+        $._expression
+      ))),
+      ...[
+        ['is', prec_op.is],
+        ['as', prec_op.as]
+      ].map(([operator, precedence]) => prec.right(precedence, seq(
+        $._expression,
+        field(operator + '_op', operator),
+        $._type
+      )))
     ),
 
     var_declaration: $ => seq(

@@ -1,0 +1,36 @@
+
+==============================
+Basic arithmetic
+==============================
+
+return 3 + 3
+
+---
+
+(program
+  (retstat (bin_op (number) (number))))
+
+==============================
+Basic precedence
+==============================
+
+return 3 + 3 * 2
+
+---
+
+(program
+  (retstat (bin_op (number) (bin_op (number) (number)))))
+
+==============================
+A bunch of precedence
+==============================
+
+return 4 as string .. 5 as string / 2 + {}
+
+---
+
+(program (retstat (bin_op
+  (bin_op (number) (simple_type (identifier)))
+  (bin_op
+    (bin_op (bin_op (number) (simple_type (identifier))) (number))
+    (table_constructor)))))
