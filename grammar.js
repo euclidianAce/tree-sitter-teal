@@ -34,10 +34,37 @@ module.exports = grammar({
     _statement: $ => choice(
       $.var_declaration,
       $.function_declaration,
-      $.retstat
+      $.retstat,
+      $.for_statement,
+      $.do_statement,
+      $.while_statement,
+      $.repeat_statement
     ),
 
     retstat: $ => seq('return', optional(list($._expression))),
+
+    for_statement: $ => choice(
+      seq(
+        "for", $.identifier, "=", $._expression, ",", $._expression, optional(seq(",", $._expression)), $.do_statement
+      ),
+      seq(
+        "for", list($.identifier), "in", list($._expression), $.do_statement
+      )
+    ),
+
+    while_statement: $ => seq(
+      "while", $._expression, $.do_statement
+    ),
+
+    repeat_statement: $ => seq(
+      "repeat", repeat($._statement), "until", $._expression
+    ),
+
+    do_statement: $ => seq(
+      "do",
+      repeat($._statement),
+      "end"
+    ),
 
     _expression: $ => choice(
       $.identifier,

@@ -19,6 +19,14 @@
       "required": false,
       "types": [
         {
+          "type": "do_statement",
+          "named": true
+        },
+        {
+          "type": "for_statement",
+          "named": true
+        },
+        {
           "type": "function_declaration",
           "named": true
         },
@@ -27,11 +35,19 @@
           "named": true
         },
         {
+          "type": "repeat_statement",
+          "named": true
+        },
+        {
           "type": "retstat",
           "named": true
         },
         {
           "type": "var_declaration",
+          "named": true
+        },
+        {
+          "type": "while_statement",
           "named": true
         }
       ]
@@ -320,6 +336,88 @@
     }
   },
   {
+    "type": "do_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "do_statement",
+          "named": true
+        },
+        {
+          "type": "for_statement",
+          "named": true
+        },
+        {
+          "type": "function_declaration",
+          "named": true
+        },
+        {
+          "type": "repeat_statement",
+          "named": true
+        },
+        {
+          "type": "retstat",
+          "named": true
+        },
+        {
+          "type": "var_declaration",
+          "named": true
+        },
+        {
+          "type": "while_statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "for_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "anon_function",
+          "named": true
+        },
+        {
+          "type": "bin_op",
+          "named": true
+        },
+        {
+          "type": "do_statement",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "table_constructor",
+          "named": true
+        },
+        {
+          "type": "unary_op",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "function_declaration",
     "named": true,
     "fields": {
@@ -349,6 +447,14 @@
       "required": false,
       "types": [
         {
+          "type": "do_statement",
+          "named": true
+        },
+        {
+          "type": "for_statement",
+          "named": true
+        },
+        {
           "type": "function_declaration",
           "named": true
         },
@@ -357,11 +463,19 @@
           "named": true
         },
         {
+          "type": "repeat_statement",
+          "named": true
+        },
+        {
           "type": "retstat",
           "named": true
         },
         {
           "type": "var_declaration",
+          "named": true
+        },
+        {
+          "type": "while_statement",
           "named": true
         }
       ]
@@ -426,7 +540,19 @@
       "required": false,
       "types": [
         {
+          "type": "do_statement",
+          "named": true
+        },
+        {
+          "type": "for_statement",
+          "named": true
+        },
+        {
           "type": "function_declaration",
+          "named": true
+        },
+        {
+          "type": "repeat_statement",
           "named": true
         },
         {
@@ -435,6 +561,77 @@
         },
         {
           "type": "var_declaration",
+          "named": true
+        },
+        {
+          "type": "while_statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "repeat_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "anon_function",
+          "named": true
+        },
+        {
+          "type": "bin_op",
+          "named": true
+        },
+        {
+          "type": "do_statement",
+          "named": true
+        },
+        {
+          "type": "for_statement",
+          "named": true
+        },
+        {
+          "type": "function_declaration",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "repeat_statement",
+          "named": true
+        },
+        {
+          "type": "retstat",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "table_constructor",
+          "named": true
+        },
+        {
+          "type": "unary_op",
+          "named": true
+        },
+        {
+          "type": "var_declaration",
+          "named": true
+        },
+        {
+          "type": "while_statement",
           "named": true
         }
       ]
@@ -734,6 +931,49 @@
     }
   },
   {
+    "type": "while_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "anon_function",
+          "named": true
+        },
+        {
+          "type": "bin_op",
+          "named": true
+        },
+        {
+          "type": "do_statement",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "table_constructor",
+          "named": true
+        },
+        {
+          "type": "unary_op",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "#",
     "named": false
   },
@@ -846,7 +1086,15 @@
     "named": false
   },
   {
+    "type": "do",
+    "named": false
+  },
+  {
     "type": "end",
+    "named": false
+  },
+  {
+    "type": "for",
     "named": false
   },
   {
@@ -860,6 +1108,10 @@
   {
     "type": "identifier",
     "named": true
+  },
+  {
+    "type": "in",
+    "named": false
   },
   {
     "type": "is",
@@ -882,6 +1134,10 @@
     "named": false
   },
   {
+    "type": "repeat",
+    "named": false
+  },
+  {
     "type": "return",
     "named": false
   },
@@ -892,6 +1148,14 @@
   {
     "type": "string",
     "named": true
+  },
+  {
+    "type": "until",
+    "named": false
+  },
+  {
+    "type": "while",
+    "named": false
   },
   {
     "type": "{",

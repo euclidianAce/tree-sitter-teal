@@ -1,0 +1,112 @@
+
+==============================
+Do block
+==============================
+
+do
+end
+
+---
+
+(program (do_statement))
+
+==============================
+Nested do blocks
+==============================
+
+do
+  do
+    do
+    end
+  end
+end
+
+---
+
+(program
+  (do_statement
+    (do_statement
+      (do_statement))))
+
+==============================
+Numeric for loop
+==============================
+
+for i = 1, 10 do
+end
+
+---
+
+(program
+  (for_statement (identifier) (number) (number)
+    (do_statement)))
+
+==============================
+Numeric for loop with step
+==============================
+
+for i = 1, 10, -2 do
+end
+
+---
+
+(program
+  (for_statement (identifier) (number) (number) (unary_op (number))
+    (do_statement)))
+
+==============================
+Generic for loop
+==============================
+
+for i, v in thingy do
+
+end
+
+---
+
+(program
+  (for_statement (identifier) (identifier) (identifier) (do_statement)))
+
+==============================
+While loop
+==============================
+
+while 1 do
+end
+
+---
+
+(program
+  (while_statement (number) (do_statement)))
+
+==============================
+Repeat loop
+==============================
+
+repeat
+until 1
+
+---
+
+(program
+  (repeat_statement (number)))
+
+==============================
+A whole bunch of loops
+==============================
+
+for i = 1, 20 do
+   while i < 10 do
+      repeat
+         do
+         end
+      until i > 30
+   end
+end
+
+---
+
+(program
+  (for_statement (identifier) (number) (number) (do_statement
+    (while_statement (bin_op (identifier) (number)) (do_statement
+      (repeat_statement (do_statement) (bin_op (identifier) (number))))))))
