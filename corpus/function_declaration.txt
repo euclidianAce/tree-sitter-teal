@@ -44,9 +44,9 @@ end
   (function_statement (function_name)
     (var_declaration (var) (number))
     (var_declaration (var) (table_constructor
-      table_key: (identifier) (functiondef
-        (var_declaration (var) (number)))
-      table_key: (identifier) (functiondef)))))
+      (table_key) (table_value (functiondef
+        (var_declaration (var) (number))))
+      (table_key) (table_value (functiondef))))))
 
 
 ==============================

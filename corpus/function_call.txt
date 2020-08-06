@@ -98,4 +98,4 @@ func_that_returns_func "hello" { this = "is" } "getting" "silly"
       (function_call (called_object
         (function_call (called_object (identifier)) (string)))
           (table_constructor
-            table_key: (identifier) (string)))) (string))) (string)))
+            (table_key) (table_value (string))))) (string))) (string)))

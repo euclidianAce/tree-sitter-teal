@@ -21,7 +21,9 @@ local arr = {1, 2, 3}
 (program
   (var_declaration (var)
     (table_constructor
-      (number) (number) (number))))
+      (table_value (number))
+      (table_value (number))
+      (table_value (number)))))
 
 ==============================
 Identifier-Map
@@ -37,8 +39,8 @@ local arr = {
 (program
   (var_declaration (var)
     (table_constructor
-      table_key: (identifier) (number)
-      table_key: (identifier) (number))))
+      (table_key) (table_value (number))
+      (table_key) (table_value (number)))))
 
 ==============================
 Value-Map
@@ -54,8 +56,8 @@ local arr = {
 (program
   (var_declaration (var)
     (table_constructor
-      table_expr_key: (string) (number)
-      table_expr_key: (identifier) (number))))
+      (table_key (string)) (table_value (number))
+      (table_key (identifier)) (table_value (number)))))
 
 ==============================
 Nested
@@ -74,8 +76,8 @@ local arr = {
 (program
   (var_declaration (var)
     (table_constructor
-      table_key: (identifier) (table_constructor
-        table_key: (identifier) (string)
-        table_key: (identifier) (string))
-      table_expr_key: (table_constructor) (table_constructor))))
+      (table_key) (table_value (table_constructor
+        (table_key) (table_value (string))
+        (table_key) (table_value (string))))
+      (table_key (table_constructor)) (table_value (table_constructor)))))
 

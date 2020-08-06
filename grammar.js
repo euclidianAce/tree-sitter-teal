@@ -1,5 +1,5 @@
 
-const list = (item) => seq(item, repeat(seq(",", item)))
+const list = (item, sep = ",") => seq(item, repeat(seq(sep, item)))
 const prec_op = {
   or: 1,
   and: 2,
@@ -30,6 +30,7 @@ module.exports = grammar({
     [$.retstat],
     [$._parnamelist],
     [$._expression, $._var],
+    [$._table_field, $._var],
   ],
 
   rules: {
@@ -171,32 +172,20 @@ module.exports = grammar({
       )
     )),
 
+    _table_field: $ => choice(
+      seq("[", alias($._expression, $.table_key), "]", "=", alias($._expression, $.table_value)),
+      seq(
+        alias($.identifier, $.table_key),
+        optional(seq(":", $._type)),
+        "=",
+        alias($._expression, $.table_value)
+      ),
+      alias($._expression, $.table_value)
+    ),
     table_constructor: $ => seq(
       "{",
-      repeat(
-        choice(
-          seq(
-            $._expression,
-            repeat(seq(
-              choice(";", ","),
-              $._expression
-            )),
-            optional(choice(";", ","))
-          ),
-          seq(
-            field("table_key", $.identifier),
-            "=",
-            $._expression,
-            optional(choice(";", ","))
-          ),
-          seq(
-            "[", field("table_expr_key", $._expression), "]",
-            "=",
-            $._expression,
-            optional(choice(";", ","))
-          )
-        )
-      ),
+      optional(list($._table_field, choice(",", ";"))),
+      optional(choice(",", ";")),
       "}"
     ),
 
