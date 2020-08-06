@@ -1,0 +1,38 @@
+
+==============================
+Generic anonymous function
+==============================
+
+return function<T>()
+
+end
+
+---
+
+(program (retstat (functiondef (typearg))))
+
+==============================
+Generic named function
+==============================
+
+local function foo<T>()
+
+end
+
+---
+
+(program (function_statement
+  (function_name) (typearg)))
+
+==============================
+Many typeargs
+==============================
+
+local function foo<A, B, C, D, E, F>()
+
+end
+
+---
+
+(program (function_statement
+  (function_name) (typearg) (typearg) (typearg) (typearg) (typearg) (typearg)))

@@ -8,7 +8,7 @@ end
 ---
 
 (program
-  (var_declaration (identifier) (anon_function)))
+  (var_declaration (identifier) (functiondef)))
 
 ==============================
 Named
@@ -21,7 +21,7 @@ end
 ---
 
 (program
-  (function_declaration function_name: (identifier)))
+  (function_statement (function_name)))
 
 ==============================
 A function that actually does something
@@ -41,12 +41,12 @@ end
 ---
 
 (program
-  (function_declaration function_name: (identifier)
+  (function_statement (function_name)
     (var_declaration (identifier) (number))
     (var_declaration (identifier) (table_constructor
-      table_key: (identifier) (anon_function
+      table_key: (identifier) (functiondef
         (var_declaration (identifier) (number)))
-      table_key: (identifier) (anon_function)))))
+      table_key: (identifier) (functiondef)))))
 
 
 ==============================
@@ -61,7 +61,7 @@ end
 ---
 
 (program
-  (function_declaration function_name: (identifier)
+  (function_statement (function_name)
     (var_declaration (identifier) (string))
     (retstat (identifier))))
 
@@ -77,6 +77,22 @@ end
 ---
 
 (program 
-  (function_declaration function_name: (identifier)
-    arg: (identifier) (identifier)
+  (function_statement (function_name)
+    (arg_name) (arg_name)
+    (retstat (identifier) (identifier))))
+
+==============================
+A function with typed args
+==============================
+
+local function foo(bar: string, baz: number)
+   return bar, baz
+end
+
+---
+
+(program 
+  (function_statement (function_name)
+    (arg_name) (simple_type)
+    (arg_name) (simple_type)
     (retstat (identifier) (identifier))))

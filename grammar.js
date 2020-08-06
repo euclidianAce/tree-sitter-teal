@@ -27,20 +27,21 @@ module.exports = grammar({
     [$.type_annotation],
     [$._type],
     [$.function_type],
-    [$.retstat]
+    [$.retstat],
+    [$._parnamelist],
   ],
 
   rules: {
     program: $ => repeat($._statement),
     _statement: $ => choice(
       $.var_declaration,
-      $.function_declaration,
       $.retstat,
       $.for_statement,
       $.do_statement,
       $.while_statement,
       $.repeat_statement,
-      $.function_call
+      $.function_call,
+      $.function_statement
     ),
 
     retstat: $ => seq('return', optional(list($._expression))),
@@ -73,7 +74,7 @@ module.exports = grammar({
       $.number,
       $.string,
       $.table_constructor,
-      $.anon_function,
+      $.functiondef,
       $.function_call,
       $.bin_op,
       $.unary_op
@@ -183,28 +184,53 @@ module.exports = grammar({
       "}"
     ),
 
-    function_declaration: $ => seq(
+    function_statement: $ => seq(
       choice("local", "global"),
       "function",
-      field("function_name", $.identifier),
-      "(",
-      optional(seq(
-        field("arg", $.identifier),
-        repeat(seq(",", $.identifier))
-      )),
-      ")",
-      repeat($._statement),
-      "end"
+      alias($.identifier, $.function_name),
+      $._funcbody
     ),
 
-    anon_function: $ => seq(
+    _retlist: $ => choice(
+      seq(
+        "(",
+        optional(list($._type)),
+        optional("..."),
+        ")"
+      ),
+      seq(
+        list($._type),
+        optional("...")
+      )
+    ),
+    _parlist: $ => choice(
+      seq(
+        $._parnamelist,
+        optional(seq(
+          ",", "...",
+          optional(seq(":", $._type))
+        ))
+      ),
+      seq(
+        "...",
+        optional(seq(":", $._type))
+      )
+    ),
+    _partypelist: $ => list($._partype),
+    _partype: $ => seq(optional(seq(alias($.identifier, "arg_name"), ":")), $._type),
+    _parnamelist: $ => list($._parname),
+    _parname: $ => seq(alias($.identifier, $.arg_name), optional(seq(":", $._type))),
+    _typeargs: $ => seq("<", list(alias($.identifier, $.typearg)), ">"),
+    functiondef: $ => seq(
       "function",
+      $._funcbody
+    ),
+    _funcbody: $ => seq(
+      optional($._typeargs),
       "(",
-      optional(seq(
-        field("arg", $.identifier),
-        repeat(seq(",", $.identifier))
-      )),
+      optional($._parlist),
       ")",
+      optional(seq(":", $._retlist)),
       repeat($._statement),
       "end"
     ),
