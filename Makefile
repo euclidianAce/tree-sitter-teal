@@ -5,3 +5,5 @@ gen: grammar.js
 test: gen
 	./node_modules/tree-sitter-cli/tree-sitter test
 
+.PHONY: test
+

@@ -52,4 +52,62 @@ local x: string | number
 ---
 
 (program
-  (var_declaration (identifier) (type_annotation (simple_type (identifier) (simple_type (identifier))))))
+  (var_declaration (identifier) (type_annotation (simple_type (identifier)) (simple_type (identifier)))))
+
+==============================
+Array type
+==============================
+
+local x: {string}
+
+---
+
+(program
+  (var_declaration (identifier) (type_annotation (table_type (simple_type (identifier))))))
+
+==============================
+Array type with initialization
+==============================
+
+local x: {string} = {}
+
+---
+
+(program
+  (var_declaration (identifier) (type_annotation (table_type (simple_type (identifier))))
+    (table_constructor)))
+
+==============================
+Map type
+==============================
+
+local x: {string:number}
+
+---
+
+(program
+  (var_declaration (identifier) (type_annotation (table_type (simple_type (identifier)) (simple_type (identifier))))))
+
+==============================
+Map type with initialization
+==============================
+
+local x: {string:number} = {}
+
+---
+
+(program
+  (var_declaration (identifier) (type_annotation (table_type (simple_type (identifier)) (simple_type (identifier))))
+    (table_constructor)))
+
+==============================
+Union of array and non-array type
+==============================
+
+local x: thread | {string:number} = {}
+
+---
+
+(program
+  (var_declaration (identifier) (type_annotation (simple_type (identifier)) (table_type (simple_type (identifier)) (simple_type (identifier))))
+    (table_constructor)))

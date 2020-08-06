@@ -1,5 +1,5 @@
 
-let list = (item) => seq(item, repeat(seq(",", item)))
+const list = (item) => seq(item, repeat(seq(",", item)))
 
 module.exports = grammar({
   name: 'Teal',
@@ -7,6 +7,9 @@ module.exports = grammar({
   conflicts: $ => [
     [$.table_constructor],
     [$.type_annotation, $._type],
+    [$.type_annotation],
+    [$._type],
+    [$.function_type]
   ],
 
   rules: {
@@ -100,22 +103,38 @@ module.exports = grammar({
       // optional(")")
     ),
 
-    _type: $ => choice(
-      $.simple_type,
-      $.table_type
+    _type: $ => seq(
+      choice(
+        $.simple_type,
+        $.table_type,
+        $.function_type
+      ),
+      repeat(seq(
+        "|", choice($.simple_type, $.table_type, $.function_type)
+      ))
     ),
 
     simple_type: $ => seq(
       $.identifier, repeat(seq(".", $.identifier)),
     ),
 
-    table_type: $ => choice(
-      seq(
-        "{",
-        $._type, //array
-        optional(seq(":", $._type)), //map
-        "}"
-      )
+    table_type: $ => seq(
+      "{",
+      $._type, //array
+      optional(seq(":", $._type)), //map
+      "}"
+    ),
+
+    function_type: $ => seq(
+      "function",
+      // TODO: generics
+      "(",
+      optional(list(field("arg_type", $._type))), // TODO: named args in types: foo: function(a: string, b: number)
+      ")",
+      optional(seq(
+        ":",
+        list(field("ret_type", $._type))
+      ))
     ),
 
     identifier: $ => /[a-zA-Z_][a-zA-Z_0-9]*/,
