@@ -1,0 +1,85 @@
+
+==============================
+Empty record (type foo = record)
+==============================
+
+local type foo = record
+end
+
+---
+
+(program (type_declaration (simple_type) (record_block)))
+
+==============================
+Empty record (record foo)
+==============================
+
+local record foo
+end
+
+---
+
+(program (record_declaration (simple_type) (record_block)))
+
+==============================
+Record with stuff
+==============================
+
+local type foo = record
+   bar: {number}
+   baz: string
+end
+
+---
+
+(program (type_declaration (simple_type) (record_block
+  (record_entry) (table_type (simple_type))
+  (record_entry) (simple_type))))
+
+==============================
+Arrayrecord with stuff
+==============================
+
+local type foo = record
+   {thread}
+   bar: {number}
+   baz: string
+end
+
+---
+
+(program (type_declaration (simple_type) (record_block
+  (record_array_type (simple_type))
+  (record_entry) (table_type (simple_type))
+  (record_entry) (simple_type))))
+
+==============================
+Nested records
+==============================
+
+local type foo = record
+   type bar = record
+      x: number
+   end
+   baz: bar
+end
+
+---
+
+(program (type_declaration (simple_type) (record_block
+  (record_type) (record_block
+    (record_entry) (simple_type))
+  (record_entry) (simple_type))))
+
+==============================
+Generic record
+==============================
+
+local type foo = record<T>
+   foo: T
+end
+
+---
+
+(program (type_declaration (simple_type) (record_block (typearg)
+  (record_entry) (simple_type))))

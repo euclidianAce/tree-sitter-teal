@@ -38,6 +38,8 @@ module.exports = grammar({
     _statement: $ => choice(
       $.var_declaration,
       $.var_assignment,
+      $.type_declaration,
+      $.record_declaration,
       $.retstat,
       $.for_statement,
       $.do_statement,
@@ -151,6 +153,14 @@ module.exports = grammar({
       optional(seq("=", list($._expression)))
     ),
 
+    type_declaration: $ => seq(
+      choice("local", "global"),
+      "type",
+      alias($.identifier, $.simple_type),
+      "=",
+      choice($._type, $._newtype)
+    ),
+
     var_assignment: $ => seq(
       list(alias($._var, $.var)), "=", list($._expression)
     ),
@@ -240,11 +250,30 @@ module.exports = grammar({
       "end"
     ),
 
+    _record_body: $ => seq(
+      optional($._typeargs),
+      optional(seq("{", alias($._type, $.record_array_type), "}")),
+      repeat(choice(
+        seq(alias($.identifier, $.record_entry), ":", $._type),
+        seq("type", alias($.identifier, $.record_type), "=", $._newtype),
+      )),
+      "end"
+    ),
+
+    record_declaration: $ => seq(
+      choice("local", "global"),
+      "record",
+      alias($.identifier, $.simple_type),
+      alias($._record_body, $.record_block)
+    ),
+
+    _newtype: $ => choice(
+      seq("record", alias($._record_body, $.record_block))
+    ),
+
     type_annotation: $ => seq(
       ":",
-      // optional("("), //TODO: how to do optional pairs?
       list($._type)
-      // optional(")")
     ),
 
     _type: $ => seq(

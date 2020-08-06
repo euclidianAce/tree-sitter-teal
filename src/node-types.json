@@ -357,11 +357,19 @@
           "named": true
         },
         {
+          "type": "record_declaration",
+          "named": true
+        },
+        {
           "type": "repeat_statement",
           "named": true
         },
         {
           "type": "retstat",
+          "named": true
+        },
+        {
+          "type": "type_declaration",
           "named": true
         },
         {
@@ -408,11 +416,19 @@
           "named": true
         },
         {
+          "type": "record_declaration",
+          "named": true
+        },
+        {
           "type": "repeat_statement",
           "named": true
         },
         {
           "type": "retstat",
+          "named": true
+        },
+        {
+          "type": "type_declaration",
           "named": true
         },
         {
@@ -475,6 +491,10 @@
           "named": true
         },
         {
+          "type": "record_declaration",
+          "named": true
+        },
+        {
           "type": "repeat_statement",
           "named": true
         },
@@ -488,6 +508,10 @@
         },
         {
           "type": "table_constructor",
+          "named": true
+        },
+        {
+          "type": "type_declaration",
           "named": true
         },
         {
@@ -644,6 +668,10 @@
           "named": true
         },
         {
+          "type": "record_declaration",
+          "named": true
+        },
+        {
           "type": "repeat_statement",
           "named": true
         },
@@ -657,6 +685,10 @@
         },
         {
           "type": "table_type",
+          "named": true
+        },
+        {
+          "type": "type_declaration",
           "named": true
         },
         {
@@ -765,6 +797,10 @@
           "named": true
         },
         {
+          "type": "record_declaration",
+          "named": true
+        },
+        {
           "type": "repeat_statement",
           "named": true
         },
@@ -778,6 +814,10 @@
         },
         {
           "type": "table_type",
+          "named": true
+        },
+        {
+          "type": "type_declaration",
           "named": true
         },
         {
@@ -852,6 +892,10 @@
           "named": true
         },
         {
+          "type": "record_declaration",
+          "named": true
+        },
+        {
           "type": "repeat_statement",
           "named": true
         },
@@ -865,6 +909,10 @@
         },
         {
           "type": "table_constructor",
+          "named": true
+        },
+        {
+          "type": "type_declaration",
           "named": true
         },
         {
@@ -915,11 +963,19 @@
           "named": true
         },
         {
+          "type": "record_declaration",
+          "named": true
+        },
+        {
           "type": "repeat_statement",
           "named": true
         },
         {
           "type": "retstat",
+          "named": true
+        },
+        {
+          "type": "type_declaration",
           "named": true
         },
         {
@@ -932,6 +988,91 @@
         },
         {
           "type": "while_statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "record_array_type",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "function_type",
+          "named": true
+        },
+        {
+          "type": "simple_type",
+          "named": true
+        },
+        {
+          "type": "table_type",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "record_block",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "function_type",
+          "named": true
+        },
+        {
+          "type": "record_array_type",
+          "named": true
+        },
+        {
+          "type": "record_block",
+          "named": true
+        },
+        {
+          "type": "record_entry",
+          "named": true
+        },
+        {
+          "type": "record_type",
+          "named": true
+        },
+        {
+          "type": "simple_type",
+          "named": true
+        },
+        {
+          "type": "table_type",
+          "named": true
+        },
+        {
+          "type": "typearg",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "record_declaration",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "record_block",
+          "named": true
+        },
+        {
+          "type": "simple_type",
           "named": true
         }
       ]
@@ -982,6 +1123,10 @@
           "named": true
         },
         {
+          "type": "record_declaration",
+          "named": true
+        },
+        {
           "type": "repeat_statement",
           "named": true
         },
@@ -995,6 +1140,10 @@
         },
         {
           "type": "table_constructor",
+          "named": true
+        },
+        {
+          "type": "type_declaration",
           "named": true
         },
         {
@@ -1251,6 +1400,33 @@
       "types": [
         {
           "type": "function_type",
+          "named": true
+        },
+        {
+          "type": "simple_type",
+          "named": true
+        },
+        {
+          "type": "table_type",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "type_declaration",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "function_type",
+          "named": true
+        },
+        {
+          "type": "record_block",
           "named": true
         },
         {
@@ -1688,6 +1864,18 @@
     "named": false
   },
   {
+    "type": "record",
+    "named": false
+  },
+  {
+    "type": "record_entry",
+    "named": true
+  },
+  {
+    "type": "record_type",
+    "named": true
+  },
+  {
     "type": "repeat",
     "named": false
   },
@@ -1709,6 +1897,10 @@
   },
   {
     "type": "true",
+    "named": false
+  },
+  {
+    "type": "type",
     "named": false
   },
   {
