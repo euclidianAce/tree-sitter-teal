@@ -214,11 +214,23 @@ module.exports = grammar({
       "}"
     ),
 
-    function_statement: $ => seq(
-      choice("local", "global"),
-      "function",
-      alias($.identifier, $.function_name),
-      $._funcbody
+    _func_name: $ => seq(
+      alias($.identifier, "base"),
+      repeat(seq(".", alias($.identifier, "entry"))),
+      optional(seq(":", alias($.identifier, "method")))
+    ),
+    function_statement: $ => choice(
+      seq(
+        choice("local", "global"),
+        "function",
+        alias($.identifier, $.function_name),
+        $._funcbody
+      ),
+      seq(
+        "function",
+        alias($._func_name, $.function_name),
+        $._funcbody
+      )
     ),
 
     _retlist: $ => choice(
@@ -261,7 +273,7 @@ module.exports = grammar({
       "(",
       optional($._parlist),
       ")",
-      optional(seq(":", $._retlist)),
+      optional(seq(":", alias($._retlist, $.ret))),
       repeat($._statement),
       "end"
     ),

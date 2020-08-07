@@ -746,6 +746,11 @@
     }
   },
   {
+    "type": "function_name",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "function_statement",
     "named": true,
     "fields": {},
@@ -795,6 +800,10 @@
         },
         {
           "type": "repeat_statement",
+          "named": true
+        },
+        {
+          "type": "ret",
           "named": true
         },
         {
@@ -901,6 +910,10 @@
         },
         {
           "type": "repeat_statement",
+          "named": true
+        },
+        {
+          "type": "ret",
           "named": true
         },
         {
@@ -2014,6 +2027,10 @@
     "named": false
   },
   {
+    "type": "base",
+    "named": false
+  },
+  {
     "type": "do",
     "named": false
   },
@@ -2027,6 +2044,10 @@
   },
   {
     "type": "end",
+    "named": false
+  },
+  {
+    "type": "entry",
     "named": false
   },
   {
@@ -2044,10 +2065,6 @@
   {
     "type": "function",
     "named": false
-  },
-  {
-    "type": "function_name",
-    "named": true
   },
   {
     "type": "global",
@@ -2071,6 +2088,10 @@
   },
   {
     "type": "local",
+    "named": false
+  },
+  {
+    "type": "method",
     "named": false
   },
   {

@@ -96,3 +96,39 @@ end
     (arg_name) (simple_type)
     (arg_name) (simple_type)
     (retstat (identifier) (identifier))))
+
+==============================
+A function with typed returns
+==============================
+
+local function foo(): string, number
+end
+
+---
+
+(program 
+  (function_statement (function_name) (ret (simple_type) (simple_type))))
+
+==============================
+A function in a table/record
+==============================
+
+function foo.bar()
+end
+
+---
+
+(program 
+  (function_statement (function_name)))
+
+==============================
+A method in a table/record
+==============================
+
+function foo:bar()
+end
+
+---
+
+(program 
+  (function_statement (function_name)))
