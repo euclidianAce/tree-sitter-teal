@@ -28,6 +28,7 @@ module.exports = grammar({
     [$._type],
     [$.function_type],
     [$.retstat],
+    [$._retlist],
     [$._parnamelist],
     [$._expression, $._var],
     [$._table_field, $._var],
@@ -245,8 +246,9 @@ module.exports = grammar({
         optional(seq(":", $._type))
       )
     ),
+
     _partypelist: $ => list($._partype),
-    _partype: $ => seq(optional(seq(alias($.identifier, "arg_name"), ":")), $._type),
+    _partype: $ => seq(optional(seq(alias($.identifier, $.arg_name), ":")), $._type),
     _parnamelist: $ => list($._parname),
     _parname: $ => seq(alias($.identifier, $.arg_name), optional(seq(":", $._type))),
     _typeargs: $ => seq("<", list(alias($.identifier, $.typearg)), ">"),
@@ -335,13 +337,14 @@ module.exports = grammar({
 
     function_type: $ => seq(
       "function",
-      // TODO: generics
+      optional($._typeargs),
       "(",
-      optional(list(field("arg_type", $._type))), // TODO: named args in types: foo: function(a: string, b: number)
+      optional(alias($._partypelist, $.arg)),
       ")",
       optional(seq(
         ":",
-        list(field("ret_type", $._type))
+        // list(alias($._type, $.ret))
+        alias($._retlist, $.ret)
       ))
     ),
 
@@ -358,7 +361,6 @@ module.exports = grammar({
 
     identifier: $ => /[a-zA-Z_][a-zA-Z_0-9]*/,
     number: $ => /\d+/, //TODO: hex and stuff
-    string: $ => /"[^"]*"/, //TODO: [==[multiline strings]==] externally, 'single quote strings'
     boolean: $ => choice("true", "false"),
     nil: $ => "nil"
 

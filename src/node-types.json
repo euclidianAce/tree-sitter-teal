@@ -1,5 +1,32 @@
 [
   {
+    "type": "arg",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "arg_name",
+          "named": true
+        },
+        {
+          "type": "function_type",
+          "named": true
+        },
+        {
+          "type": "simple_type",
+          "named": true
+        },
+        {
+          "type": "table_type",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "bin_op",
     "named": true,
     "fields": {
@@ -808,51 +835,24 @@
   {
     "type": "function_type",
     "named": true,
-    "fields": {
-      "arg_type": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "function_type",
-            "named": true
-          },
-          {
-            "type": "simple_type",
-            "named": true
-          },
-          {
-            "type": "table_type",
-            "named": true
-          },
-          {
-            "type": "|",
-            "named": false
-          }
-        ]
-      },
-      "ret_type": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "function_type",
-            "named": true
-          },
-          {
-            "type": "simple_type",
-            "named": true
-          },
-          {
-            "type": "table_type",
-            "named": true
-          },
-          {
-            "type": "|",
-            "named": false
-          }
-        ]
-      }
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "arg",
+          "named": true
+        },
+        {
+          "type": "ret",
+          "named": true
+        },
+        {
+          "type": "typearg",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -1291,6 +1291,29 @@
         },
         {
           "type": "while_statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "ret",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "function_type",
+          "named": true
+        },
+        {
+          "type": "simple_type",
+          "named": true
+        },
+        {
+          "type": "table_type",
           "named": true
         }
       ]
@@ -1985,10 +2008,6 @@
   {
     "type": "arg_name",
     "named": true
-  },
-  {
-    "type": "arg_name",
-    "named": false
   },
   {
     "type": "as",

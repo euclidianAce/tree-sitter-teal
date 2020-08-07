@@ -1844,7 +1844,7 @@
                     "type": "SYMBOL",
                     "name": "identifier"
                   },
-                  "named": false,
+                  "named": true,
                   "value": "arg_name"
                 },
                 {
@@ -2480,6 +2480,18 @@
           "value": "function"
         },
         {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_typeargs"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
           "type": "STRING",
           "value": "("
         },
@@ -2487,37 +2499,13 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "FIELD",
-                  "name": "arg_type",
-                  "content": {
-                    "type": "SYMBOL",
-                    "name": "_type"
-                  }
-                },
-                {
-                  "type": "REPEAT",
-                  "content": {
-                    "type": "SEQ",
-                    "members": [
-                      {
-                        "type": "STRING",
-                        "value": ","
-                      },
-                      {
-                        "type": "FIELD",
-                        "name": "arg_type",
-                        "content": {
-                          "type": "SYMBOL",
-                          "name": "_type"
-                        }
-                      }
-                    ]
-                  }
-                }
-              ]
+              "type": "ALIAS",
+              "content": {
+                "type": "SYMBOL",
+                "name": "_partypelist"
+              },
+              "named": true,
+              "value": "arg"
             },
             {
               "type": "BLANK"
@@ -2539,37 +2527,13 @@
                   "value": ":"
                 },
                 {
-                  "type": "SEQ",
-                  "members": [
-                    {
-                      "type": "FIELD",
-                      "name": "ret_type",
-                      "content": {
-                        "type": "SYMBOL",
-                        "name": "_type"
-                      }
-                    },
-                    {
-                      "type": "REPEAT",
-                      "content": {
-                        "type": "SEQ",
-                        "members": [
-                          {
-                            "type": "STRING",
-                            "value": ","
-                          },
-                          {
-                            "type": "FIELD",
-                            "name": "ret_type",
-                            "content": {
-                              "type": "SYMBOL",
-                              "name": "_type"
-                            }
-                          }
-                        ]
-                      }
-                    }
-                  ]
+                  "type": "ALIAS",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "_retlist"
+                  },
+                  "named": true,
+                  "value": "ret"
                 }
               ]
             },
@@ -2641,10 +2605,6 @@
       "type": "PATTERN",
       "value": "\\d+"
     },
-    "string": {
-      "type": "PATTERN",
-      "value": "\"[^\"]*\""
-    },
     "boolean": {
       "type": "CHOICE",
       "members": [
@@ -2692,6 +2652,9 @@
     ],
     [
       "retstat"
+    ],
+    [
+      "_retlist"
     ],
     [
       "_parnamelist"
