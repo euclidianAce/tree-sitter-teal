@@ -287,8 +287,10 @@ module.exports = grammar({
       optional($._typeargs),
       optional(seq("{", alias($._type, $.record_array_type), "}")),
       repeat(choice(
-        seq(alias($.identifier, $.record_entry), ":", $._type),
+        // Why doesn't this work
         seq("type", alias($.identifier, $.record_type), "=", $._newtype),
+        seq(alias("type", $.record_entry), ":", $._type),
+        seq(alias($.identifier, $.record_entry), ":", $._type),
       )),
       "end"
     ),

@@ -96,3 +96,24 @@ end
 
 (program (type_declaration (simple_type) (record_block
   (record_entry) (simple_type))))
+
+==============================
+Record with a 'type' entry and types
+==============================
+
+local type foo = record
+   type: number
+   type bar = record
+   end
+   type baz = enum
+      "foo" "bar"
+   end
+end
+
+---
+
+(program (type_declaration (simple_type) (record_block
+  (record_entry) (simple_type)
+  (record_type) (record_block)
+  (record_type) (enum_block
+    (string) (string)))))
