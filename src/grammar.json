@@ -2932,10 +2932,6 @@
   ],
   "conflicts": [
     [
-      "type_annotation",
-      "_type"
-    ],
-    [
       "_type"
     ],
     [

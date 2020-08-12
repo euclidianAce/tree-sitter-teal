@@ -22,7 +22,6 @@ module.exports = grammar({
   name: 'teal',
 
   conflicts: $ => [
-    [$.type_annotation, $._type],
     [$._type],
     [$.retstat],
     [$._retlist],
