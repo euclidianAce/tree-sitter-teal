@@ -28,7 +28,6 @@ module.exports = grammar({
     [$._retlist],
     [$._parnamelist],
     [$._partypelist],
-    [$._expression, $._var],
   ],
 
   extras: $ => [
