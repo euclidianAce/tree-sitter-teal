@@ -22,7 +22,6 @@ module.exports = grammar({
   name: 'teal',
 
   conflicts: $ => [
-    [$.retstat],
     [$._retlist],
     [$._parnamelist],
     [$._partypelist],
@@ -57,7 +56,7 @@ module.exports = grammar({
       $.if_statement
     ),
 
-    retstat: $ => seq('return', optional(list($._expression))),
+    retstat: $ => prec.right(1, seq('return', optional(list($._expression)))),
     break: $ => 'break',
 
     if_statement: $ => seq(
