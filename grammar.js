@@ -22,17 +22,13 @@ module.exports = grammar({
   name: 'teal',
 
   conflicts: $ => [
-    [$.table_constructor],
     [$.type_annotation, $._type],
-    [$.type_annotation],
     [$._type],
-    [$.function_type],
     [$.retstat],
     [$._retlist],
     [$._parnamelist],
     [$._partypelist],
     [$._expression, $._var],
-    [$._table_field, $._var],
   ],
 
   extras: $ => [
@@ -202,7 +198,7 @@ module.exports = grammar({
       )
     )),
 
-    _table_field: $ => choice(
+    _table_field: $ => prec(2, choice(
       seq("[", alias($._expression, $.table_key), "]", "=", alias($._expression, $.table_value)),
       seq(
         alias($.identifier, $.table_key),
@@ -211,7 +207,7 @@ module.exports = grammar({
         alias($._expression, $.table_value)
       ),
       alias($._expression, $.table_value)
-    ),
+    )),
     table_constructor: $ => seq(
       "{",
       optional(list($._table_field, choice(",", ";"))),
@@ -355,7 +351,7 @@ module.exports = grammar({
       )
     ),
 
-    function_type: $ => seq(
+    function_type: $ => prec.right(1, seq(
       "function",
       optional($._typeargs),
       "(",
@@ -385,9 +381,9 @@ module.exports = grammar({
         // list(alias($._type, $.ret))
         alias($._retlist, $.ret)
       ))
-    ),
+    )),
 
-    _var: $ => choice(
+    _var: $ => prec(1, choice(
       $.identifier,
       seq(
         $._prefix_expression,
@@ -396,7 +392,7 @@ module.exports = grammar({
           seq(".", $.identifier)
         )
       ),
-    ),
+    )),
 
     identifier: $ => /[a-zA-Z_][a-zA-Z_0-9]*/,
     number: $ => choice(
