@@ -146,7 +146,7 @@ local foo: function(...: string)
 (program 
   (var_declaration (var)
     (type_annotation (function_type
-      (arg (varargs) (simple_type))))))
+      (vararg (simple_type))))))
 
 ==============================
 Args + variadic last arg
@@ -159,7 +159,7 @@ local foo: function(number, string, ...: string)
 (program 
   (var_declaration (var)
     (type_annotation (function_type
-      (arg (simple_type) (simple_type) (varargs) (simple_type))))))
+      (arg (simple_type) (simple_type)) (vararg (simple_type))))))
 
 ==============================
 Variadic return
@@ -172,4 +172,4 @@ local foo: function(): string...
 (program 
   (var_declaration (var)
     (type_annotation (function_type
-      (ret (simple_type) (varargs))))))
+      (ret (simple_type) (vararg))))))

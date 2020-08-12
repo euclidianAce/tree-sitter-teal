@@ -30,6 +30,7 @@ module.exports = grammar({
     [$.retstat],
     [$._retlist],
     [$._parnamelist],
+    [$._partypelist],
     [$._expression, $._var],
     [$._table_field, $._var],
   ],
@@ -110,8 +111,10 @@ module.exports = grammar({
       $.table_constructor,
       $.functiondef,
       $.function_call,
+      $._prefix_expression,
       $.bin_op,
-      $.unary_op
+      $.unary_op,
+      alias("...", $.varargs)
     ),
 
     unary_op: $ => prec.left(prec_op.unary, seq(
@@ -239,24 +242,24 @@ module.exports = grammar({
       seq(
         "(",
         optional(list($._type)),
-        optional("..."),
+        optional(alias("...", $.vararg)),
         ")"
       ),
       seq(
         list($._type),
-        optional("...")
+        optional(alias("...", $.vararg)),
       )
     ),
     _parlist: $ => choice(
       seq(
         $._parnamelist,
         optional(seq(
-          ",", "...",
+          ",", alias("...", $.varargs),
           optional(seq(":", $._type))
         ))
       ),
       seq(
-        "...",
+        alias("...", $.varargs),
         optional(seq(":", $._type))
       )
     ),
@@ -353,7 +356,26 @@ module.exports = grammar({
       "function",
       optional($._typeargs),
       "(",
-      optional(alias($._partypelist, $.arg)),
+      choice(
+        seq(
+          optional(alias($._partypelist, $.arg)),
+          alias(optional(
+            seq(
+              alias(",", "comma"),
+              alias(seq("...", ":"), "vararg_annotation"),
+              $._type
+            )
+          ), $.vararg),
+        ),
+        seq(
+          alias(optional(
+            seq(
+              alias(seq("...", ":"), "vararg_annotation"),
+              $._type
+            )
+          ), $.vararg)
+        )
+      ),
       ")",
       optional(seq(
         ":",

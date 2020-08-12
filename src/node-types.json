@@ -316,6 +316,10 @@
         {
           "type": "unary_op",
           "named": true
+        },
+        {
+          "type": "varargs",
+          "named": true
         }
       ]
     }
@@ -371,6 +375,10 @@
         },
         {
           "type": "unary_op",
+          "named": true
+        },
+        {
+          "type": "varargs",
           "named": true
         }
       ]
@@ -607,6 +615,10 @@
           "named": true
         },
         {
+          "type": "varargs",
+          "named": true
+        },
+        {
           "type": "while_statement",
           "named": true
         }
@@ -698,6 +710,10 @@
         {
           "type": "unary_op",
           "named": true
+        },
+        {
+          "type": "varargs",
+          "named": true
         }
       ]
     }
@@ -752,6 +768,10 @@
         },
         {
           "type": "unary_op",
+          "named": true
+        },
+        {
+          "type": "varargs",
           "named": true
         }
       ]
@@ -851,6 +871,10 @@
           "named": true
         },
         {
+          "type": "varargs",
+          "named": true
+        },
+        {
           "type": "while_statement",
           "named": true
         }
@@ -875,6 +899,10 @@
         },
         {
           "type": "typearg",
+          "named": true
+        },
+        {
+          "type": "vararg",
           "named": true
         }
       ]
@@ -962,6 +990,10 @@
         },
         {
           "type": "var_declaration",
+          "named": true
+        },
+        {
+          "type": "varargs",
           "named": true
         },
         {
@@ -1073,6 +1105,10 @@
         },
         {
           "type": "var_declaration",
+          "named": true
+        },
+        {
+          "type": "varargs",
           "named": true
         },
         {
@@ -1335,6 +1371,10 @@
           "named": true
         },
         {
+          "type": "varargs",
+          "named": true
+        },
+        {
           "type": "while_statement",
           "named": true
         }
@@ -1359,6 +1399,10 @@
         },
         {
           "type": "table_type",
+          "named": true
+        },
+        {
+          "type": "vararg",
           "named": true
         }
       ]
@@ -1410,6 +1454,10 @@
         },
         {
           "type": "unary_op",
+          "named": true
+        },
+        {
+          "type": "varargs",
           "named": true
         }
       ]
@@ -1507,6 +1555,10 @@
         },
         {
           "type": "unary_op",
+          "named": true
+        },
+        {
+          "type": "varargs",
           "named": true
         }
       ]
@@ -1608,6 +1660,10 @@
         },
         {
           "type": "unary_op",
+          "named": true
+        },
+        {
+          "type": "varargs",
           "named": true
         }
       ]
@@ -1714,6 +1770,10 @@
         {
           "type": "unary_op",
           "named": true
+        },
+        {
+          "type": "varargs",
+          "named": true
         }
       ]
     }
@@ -1764,6 +1824,10 @@
         },
         {
           "type": "unary_op",
+          "named": true
+        },
+        {
+          "type": "varargs",
           "named": true
         }
       ]
@@ -1819,6 +1883,10 @@
         },
         {
           "type": "var",
+          "named": true
+        },
+        {
+          "type": "varargs",
           "named": true
         }
       ]
@@ -1879,6 +1947,33 @@
         {
           "type": "var",
           "named": true
+        },
+        {
+          "type": "varargs",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "vararg",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "function_type",
+          "named": true
+        },
+        {
+          "type": "simple_type",
+          "named": true
+        },
+        {
+          "type": "table_type",
+          "named": true
         }
       ]
     }
@@ -1934,6 +2029,10 @@
         {
           "type": "unary_op",
           "named": true
+        },
+        {
+          "type": "varargs",
+          "named": true
         }
       ]
     }
@@ -1980,10 +2079,6 @@
   },
   {
     "type": "..",
-    "named": false
-  },
-  {
-    "type": "...",
     "named": false
   },
   {
@@ -2065,6 +2160,10 @@
   {
     "type": "break",
     "named": true
+  },
+  {
+    "type": "comma",
+    "named": false
   },
   {
     "type": "do",
@@ -2193,6 +2292,14 @@
   {
     "type": "until",
     "named": false
+  },
+  {
+    "type": "vararg_annotation",
+    "named": false
+  },
+  {
+    "type": "varargs",
+    "named": true
   },
   {
     "type": "while",
