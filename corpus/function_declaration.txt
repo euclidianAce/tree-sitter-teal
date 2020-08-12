@@ -132,3 +132,24 @@ end
 
 (program 
   (function_statement (function_name)))
+
+==============================
+Argument with typearg
+==============================
+
+local function parse_list<T>(ps: ParseState, i: number, list: {T}, close: {string:boolean}, sep: SeparatorMode, parse_item: ParseItem<T>): number, {T}
+end
+
+---
+
+(program (function_statement (function_name) (typearg)
+  (arg_name) (simple_type)
+  (arg_name) (simple_type)
+  (arg_name) (table_type
+    value_type: (simple_type))
+  (arg_name) (table_type
+    key_type: (simple_type)
+    value_type: (simple_type))
+  (arg_name) (simple_type)
+  (arg_name) (simple_type (typearg))
+  (ret (simple_type) (table_type value_type: (simple_type)))))

@@ -1465,7 +1465,7 @@
   },
   {
     "type": "simple_type",
-    "named": true,
+    "named": false,
     "fields": {},
     "children": {
       "multiple": true,
@@ -1473,6 +1473,10 @@
       "types": [
         {
           "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "typearg",
           "named": true
         }
       ]

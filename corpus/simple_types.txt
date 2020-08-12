@@ -63,7 +63,7 @@ local x: {string}
 ---
 
 (program
-  (var_declaration (var) (type_annotation (table_type (simple_type)))))
+  (var_declaration (var) (type_annotation (table_type value_type: (simple_type)))))
 
 ==============================
 Array type with initialization

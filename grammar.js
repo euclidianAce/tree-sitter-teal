@@ -335,9 +335,10 @@ module.exports = grammar({
       ))
     ),
 
-    simple_type: $ => alias(seq(
+    simple_type: $ => prec.left(1, alias(seq(
       $.identifier, repeat(seq(".", $.identifier)),
-    ), 'simple_type'),
+      optional($._typeargs)
+    ), 'simple_type')),
 
     table_type: $ => choice(
       seq( // array
