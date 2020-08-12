@@ -53,6 +53,7 @@ module.exports = grammar({
       $.record_declaration,
       $.enum_declaration,
       $.retstat,
+      $.break,
       $.for_statement,
       $.do_statement,
       $.while_statement,
@@ -63,6 +64,7 @@ module.exports = grammar({
     ),
 
     retstat: $ => seq('return', optional(list($._expression))),
+    break: $ => 'break',
 
     if_statement: $ => seq(
       "if", $._expression, "then",

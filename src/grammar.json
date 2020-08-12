@@ -37,6 +37,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "break"
+        },
+        {
+          "type": "SYMBOL",
           "name": "for_statement"
         },
         {
@@ -106,6 +110,10 @@
           ]
         }
       ]
+    },
+    "break": {
+      "type": "STRING",
+      "value": "break"
     },
     "if_statement": {
       "type": "SEQ",

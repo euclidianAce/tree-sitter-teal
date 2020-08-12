@@ -385,6 +385,10 @@
       "required": false,
       "types": [
         {
+          "type": "break",
+          "named": true
+        },
+        {
           "type": "do_statement",
           "named": true
         },
@@ -447,6 +451,10 @@
       "multiple": true,
       "required": false,
       "types": [
+        {
+          "type": "break",
+          "named": true
+        },
         {
           "type": "do_statement",
           "named": true
@@ -516,6 +524,10 @@
         },
         {
           "type": "boolean",
+          "named": true
+        },
+        {
+          "type": "break",
           "named": true
         },
         {
@@ -763,6 +775,10 @@
           "named": true
         },
         {
+          "type": "break",
+          "named": true
+        },
+        {
           "type": "do_statement",
           "named": true
         },
@@ -877,6 +893,10 @@
           "named": true
         },
         {
+          "type": "break",
+          "named": true
+        },
+        {
           "type": "do_statement",
           "named": true
         },
@@ -965,6 +985,10 @@
         },
         {
           "type": "boolean",
+          "named": true
+        },
+        {
+          "type": "break",
           "named": true
         },
         {
@@ -1066,6 +1090,10 @@
       "multiple": true,
       "required": false,
       "types": [
+        {
+          "type": "break",
+          "named": true
+        },
         {
           "type": "do_statement",
           "named": true
@@ -1224,6 +1252,10 @@
         },
         {
           "type": "boolean",
+          "named": true
+        },
+        {
+          "type": "break",
           "named": true
         },
         {
@@ -2029,6 +2061,10 @@
   {
     "type": "base",
     "named": false
+  },
+  {
+    "type": "break",
+    "named": true
   },
   {
     "type": "do",

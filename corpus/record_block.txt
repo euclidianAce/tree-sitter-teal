@@ -83,3 +83,16 @@ end
 
 (program (type_declaration (simple_type) (record_block (typearg)
   (record_entry) (simple_type))))
+
+==============================
+Record with a 'type' entry
+==============================
+
+local type foo = record
+   type: number
+end
+
+---
+
+(program (type_declaration (simple_type) (record_block
+  (record_entry) (simple_type))))

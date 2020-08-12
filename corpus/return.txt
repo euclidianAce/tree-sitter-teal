@@ -27,3 +27,13 @@ return 4, 5, 4
 ---
 
 (program (retstat (number) (number) (number)))
+
+==============================
+Expression list with parens
+==============================
+
+return 4, (5), 4
+
+---
+
+(program (retstat (number) (number) (number)))
