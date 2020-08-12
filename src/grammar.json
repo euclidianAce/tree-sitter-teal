@@ -2493,55 +2493,59 @@
       ]
     },
     "_type": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "simple_type"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "table_type"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "function_type"
-            }
-          ]
-        },
-        {
-          "type": "REPEAT",
-          "content": {
-            "type": "SEQ",
+      "type": "PREC_RIGHT",
+      "value": 1,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "CHOICE",
             "members": [
               {
-                "type": "STRING",
-                "value": "|"
+                "type": "SYMBOL",
+                "name": "simple_type"
               },
               {
-                "type": "CHOICE",
-                "members": [
-                  {
-                    "type": "SYMBOL",
-                    "name": "simple_type"
-                  },
-                  {
-                    "type": "SYMBOL",
-                    "name": "table_type"
-                  },
-                  {
-                    "type": "SYMBOL",
-                    "name": "function_type"
-                  }
-                ]
+                "type": "SYMBOL",
+                "name": "table_type"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "function_type"
               }
             ]
+          },
+          {
+            "type": "REPEAT",
+            "content": {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "|"
+                },
+                {
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "SYMBOL",
+                      "name": "simple_type"
+                    },
+                    {
+                      "type": "SYMBOL",
+                      "name": "table_type"
+                    },
+                    {
+                      "type": "SYMBOL",
+                      "name": "function_type"
+                    }
+                  ]
+                }
+              ]
+            }
           }
-        }
-      ]
+        ]
+      }
     },
     "simple_type": {
       "type": "PREC_LEFT",
@@ -2931,9 +2935,6 @@
     }
   ],
   "conflicts": [
-    [
-      "_type"
-    ],
     [
       "retstat"
     ],

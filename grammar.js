@@ -22,7 +22,6 @@ module.exports = grammar({
   name: 'teal',
 
   conflicts: $ => [
-    [$._type],
     [$.retstat],
     [$._retlist],
     [$._parnamelist],
@@ -318,7 +317,7 @@ module.exports = grammar({
       list($._type)
     ),
 
-    _type: $ => seq(
+    _type: $ => prec.right(1, seq(
       choice(
         $.simple_type,
         $.table_type,
@@ -327,7 +326,7 @@ module.exports = grammar({
       repeat(seq(
         "|", choice($.simple_type, $.table_type, $.function_type)
       ))
-    ),
+    )),
 
     simple_type: $ => prec.left(1, alias(seq(
       $.identifier, repeat(seq(".", $.identifier)),
