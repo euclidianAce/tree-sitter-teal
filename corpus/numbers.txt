@@ -1,0 +1,54 @@
+==============================
+Floats
+==============================
+
+local x = 4.63
+
+---
+
+(program
+  (var_declaration (var) (number)))
+
+==============================
+Hex number
+==============================
+
+local x = 0xf22
+
+---
+
+(program
+  (var_declaration (var) (number)))
+
+==============================
+Hex float
+==============================
+
+local x = 0xf22.fffeec1
+
+---
+
+(program
+  (var_declaration (var) (number)))
+
+==============================
+Exponent
+==============================
+
+local x = 3e2
+
+---
+
+(program
+  (var_declaration (var) (number)))
+
+==============================
+Float Exponent (malformed number)
+==============================
+
+local x = 3e2.2
+
+---
+
+(program
+  (var_declaration (var) (ERROR (number)) (number)))

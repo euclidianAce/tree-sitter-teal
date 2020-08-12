@@ -399,7 +399,10 @@ module.exports = grammar({
     ),
 
     identifier: $ => /[a-zA-Z_][a-zA-Z_0-9]*/,
-    number: $ => /\d+/, //TODO: hex and stuff
+    number: $ => choice(
+      /\d+(\.\d+)?(e\d+)?/i,
+      /0x[0-9a-f]+(\.[0-9a-f]+)?/i,
+    ),
     boolean: $ => choice("true", "false"),
     nil: $ => "nil"
 
