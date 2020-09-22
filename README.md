@@ -2,8 +2,9 @@
 
 It's a tree-sitter parser for teal™
 
-Specifically, this is a parser for the [type-declaration](https://github.com/teal-language/tl/tree/type-declaration) branch of [Teal](https://github.com/teal-language/tl)
+Specifically, this is a parser for the (Soon to be merged) [type-declaration](https://github.com/teal-language/tl/tree/type-declaration) branch of [Teal](https://github.com/teal-language/tl)
 
-# Help appreciated
+# Help/Contributions appreciated
 
-I (euclidianAce) am not super familiar with how tree-sitter is used, so pull requests and more contributors are welcome.
+All I really know is that tree-sitter is used for things like syntax highlighting. If someone has an Atom or Neovim or whatever example of this that they get working, I'd love to hear about it. And if there are any changes that can be made to make this easier, feel free to open an issue or a pull request.
+
