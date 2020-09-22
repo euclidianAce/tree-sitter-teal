@@ -39,7 +39,7 @@ module.exports = grammar({
 
   rules: {
     program: $ => repeat($._statement),
-    _statement: $ => choice(
+    _statement: $ => prec(1, choice(
       $.var_declaration,
       $.var_assignment,
       $.type_declaration,
@@ -54,7 +54,7 @@ module.exports = grammar({
       $.function_call,
       $.function_statement,
       $.if_statement
-    ),
+    )),
 
     retstat: $ => prec.right(1, seq('return', optional(list($._expression)))),
     break: $ => 'break',
@@ -165,12 +165,19 @@ module.exports = grammar({
       optional(seq("=", list($._expression)))
     ),
 
-    type_declaration: $ => seq(
-      choice("local", "global"),
-      "type",
-      alias($.identifier, $.simple_type),
-      "=",
-      choice($._type, $._newtype)
+    type_declaration: $ => choice(
+      seq(
+        choice("local", "global"),
+        "type",
+        alias($.identifier, $.type_name),
+        "=",
+        choice(
+          $._type, $._newtype
+        )
+      ),
+      seq(
+        choice($.record_declaration, $.enum_declaration)
+      )
     ),
 
     var_assignment: $ => seq(
@@ -281,16 +288,24 @@ module.exports = grammar({
       repeat(choice(
         seq("type", alias($.identifier, $.record_type), "=", $._newtype),
         seq(alias("type", $.record_entry), ":", $._type),
+        seq(alias("enum", $.record_entry), ":", $._type),
+        seq(alias("record", $.record_entry), ":", $._type),
         seq(alias($.identifier, $.record_entry), ":", $._type),
+        alias($._record_def, $.record_block),
+        alias($._enum_def, $.enum_block)
       )),
       "end"
     ),
 
+    _record_def: $ => seq(
+      "record",
+      alias($.identifier, $.record_name),
+      $._record_body
+    ),
+
     record_declaration: $ => seq(
       choice("local", "global"),
-      "record",
-      alias($.identifier, $.simple_type),
-      alias($._record_body, $.record_block)
+      $._record_def
     ),
 
     _enum_body: $ => seq(
@@ -298,16 +313,20 @@ module.exports = grammar({
       "end"
     ),
 
+    _enum_def: $ => seq(
+      "enum",
+      alias($.identifier, $.enum_name),
+      $._enum_body
+    ),
+
     enum_declaration: $ => seq(
       choice("local", "global"),
-      "enum",
-      alias($.identifier, $.simple_type),
-      alias($._enum_body, $.enum_block)
+      $._enum_def
     ),
 
     _newtype: $ => choice(
-      seq("record", alias($._record_body, $.record_block)),
-      seq("enum", alias($._enum_body, $.enum_block))
+      seq("enum", alias($._enum_body, $.enum_block)),
+      seq("record", alias($._record_body, $.record_block))
     ),
 
     type_annotation: $ => seq(

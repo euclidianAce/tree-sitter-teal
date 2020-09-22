@@ -634,6 +634,10 @@
       "required": false,
       "types": [
         {
+          "type": "enum_name",
+          "named": true
+        },
+        {
           "type": "string",
           "named": true
         }
@@ -649,11 +653,11 @@
       "required": true,
       "types": [
         {
-          "type": "enum_block",
+          "type": "enum_name",
           "named": true
         },
         {
-          "type": "simple_type",
+          "type": "string",
           "named": true
         }
       ]
@@ -1242,6 +1246,10 @@
           "named": true
         },
         {
+          "type": "record_name",
+          "named": true
+        },
+        {
           "type": "record_type",
           "named": true
         },
@@ -1269,11 +1277,43 @@
       "required": true,
       "types": [
         {
+          "type": "enum_block",
+          "named": true
+        },
+        {
+          "type": "function_type",
+          "named": true
+        },
+        {
+          "type": "record_array_type",
+          "named": true
+        },
+        {
           "type": "record_block",
           "named": true
         },
         {
+          "type": "record_entry",
+          "named": true
+        },
+        {
+          "type": "record_name",
+          "named": true
+        },
+        {
+          "type": "record_type",
+          "named": true
+        },
+        {
           "type": "simple_type",
+          "named": true
+        },
+        {
+          "type": "table_type",
+          "named": true
+        },
+        {
+          "type": "typearg",
           "named": true
         }
       ]
@@ -1714,6 +1754,10 @@
           "named": true
         },
         {
+          "type": "enum_declaration",
+          "named": true
+        },
+        {
           "type": "function_type",
           "named": true
         },
@@ -1722,11 +1766,19 @@
           "named": true
         },
         {
+          "type": "record_declaration",
+          "named": true
+        },
+        {
           "type": "simple_type",
           "named": true
         },
         {
           "type": "table_type",
+          "named": true
+        },
+        {
+          "type": "type_name",
           "named": true
         }
       ]
@@ -2199,6 +2251,10 @@
     "named": false
   },
   {
+    "type": "enum_name",
+    "named": true
+  },
+  {
     "type": "false",
     "named": false
   },
@@ -2259,6 +2315,10 @@
     "named": true
   },
   {
+    "type": "record_name",
+    "named": true
+  },
+  {
     "type": "record_type",
     "named": true
   },
@@ -2289,6 +2349,10 @@
   {
     "type": "type",
     "named": false
+  },
+  {
+    "type": "type_name",
+    "named": true
   },
   {
     "type": "typearg",

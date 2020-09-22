@@ -1,6 +1,6 @@
 
 ==============================
-Empty record (type foo = record)
+Empty record
 ==============================
 
 local type foo = record
@@ -8,10 +8,10 @@ end
 
 ---
 
-(program (type_declaration (simple_type) (record_block)))
+(program (type_declaration (type_name) (record_block)))
 
 ==============================
-Empty record (record foo)
+Empty record (shorthand)
 ==============================
 
 local record foo
@@ -19,7 +19,7 @@ end
 
 ---
 
-(program (record_declaration (simple_type) (record_block)))
+(program (record_declaration (record_name)))
 
 ==============================
 Record with stuff
@@ -32,8 +32,9 @@ end
 
 ---
 
-(program (type_declaration (simple_type) (record_block
-  (record_entry) (table_type (simple_type))
+(program (type_declaration (type_name) (record_block
+  (record_entry) (table_type
+    value_type: (simple_type))
   (record_entry) (simple_type))))
 
 ==============================
@@ -48,9 +49,9 @@ end
 
 ---
 
-(program (type_declaration (simple_type) (record_block
+(program (type_declaration (type_name) (record_block
   (record_array_type (simple_type))
-  (record_entry) (table_type (simple_type))
+  (record_entry) (table_type value_type: (simple_type))
   (record_entry) (simple_type))))
 
 ==============================
@@ -66,7 +67,7 @@ end
 
 ---
 
-(program (type_declaration (simple_type) (record_block
+(program (type_declaration (type_name) (record_block
   (record_type) (record_block
     (record_entry) (simple_type))
   (record_entry) (simple_type))))
@@ -81,7 +82,7 @@ end
 
 ---
 
-(program (type_declaration (simple_type) (record_block (typearg)
+(program (type_declaration (type_name) (record_block (typearg)
   (record_entry) (simple_type))))
 
 ==============================
@@ -94,7 +95,7 @@ end
 
 ---
 
-(program (type_declaration (simple_type) (record_block
+(program (type_declaration (type_name) (record_block
   (record_entry) (simple_type))))
 
 ==============================
@@ -112,8 +113,49 @@ end
 
 ---
 
-(program (type_declaration (simple_type) (record_block
+(program (type_declaration (type_name) (record_block
   (record_entry) (simple_type)
   (record_type) (record_block)
   (record_type) (enum_block
     (string) (string)))))
+
+==============================
+Nested record shorthand syntax
+==============================
+
+local record Foo
+   record Bar
+
+   end
+end
+
+---
+
+(program (record_declaration (record_name)
+  (record_block (record_name))))
+
+==============================
+Record with a 'record' entry
+==============================
+
+local record Foo
+   record: number
+end
+
+---
+
+(program (record_declaration (record_name)
+  (record_entry) (simple_type)))
+
+==============================
+Record with a 'enum' entry
+==============================
+
+local record Foo
+   enum: number
+end
+
+---
+
+(program (record_declaration (record_name)
+  (record_entry) (simple_type)))

@@ -8,7 +8,7 @@ end
 
 ---
 
-(program (type_declaration (simple_type) (enum_block)))
+(program (type_declaration (type_name) (enum_block)))
 
 ==============================
 Enum with stuff
@@ -21,10 +21,24 @@ end
 
 ---
 
-(program (type_declaration (simple_type) (enum_block (string) (string))))
+(program (type_declaration (type_name)
+  (enum_block
+    (string)
+    (string))))
 
 ==============================
-Enum declaration
+Empty enum (shorthand)
+==============================
+
+local enum foo
+end
+
+---
+
+(program (enum_declaration (enum_name)))
+
+==============================
+Enum with stuff (shorthand)
 ==============================
 
 local enum foo
@@ -35,6 +49,8 @@ end
 
 ---
 
-(program (enum_declaration (simple_type) (enum_block
-  (string) (string) (string))))
+(program (enum_declaration (enum_name)
+  (string)
+  (string)
+  (string)))
 
