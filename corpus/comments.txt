@@ -1,0 +1,32 @@
+==============================
+Single line comment
+==============================
+
+-- This is a comment
+
+---------------------
+
+(program (comment))
+
+==============================
+Multi line comment
+==============================
+
+--[[
+This is a comment
+]]
+
+---------------------
+
+(program (comment))
+
+==============================
+Inline comment
+==============================
+
+local x --[[ This is a comment ]] = 5
+
+---------------------
+
+(program (var_declaration (var) (comment) (number)))
+
