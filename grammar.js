@@ -55,7 +55,9 @@ module.exports = grammar({
       $.repeat_statement,
       $.function_call,
       $.function_statement,
-      $.if_statement
+      $.if_statement,
+      seq("::", alias($.identifier, $.label), "::"),
+      $.goto
     )),
 
     retstat: $ => prec.right(1, seq('return', optional(list($._expression)))),
@@ -410,6 +412,8 @@ module.exports = grammar({
         alias($._retlist, $.ret)
       ))
     )),
+
+    goto: $ => seq("goto", $.identifier),
 
     _var: $ => prec(1, choice(
       $.identifier,

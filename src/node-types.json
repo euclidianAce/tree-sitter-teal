@@ -417,7 +417,15 @@
           "named": true
         },
         {
+          "type": "goto",
+          "named": true
+        },
+        {
           "type": "if_statement",
+          "named": true
+        },
+        {
+          "type": "label",
           "named": true
         },
         {
@@ -484,7 +492,15 @@
           "named": true
         },
         {
+          "type": "goto",
+          "named": true
+        },
+        {
           "type": "if_statement",
+          "named": true
+        },
+        {
+          "type": "label",
           "named": true
         },
         {
@@ -563,11 +579,19 @@
           "named": true
         },
         {
+          "type": "goto",
+          "named": true
+        },
+        {
           "type": "identifier",
           "named": true
         },
         {
           "type": "if_statement",
+          "named": true
+        },
+        {
+          "type": "label",
           "named": true
         },
         {
@@ -696,7 +720,15 @@
           "named": true
         },
         {
+          "type": "goto",
+          "named": true
+        },
+        {
           "type": "if_statement",
+          "named": true
+        },
+        {
+          "type": "label",
           "named": true
         },
         {
@@ -916,7 +948,15 @@
           "named": true
         },
         {
+          "type": "goto",
+          "named": true
+        },
+        {
           "type": "if_statement",
+          "named": true
+        },
+        {
+          "type": "label",
           "named": true
         },
         {
@@ -1038,7 +1078,15 @@
           "named": true
         },
         {
+          "type": "goto",
+          "named": true
+        },
+        {
           "type": "if_statement",
+          "named": true
+        },
+        {
+          "type": "label",
           "named": true
         },
         {
@@ -1087,6 +1135,21 @@
         },
         {
           "type": "while_statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "goto",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
           "named": true
         }
       ]
@@ -1145,11 +1208,19 @@
           "named": true
         },
         {
+          "type": "goto",
+          "named": true
+        },
+        {
           "type": "identifier",
           "named": true
         },
         {
           "type": "if_statement",
+          "named": true
+        },
+        {
+          "type": "label",
           "named": true
         },
         {
@@ -1245,7 +1316,15 @@
           "named": true
         },
         {
+          "type": "goto",
+          "named": true
+        },
+        {
           "type": "if_statement",
+          "named": true
+        },
+        {
+          "type": "label",
           "named": true
         },
         {
@@ -1449,11 +1528,19 @@
           "named": true
         },
         {
+          "type": "goto",
+          "named": true
+        },
+        {
           "type": "identifier",
           "named": true
         },
         {
           "type": "if_statement",
+          "named": true
+        },
+        {
+          "type": "label",
           "named": true
         },
         {
@@ -2161,7 +2248,15 @@
           "named": true
         },
         {
+          "type": "goto",
+          "named": true
+        },
+        {
           "type": "if_statement",
+          "named": true
+        },
+        {
+          "type": "label",
           "named": true
         },
         {
@@ -2311,6 +2406,10 @@
     "named": false
   },
   {
+    "type": "::",
+    "named": false
+  },
+  {
     "type": ";",
     "named": false
   },
@@ -2431,6 +2530,10 @@
     "named": false
   },
   {
+    "type": "goto",
+    "named": false
+  },
+  {
     "type": "identifier",
     "named": true
   },
@@ -2445,6 +2548,10 @@
   {
     "type": "is",
     "named": false
+  },
+  {
+    "type": "label",
+    "named": true
   },
   {
     "type": "local",

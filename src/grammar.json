@@ -70,6 +70,32 @@
           {
             "type": "SYMBOL",
             "name": "if_statement"
+          },
+          {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "STRING",
+                "value": "::"
+              },
+              {
+                "type": "ALIAS",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "identifier"
+                },
+                "named": true,
+                "value": "label"
+              },
+              {
+                "type": "STRING",
+                "value": "::"
+              }
+            ]
+          },
+          {
+            "type": "SYMBOL",
+            "name": "goto"
           }
         ]
       }
@@ -3004,6 +3030,19 @@
           }
         ]
       }
+    },
+    "goto": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "goto"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "identifier"
+        }
+      ]
     },
     "_var": {
       "type": "PREC",
