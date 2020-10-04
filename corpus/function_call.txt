@@ -7,7 +7,20 @@ print("hello world")
 
 ---
 
-(program (function_call (called_object (identifier)) (string)))
+(program (function_call called_object: (identifier) argument: (string)))
+
+==============================
+Multiple arguments
+==============================
+
+print(a, b)
+
+---
+
+(program (function_call
+  called_object: (identifier)
+  argument: (identifier)
+  argument: (identifier)))
 
 ==============================
 Basic single string arg
@@ -17,7 +30,9 @@ print "hello world"
 
 ---
 
-(program (function_call (called_object (identifier)) (string)))
+(program (function_call
+  called_object: (identifier)
+  argument: (string)))
 
 ==============================
 Basic single table arg
@@ -27,7 +42,9 @@ print {}
 
 ---
 
-(program (function_call (called_object (identifier)) (table_constructor)))
+(program (function_call
+  called_object: (identifier)
+  argument: (table_constructor)))
 
 ==============================
 Call table entry
@@ -37,7 +54,9 @@ foo.bar()
 
 ---
 
-(program (function_call (called_object (identifier) (identifier))))
+(program (function_call
+  called_object: (identifier)
+  called_object: (identifier)))
 
 ==============================
 Higher order calls
@@ -47,7 +66,9 @@ func_that_returns_func()()
 
 ---
 
-(program (function_call (called_object (function_call (called_object (identifier))))))
+(program (function_call
+  called_object: (function_call
+    called_object: (identifier))))
 
 ==============================
 More higher order calls
@@ -58,13 +79,14 @@ func_that_returns_func()()()()()()()
 ---
 
 (program
-  (function_call (called_object
-    (function_call (called_object
-      (function_call (called_object
-        (function_call (called_object
-          (function_call (called_object
-            (function_call (called_object
-              (function_call (called_object (identifier))))))))))))))))
+  (function_call
+    called_object: (function_call
+      called_object: (function_call
+        called_object: (function_call
+          called_object: (function_call
+            called_object: (function_call
+              called_object: (function_call
+                called_object: (identifier)))))))))
 
 ==============================
 Even more higher order calls
@@ -75,14 +97,15 @@ func_that_returns_func "hello" "world" "foo" "bar"
 ---
 
 (program
-  (function_call (called_object
-    (function_call (called_object
-      (function_call (called_object
-        (function_call (called_object (identifier))
-          (string)))
-            (string)))
-              (string)))
-                (string)))
+  (function_call
+    called_object: (function_call
+      called_object: (function_call 
+        called_object: (function_call 
+          called_object: (identifier)
+            argument: (string))
+              argument: (string))
+                argument: (string))
+                  argument: (string)))
 
 ==============================
 You get the idea
@@ -93,9 +116,9 @@ func_that_returns_func "hello" { this = "is" } "getting" "silly"
 ---
 
 (program
-  (function_call (called_object
-    (function_call (called_object
-      (function_call (called_object
-        (function_call (called_object (identifier)) (string)))
-          (table_constructor
-            (table_key) (table_value (string))))) (string))) (string)))
+  (function_call
+    called_object: (function_call
+      called_object: (function_call
+        called_object: (function_call
+          called_object: (identifier) argument: (string))
+            argument: (table_constructor (table_key) (table_value (string)))) argument: (string)) argument: (string)))

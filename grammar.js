@@ -190,15 +190,15 @@ module.exports = grammar({
       seq("(", $._expression, ")")
     )),
     function_call: $ => prec(10, seq(
-      alias(seq(
+      field("called_object", seq(
         $._prefix_expression,
         optional(seq(":", $.identifier))
-      ), $.called_object),
-      choice(
+      )),
+      field("argument", choice(
         seq("(", optional(list($._expression)), ")"),
         $.string,
         $.table_constructor
-      )
+      ))
     )),
 
     _table_field: $ => prec(2, choice(
