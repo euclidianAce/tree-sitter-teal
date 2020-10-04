@@ -1,5 +1,6 @@
 {
   "name": "teal",
+  "word": "identifier",
   "rules": {
     "program": {
       "type": "REPEAT",
@@ -262,8 +263,13 @@
               ]
             },
             {
-              "type": "SYMBOL",
-              "name": "do_statement"
+              "type": "ALIAS",
+              "content": {
+                "type": "SYMBOL",
+                "name": "do_statement"
+              },
+              "named": true,
+              "value": "for_body"
             }
           ]
         },
@@ -329,8 +335,13 @@
               ]
             },
             {
-              "type": "SYMBOL",
-              "name": "do_statement"
+              "type": "ALIAS",
+              "content": {
+                "type": "SYMBOL",
+                "name": "do_statement"
+              },
+              "named": true,
+              "value": "for_body"
             }
           ]
         }
@@ -348,8 +359,13 @@
           "name": "_expression"
         },
         {
-          "type": "SYMBOL",
-          "name": "do_statement"
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "do_statement"
+          },
+          "named": true,
+          "value": "while_body"
         }
       ]
     },

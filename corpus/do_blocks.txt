@@ -39,7 +39,7 @@ end
 
 (program
   (for_statement (identifier) (number) (number)
-    (do_statement)))
+    (for_body)))
 
 ==============================
 Numeric for loop with step
@@ -52,7 +52,7 @@ end
 
 (program
   (for_statement (identifier) (number) (number) (unary_op (number))
-    (do_statement)))
+    (for_body)))
 
 ==============================
 Generic for loop
@@ -65,7 +65,7 @@ end
 ---
 
 (program
-  (for_statement (identifier) (identifier) (identifier) (do_statement)))
+  (for_statement (identifier) (identifier) (identifier) (for_body)))
 
 ==============================
 While loop
@@ -77,7 +77,7 @@ end
 ---
 
 (program
-  (while_statement (number) (do_statement)))
+  (while_statement (number) (while_body)))
 
 ==============================
 Repeat loop
@@ -107,6 +107,6 @@ end
 ---
 
 (program
-  (for_statement (identifier) (number) (number) (do_statement
-    (while_statement (bin_op (identifier) (number)) (do_statement
+  (for_statement (identifier) (number) (number) (for_body
+    (while_statement (bin_op (identifier) (number)) (while_body
       (repeat_statement (do_statement) (bin_op (identifier) (number))))))))

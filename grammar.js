@@ -37,6 +37,8 @@ module.exports = grammar({
     $.string
   ],
 
+  word: $ => $.identifier,
+
   rules: {
     program: $ => repeat($._statement),
     _statement: $ => prec(1, choice(
@@ -72,15 +74,15 @@ module.exports = grammar({
 
     for_statement: $ => choice(
       seq(
-        "for", $.identifier, "=", $._expression, ",", $._expression, optional(seq(",", $._expression)), $.do_statement
+        "for", $.identifier, "=", $._expression, ",", $._expression, optional(seq(",", $._expression)), alias($.do_statement, $.for_body)
       ),
       seq(
-        "for", list($.identifier), "in", list($._expression), $.do_statement
+        "for", list($.identifier), "in", list($._expression), alias($.do_statement, $.for_body)
       )
     ),
 
     while_statement: $ => seq(
-      "while", $._expression, $.do_statement
+      "while", $._expression, alias($.do_statement, $.while_body)
     ),
 
     repeat_statement: $ => seq(
@@ -287,6 +289,8 @@ module.exports = grammar({
       optional(seq("{", alias($._type, $.record_array_type), "}")),
       repeat(choice(
         seq("type", alias($.identifier, $.record_type), "=", $._newtype),
+
+        // TODO: there's gotta be a way around this, but precedence doesn't seem to work
         seq(alias("type", $.record_entry), ":", $._type),
         seq(alias("enum", $.record_entry), ":", $._type),
         seq(alias("record", $.record_entry), ":", $._type),
@@ -392,7 +396,6 @@ module.exports = grammar({
       ")",
       optional(seq(
         ":",
-        // list(alias($._type, $.ret))
         alias($._retlist, $.ret)
       ))
     )),
