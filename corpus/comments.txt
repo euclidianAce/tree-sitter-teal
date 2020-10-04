@@ -28,5 +28,5 @@ local x --[[ This is a comment ]] = 5
 
 ---------------------
 
-(program (var_declaration (var) (comment) (number)))
+(program (var_declaration (var (identifier)) (comment) (number)))
 

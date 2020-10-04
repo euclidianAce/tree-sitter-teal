@@ -8,7 +8,7 @@ end
 ---
 
 (program
-  (var_declaration (var) (functiondef)))
+  (var_declaration (var (identifier)) (functiondef)))
 
 ==============================
 Named
@@ -42,10 +42,10 @@ end
 
 (program
   (function_statement (function_name)
-    (var_declaration (var) (number))
-    (var_declaration (var) (table_constructor
+    (var_declaration (var (identifier)) (number))
+    (var_declaration (var (identifier)) (table_constructor
       (table_key) (table_value (functiondef
-        (var_declaration (var) (number))))
+        (var_declaration (var (identifier)) (number))))
       (table_key) (table_value (functiondef))))))
 
 
@@ -62,7 +62,7 @@ end
 
 (program
   (function_statement (function_name)
-    (var_declaration (var) (string))
+    (var_declaration (var (identifier)) (string))
     (retstat (identifier))))
 
 
@@ -119,7 +119,7 @@ end
 ---
 
 (program 
-  (function_statement (function_name)))
+  (function_statement (function_name (base) (entry))))
 
 ==============================
 A method in a table/record
@@ -131,7 +131,7 @@ end
 ---
 
 (program 
-  (function_statement (function_name)))
+  (function_statement (function_name (base) (method))))
 
 ==============================
 Argument with typearg

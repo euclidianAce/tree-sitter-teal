@@ -160,9 +160,14 @@ module.exports = grammar({
       )))
     ),
 
+    var_declarator: $ => choice(
+      seq($.identifier, "<", alias($.identifier, $.attribute), ">"),
+      $.identifier,
+    ),
+
     var_declaration: $ => seq(
       choice("local", "global"),
-      list(alias($.identifier, $.var)),
+      list(alias($.var_declarator, $.var)),
       optional($.type_annotation),
       optional(seq("=", list($._expression)))
     ),
@@ -191,16 +196,17 @@ module.exports = grammar({
       $.function_call,
       seq("(", $._expression, ")")
     )),
+    arguments: $ => choice(
+      seq("(", optional(list($._expression)), ")"),
+      $.string,
+      $.table_constructor
+    ),
     function_call: $ => prec(10, seq(
-      field("called_object", seq(
+      seq(
         $._prefix_expression,
         optional(seq(":", $.identifier))
-      )),
-      field("argument", choice(
-        seq("(", optional(list($._expression)), ")"),
-        $.string,
-        $.table_constructor
-      ))
+      ),
+      $.arguments
     )),
 
     _table_field: $ => prec(2, choice(
@@ -220,21 +226,26 @@ module.exports = grammar({
       "}"
     ),
 
-    _func_name: $ => seq(
-      alias($.identifier, "base"),
-      repeat(seq(".", alias($.identifier, "entry"))),
-      optional(seq(":", alias($.identifier, "method")))
+    function_name: $ => seq(
+      alias($.identifier, $.base),
+      choice(
+        seq(
+          repeat(seq(".", alias($.identifier, $.entry))),
+          seq(":", alias($.identifier, $.method))
+        ),
+        repeat1(seq(".", alias($.identifier, $.entry)))
+      )
     ),
     function_statement: $ => choice(
-      seq(
+      prec(100, seq(
         choice("local", "global"),
         "function",
         alias($.identifier, $.function_name),
         $._funcbody
-      ),
+      )),
       seq(
         "function",
-        alias($._func_name, $.function_name),
+        $.function_name,
         $._funcbody
       )
     ),
