@@ -8,20 +8,20 @@ end
 ---
 
 (program
-  (var_declaration (var (identifier)) (functiondef)))
+  (var_declaration (var (identifier))
+  (anon_function (signature) (body))))
 
 ==============================
 Named
 ==============================
 
 local function foo()
-
 end
 
 ---
 
 (program
-  (function_statement (function_name)))
+  (function_statement (name) (signature) (body)))
 
 ==============================
 A function that actually does something
@@ -41,12 +41,12 @@ end
 ---
 
 (program
-  (function_statement (function_name)
+  (function_statement (name) (signature) (body
     (var_declaration (var (identifier)) (number))
     (var_declaration (var (identifier)) (table_constructor
-      (table_key) (table_value (functiondef
-        (var_declaration (var (identifier)) (number))))
-      (table_key) (table_value (functiondef))))))
+      (table_key) (table_value (anon_function (signature) (body
+        (var_declaration (var (identifier)) (number)))))
+      (table_key) (table_value (anon_function (signature) (body))))))))
 
 
 ==============================
@@ -61,9 +61,9 @@ end
 ---
 
 (program
-  (function_statement (function_name)
+  (function_statement (name) (signature) (body
     (var_declaration (var (identifier)) (string))
-    (retstat (identifier))))
+    (return_statement (identifier)))))
 
 
 ==============================
@@ -77,9 +77,11 @@ end
 ---
 
 (program 
-  (function_statement (function_name)
-    (arg_name) (arg_name)
-    (retstat (identifier) (identifier))))
+  (function_statement (name)
+    (signature
+      (arguments (arg) (arg)))
+    (body
+      (return_statement (identifier) (identifier)))))
 
 ==============================
 A function with typed args
@@ -92,10 +94,14 @@ end
 ---
 
 (program 
-  (function_statement (function_name)
-    (arg_name) (simple_type)
-    (arg_name) (simple_type)
-    (retstat (identifier) (identifier))))
+  (function_statement
+    (name)
+    (signature
+      (arguments
+        (arg (simple_type))
+        (arg (simple_type))))
+    (body
+      (return_statement (identifier) (identifier)))))
 
 ==============================
 A function with typed returns
@@ -107,7 +113,8 @@ end
 ---
 
 (program 
-  (function_statement (function_name) (ret (simple_type) (simple_type))))
+  (function_statement (name) (signature
+  (return_type (simple_type) (simple_type))) (body)))
 
 ==============================
 A function in a table/record
@@ -119,7 +126,7 @@ end
 ---
 
 (program 
-  (function_statement (function_name (base) (entry))))
+  (function_statement (name (base) (entry)) (signature) (body)))
 
 ==============================
 A method in a table/record
@@ -131,7 +138,9 @@ end
 ---
 
 (program 
-  (function_statement (function_name (base) (method))))
+  (function_statement
+    (name (base) (method))
+    (signature) (body)))
 
 ==============================
 Argument with typearg
@@ -142,14 +151,19 @@ end
 
 ---
 
-(program (function_statement (function_name) (typearg)
-  (arg_name) (simple_type)
-  (arg_name) (simple_type)
-  (arg_name) (table_type
-    value_type: (simple_type))
-  (arg_name) (table_type
-    key_type: (simple_type)
-    value_type: (simple_type))
-  (arg_name) (simple_type)
-  (arg_name) (simple_type (typearg))
-  (ret (simple_type) (table_type value_type: (simple_type)))))
+(program (function_statement (name)
+  (signature
+    (typeargs (identifier))
+    (arguments
+      (arg (simple_type))
+      (arg (simple_type))
+      (arg (table_type
+        value_type: (simple_type)))
+      (arg (table_type
+        key_type: (simple_type)
+        value_type: (simple_type)))
+      (arg (simple_type))
+      (arg (simple_type (typeargs (identifier)))))
+    (return_type (simple_type) (table_type value_type: (simple_type))))
+  (body)))
+

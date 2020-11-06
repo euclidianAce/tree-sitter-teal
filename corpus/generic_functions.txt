@@ -9,7 +9,8 @@ end
 
 ---
 
-(program (retstat (functiondef (typearg))))
+(program (return_statement
+  (anon_function (signature (typeargs (identifier))) (body))))
 
 ==============================
 Generic named function
@@ -22,7 +23,7 @@ end
 ---
 
 (program (function_statement
-  (function_name) (typearg)))
+  (name) (signature (typeargs (identifier))) (body)))
 
 ==============================
 Many typeargs
@@ -34,5 +35,15 @@ end
 
 ---
 
-(program (function_statement
-  (function_name) (typearg) (typearg) (typearg) (typearg) (typearg) (typearg)))
+(program
+  (function_statement
+    (name)
+    (signature
+      (typeargs
+        (identifier)
+        (identifier)
+        (identifier)
+        (identifier)
+        (identifier)
+        (identifier)))
+    (body)))

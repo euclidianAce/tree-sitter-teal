@@ -6,7 +6,7 @@ return
 
 ---
 
-(program (retstat))
+(program (return_statement))
 
 ==============================
 One expression
@@ -16,7 +16,7 @@ return 4
 
 ---
 
-(program (retstat (number)))
+(program (return_statement (number)))
 
 ==============================
 Expression list
@@ -26,7 +26,7 @@ return 4, 5, 4
 
 ---
 
-(program (retstat (number) (number) (number)))
+(program (return_statement (number) (number) (number)))
 
 ==============================
 Expression list with parens
@@ -36,4 +36,4 @@ return 4, (5), 4
 
 ---
 
-(program (retstat (number) (number) (number)))
+(program (return_statement (number) (number) (number)))

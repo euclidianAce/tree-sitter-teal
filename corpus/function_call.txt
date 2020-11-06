@@ -58,6 +58,17 @@ foo.bar()
   (identifier) (identifier) (arguments)))
 
 ==============================
+Call table entry of table entry
+==============================
+
+foo.bar.baz()
+
+---
+
+(program (function_call
+  (identifier) (identifier) (identifier) (arguments)))
+
+==============================
 Higher order calls
 ==============================
 

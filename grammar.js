@@ -47,7 +47,7 @@ module.exports = grammar({
       $.type_declaration,
       $.record_declaration,
       $.enum_declaration,
-      $.retstat,
+      $.return_statement,
       $.break,
       $.for_statement,
       $.do_statement,
@@ -60,7 +60,7 @@ module.exports = grammar({
       $.goto
     )),
 
-    retstat: $ => prec.right(1, seq('return', optional(list($._expression)))),
+    return_statement: $ => prec.right(1, seq('return', optional(list($._expression)))),
     break: $ => 'break',
 
     if_statement: $ => seq(
@@ -105,7 +105,7 @@ module.exports = grammar({
       $.boolean,
       $.nil,
       $.table_constructor,
-      $.functiondef,
+      $.anon_function,
       $.function_call,
       $._prefix_expression,
       $.bin_op,
@@ -242,13 +242,15 @@ module.exports = grammar({
       prec(100, seq(
         choice("local", "global"),
         "function",
-        alias($.identifier, $.function_name),
-        $._funcbody
+        alias($.identifier, $.name),
+        alias($.function_signature, $.signature),
+        alias($.function_body, $.body)
       )),
       seq(
         "function",
-        $.function_name,
-        $._funcbody
+        alias($.function_name, $.name),
+        alias($.function_signature, $.signature),
+        alias($.function_body, $.body)
       )
     ),
 
@@ -279,26 +281,32 @@ module.exports = grammar({
     ),
 
     _partypelist: $ => list($._partype),
-    _partype: $ => seq(optional(seq(alias($.identifier, $.arg_name), ":")), $._type),
-    _parnamelist: $ => list($._parname),
-    _parname: $ => seq(alias($.identifier, $.arg_name), optional(seq(":", $._type))),
-    _typeargs: $ => seq("<", list(alias($.identifier, $.typearg)), ">"),
-    functiondef: $ => seq(
-      "function",
-      $._funcbody
+    _partype: $ => seq(optional(seq(alias($.identifier, $.name), ":")), $._type),
+    _parnamelist: $ => list(alias($._parname, $.arg)),
+    _parname: $ => seq(
+      alias($.identifier, "name"),
+      optional(seq(":", $._type))
     ),
-    _funcbody: $ => seq(
-      optional($._typeargs),
-      "(",
-      optional($._parlist),
-      ")",
-      optional(seq(":", alias($._retlist, $.ret))),
+    typeargs: $ => seq("<", list($.identifier), ">"),
+
+    anon_function: $ => seq(
+      "function",
+      alias($.function_signature, $.signature),
+      alias($.function_body, $.body)
+    ),
+
+    function_signature: $ => seq(
+      optional($.typeargs),
+      "(", optional(alias($._parlist, $.arguments)), ")",
+      optional(seq(":", alias($._retlist, $.return_type))),
+    ),
+
+    function_body: $ => seq(
       repeat($._statement),
       "end"
     ),
 
-    _record_body: $ => seq(
-      optional($._typeargs),
+    record_body: $ => seq(
       optional(seq("{", alias($._type, $.record_array_type), "}")),
       repeat(choice(
         seq("type", alias($.identifier, $.record_type), "=", $._newtype),
@@ -317,7 +325,8 @@ module.exports = grammar({
     _record_def: $ => seq(
       "record",
       alias($.identifier, $.record_name),
-      $._record_body
+      optional($.typeargs),
+      $.record_body
     ),
 
     record_declaration: $ => seq(
@@ -341,9 +350,15 @@ module.exports = grammar({
       $._enum_def
     ),
 
+    anon_record: $ => seq(
+      "record",
+      optional($.typeargs),
+      $.record_body
+    ),
+
     _newtype: $ => choice(
       seq("enum", alias($._enum_body, $.enum_block)),
-      seq("record", alias($._record_body, $.record_block))
+      $.anon_record,
     ),
 
     type_annotation: $ => seq(
@@ -362,10 +377,14 @@ module.exports = grammar({
       ))
     )),
 
-    simple_type: $ => prec.left(1, alias(seq(
+    _simple_type: $ => alias(seq(
       $.identifier, repeat(seq(".", $.identifier)),
-      optional($._typeargs)
-    ), 'simple_type')),
+    ), 'simple_type'),
+
+    simple_type: $ => prec.left(1, seq(
+      $._simple_type,
+      optional($.typeargs)
+    )),
 
     table_type: $ => choice(
       seq( // array
@@ -384,7 +403,7 @@ module.exports = grammar({
 
     function_type: $ => prec.right(1, seq(
       "function",
-      optional($._typeargs),
+      optional($.typeargs),
       "(",
       choice(
         seq(
@@ -409,7 +428,7 @@ module.exports = grammar({
       ")",
       optional(seq(
         ":",
-        alias($._retlist, $.ret)
+        alias($._retlist, $.return_type)
       ))
     )),
 

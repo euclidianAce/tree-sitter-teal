@@ -8,7 +8,7 @@ end
 
 ---
 
-(program (type_declaration (type_name) (record_block)))
+(program (type_declaration (type_name) (anon_record (record_body))))
 
 ==============================
 Empty record (shorthand)
@@ -19,7 +19,7 @@ end
 
 ---
 
-(program (record_declaration (record_name)))
+(program (record_declaration (record_name) (record_body)))
 
 ==============================
 Record with stuff
@@ -32,10 +32,10 @@ end
 
 ---
 
-(program (type_declaration (type_name) (record_block
+(program (type_declaration (type_name) (anon_record (record_body
   (record_entry) (table_type
     value_type: (simple_type))
-  (record_entry) (simple_type))))
+  (record_entry) (simple_type)))))
 
 ==============================
 Arrayrecord with stuff
@@ -49,10 +49,10 @@ end
 
 ---
 
-(program (type_declaration (type_name) (record_block
+(program (type_declaration (type_name) (anon_record (record_body
   (record_array_type (simple_type))
   (record_entry) (table_type value_type: (simple_type))
-  (record_entry) (simple_type))))
+  (record_entry) (simple_type)))))
 
 ==============================
 Nested records
@@ -67,10 +67,10 @@ end
 
 ---
 
-(program (type_declaration (type_name) (record_block
-  (record_type) (record_block
-    (record_entry) (simple_type))
-  (record_entry) (simple_type))))
+(program (type_declaration (type_name) (anon_record (record_body
+  (record_type) (anon_record (record_body
+    (record_entry) (simple_type)))
+  (record_entry) (simple_type)))))
 
 ==============================
 Generic record
@@ -82,8 +82,12 @@ end
 
 ---
 
-(program (type_declaration (type_name) (record_block (typearg)
-  (record_entry) (simple_type))))
+(program
+   (type_declaration (type_name)
+   (anon_record
+      (typeargs (identifier))
+      (record_body
+        (record_entry) (simple_type)))))
 
 ==============================
 Record with a 'type' entry
@@ -95,8 +99,8 @@ end
 
 ---
 
-(program (type_declaration (type_name) (record_block
-  (record_entry) (simple_type))))
+(program (type_declaration (type_name) (anon_record (record_body
+  (record_entry) (simple_type)))))
 
 ==============================
 Record with a 'type' entry and types
@@ -113,11 +117,11 @@ end
 
 ---
 
-(program (type_declaration (type_name) (record_block
+(program (type_declaration (type_name) (anon_record (record_body
   (record_entry) (simple_type)
-  (record_type) (record_block)
+  (record_type) (anon_record (record_body))
   (record_type) (enum_block
-    (string) (string)))))
+    (string) (string))))))
 
 ==============================
 Nested record shorthand syntax
@@ -131,8 +135,8 @@ end
 
 ---
 
-(program (record_declaration (record_name)
-  (record_block (record_name))))
+(program (record_declaration (record_name) (record_body
+  (record_block (record_name) (record_body)))))
 
 ==============================
 Record with a 'record' entry
@@ -144,8 +148,8 @@ end
 
 ---
 
-(program (record_declaration (record_name)
-  (record_entry) (simple_type)))
+(program (record_declaration (record_name) (record_body
+  (record_entry) (simple_type))))
 
 ==============================
 Record with a 'enum' entry
@@ -157,5 +161,5 @@ end
 
 ---
 
-(program (record_declaration (record_name)
-  (record_entry) (simple_type)))
+(program (record_declaration (record_name) (record_body
+  (record_entry) (simple_type))))

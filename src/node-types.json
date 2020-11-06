@@ -1,6 +1,6 @@
 [
   {
-    "type": "arg",
+    "type": "anon_function",
     "named": true,
     "fields": {},
     "children": {
@@ -8,11 +8,49 @@
       "required": true,
       "types": [
         {
-          "type": "arg_name",
+          "type": "body",
           "named": true
         },
         {
+          "type": "signature",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "anon_record",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "record_body",
+          "named": true
+        },
+        {
+          "type": "typeargs",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "arg",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
           "type": "function_type",
+          "named": true
+        },
+        {
+          "type": "name",
           "named": true
         },
         {
@@ -35,6 +73,14 @@
       "required": false,
       "types": [
         {
+          "type": "anon_function",
+          "named": true
+        },
+        {
+          "type": "arg",
+          "named": true
+        },
+        {
           "type": "bin_op",
           "named": true
         },
@@ -47,7 +93,7 @@
           "named": true
         },
         {
-          "type": "functiondef",
+          "type": "function_type",
           "named": true
         },
         {
@@ -63,11 +109,19 @@
           "named": true
         },
         {
+          "type": "simple_type",
+          "named": true
+        },
+        {
           "type": "string",
           "named": true
         },
         {
           "type": "table_constructor",
+          "named": true
+        },
+        {
+          "type": "table_type",
           "named": true
         },
         {
@@ -321,6 +375,10 @@
       "required": true,
       "types": [
         {
+          "type": "anon_function",
+          "named": true
+        },
+        {
           "type": "bin_op",
           "named": true
         },
@@ -334,10 +392,6 @@
         },
         {
           "type": "function_type",
-          "named": true
-        },
-        {
-          "type": "functiondef",
           "named": true
         },
         {
@@ -374,6 +428,81 @@
         },
         {
           "type": "varargs",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "body",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "break",
+          "named": true
+        },
+        {
+          "type": "do_statement",
+          "named": true
+        },
+        {
+          "type": "enum_declaration",
+          "named": true
+        },
+        {
+          "type": "for_statement",
+          "named": true
+        },
+        {
+          "type": "function_call",
+          "named": true
+        },
+        {
+          "type": "function_statement",
+          "named": true
+        },
+        {
+          "type": "goto",
+          "named": true
+        },
+        {
+          "type": "if_statement",
+          "named": true
+        },
+        {
+          "type": "label",
+          "named": true
+        },
+        {
+          "type": "record_declaration",
+          "named": true
+        },
+        {
+          "type": "repeat_statement",
+          "named": true
+        },
+        {
+          "type": "return_statement",
+          "named": true
+        },
+        {
+          "type": "type_declaration",
+          "named": true
+        },
+        {
+          "type": "var_assignment",
+          "named": true
+        },
+        {
+          "type": "var_declaration",
+          "named": true
+        },
+        {
+          "type": "while_statement",
           "named": true
         }
       ]
@@ -437,7 +566,7 @@
           "named": true
         },
         {
-          "type": "retstat",
+          "type": "return_statement",
           "named": true
         },
         {
@@ -512,7 +641,7 @@
           "named": true
         },
         {
-          "type": "retstat",
+          "type": "return_statement",
           "named": true
         },
         {
@@ -543,6 +672,10 @@
       "required": true,
       "types": [
         {
+          "type": "anon_function",
+          "named": true
+        },
+        {
           "type": "bin_op",
           "named": true
         },
@@ -572,10 +705,6 @@
         },
         {
           "type": "function_statement",
-          "named": true
-        },
-        {
-          "type": "functiondef",
           "named": true
         },
         {
@@ -611,7 +740,7 @@
           "named": true
         },
         {
-          "type": "retstat",
+          "type": "return_statement",
           "named": true
         },
         {
@@ -740,7 +869,7 @@
           "named": true
         },
         {
-          "type": "retstat",
+          "type": "return_statement",
           "named": true
         },
         {
@@ -771,6 +900,10 @@
       "required": true,
       "types": [
         {
+          "type": "anon_function",
+          "named": true
+        },
+        {
           "type": "bin_op",
           "named": true
         },
@@ -784,10 +917,6 @@
         },
         {
           "type": "function_call",
-          "named": true
-        },
-        {
-          "type": "functiondef",
           "named": true
         },
         {
@@ -830,6 +959,10 @@
       "required": true,
       "types": [
         {
+          "type": "anon_function",
+          "named": true
+        },
+        {
           "type": "arguments",
           "named": true
         },
@@ -843,10 +976,6 @@
         },
         {
           "type": "function_call",
-          "named": true
-        },
-        {
-          "type": "functiondef",
           "named": true
         },
         {
@@ -881,29 +1010,6 @@
     }
   },
   {
-    "type": "function_name",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "base",
-          "named": true
-        },
-        {
-          "type": "entry",
-          "named": true
-        },
-        {
-          "type": "method",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "function_statement",
     "named": true,
     "fields": {},
@@ -912,99 +1018,15 @@
       "required": true,
       "types": [
         {
-          "type": "arg_name",
+          "type": "body",
           "named": true
         },
         {
-          "type": "break",
+          "type": "name",
           "named": true
         },
         {
-          "type": "do_statement",
-          "named": true
-        },
-        {
-          "type": "enum_declaration",
-          "named": true
-        },
-        {
-          "type": "for_statement",
-          "named": true
-        },
-        {
-          "type": "function_call",
-          "named": true
-        },
-        {
-          "type": "function_name",
-          "named": true
-        },
-        {
-          "type": "function_statement",
-          "named": true
-        },
-        {
-          "type": "function_type",
-          "named": true
-        },
-        {
-          "type": "goto",
-          "named": true
-        },
-        {
-          "type": "if_statement",
-          "named": true
-        },
-        {
-          "type": "label",
-          "named": true
-        },
-        {
-          "type": "record_declaration",
-          "named": true
-        },
-        {
-          "type": "repeat_statement",
-          "named": true
-        },
-        {
-          "type": "ret",
-          "named": true
-        },
-        {
-          "type": "retstat",
-          "named": true
-        },
-        {
-          "type": "simple_type",
-          "named": true
-        },
-        {
-          "type": "table_type",
-          "named": true
-        },
-        {
-          "type": "type_declaration",
-          "named": true
-        },
-        {
-          "type": "typearg",
-          "named": true
-        },
-        {
-          "type": "var_assignment",
-          "named": true
-        },
-        {
-          "type": "var_declaration",
-          "named": true
-        },
-        {
-          "type": "varargs",
-          "named": true
-        },
-        {
-          "type": "while_statement",
+          "type": "signature",
           "named": true
         }
       ]
@@ -1023,118 +1045,15 @@
           "named": true
         },
         {
-          "type": "ret",
+          "type": "return_type",
           "named": true
         },
         {
-          "type": "typearg",
+          "type": "typeargs",
           "named": true
         },
         {
           "type": "vararg",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "functiondef",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "arg_name",
-          "named": true
-        },
-        {
-          "type": "break",
-          "named": true
-        },
-        {
-          "type": "do_statement",
-          "named": true
-        },
-        {
-          "type": "enum_declaration",
-          "named": true
-        },
-        {
-          "type": "for_statement",
-          "named": true
-        },
-        {
-          "type": "function_call",
-          "named": true
-        },
-        {
-          "type": "function_statement",
-          "named": true
-        },
-        {
-          "type": "function_type",
-          "named": true
-        },
-        {
-          "type": "goto",
-          "named": true
-        },
-        {
-          "type": "if_statement",
-          "named": true
-        },
-        {
-          "type": "label",
-          "named": true
-        },
-        {
-          "type": "record_declaration",
-          "named": true
-        },
-        {
-          "type": "repeat_statement",
-          "named": true
-        },
-        {
-          "type": "ret",
-          "named": true
-        },
-        {
-          "type": "retstat",
-          "named": true
-        },
-        {
-          "type": "simple_type",
-          "named": true
-        },
-        {
-          "type": "table_type",
-          "named": true
-        },
-        {
-          "type": "type_declaration",
-          "named": true
-        },
-        {
-          "type": "typearg",
-          "named": true
-        },
-        {
-          "type": "var_assignment",
-          "named": true
-        },
-        {
-          "type": "var_declaration",
-          "named": true
-        },
-        {
-          "type": "varargs",
-          "named": true
-        },
-        {
-          "type": "while_statement",
           "named": true
         }
       ]
@@ -1163,6 +1082,10 @@
       "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "anon_function",
+          "named": true
+        },
         {
           "type": "bin_op",
           "named": true
@@ -1204,10 +1127,6 @@
           "named": true
         },
         {
-          "type": "functiondef",
-          "named": true
-        },
-        {
           "type": "goto",
           "named": true
         },
@@ -1240,7 +1159,7 @@
           "named": true
         },
         {
-          "type": "retstat",
+          "type": "return_statement",
           "named": true
         },
         {
@@ -1273,6 +1192,29 @@
         },
         {
           "type": "while_statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "name",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "base",
+          "named": true
+        },
+        {
+          "type": "entry",
+          "named": true
+        },
+        {
+          "type": "method",
           "named": true
         }
       ]
@@ -1336,7 +1278,7 @@
           "named": true
         },
         {
-          "type": "retstat",
+          "type": "return_statement",
           "named": true
         },
         {
@@ -1387,8 +1329,35 @@
     "fields": {},
     "children": {
       "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "record_body",
+          "named": true
+        },
+        {
+          "type": "record_name",
+          "named": true
+        },
+        {
+          "type": "typeargs",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "record_body",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
       "required": false,
       "types": [
+        {
+          "type": "anon_record",
+          "named": true
+        },
         {
           "type": "enum_block",
           "named": true
@@ -1410,10 +1379,6 @@
           "named": true
         },
         {
-          "type": "record_name",
-          "named": true
-        },
-        {
           "type": "record_type",
           "named": true
         },
@@ -1423,10 +1388,6 @@
         },
         {
           "type": "table_type",
-          "named": true
-        },
-        {
-          "type": "typearg",
           "named": true
         }
       ]
@@ -1441,23 +1402,7 @@
       "required": true,
       "types": [
         {
-          "type": "enum_block",
-          "named": true
-        },
-        {
-          "type": "function_type",
-          "named": true
-        },
-        {
-          "type": "record_array_type",
-          "named": true
-        },
-        {
-          "type": "record_block",
-          "named": true
-        },
-        {
-          "type": "record_entry",
+          "type": "record_body",
           "named": true
         },
         {
@@ -1465,19 +1410,7 @@
           "named": true
         },
         {
-          "type": "record_type",
-          "named": true
-        },
-        {
-          "type": "simple_type",
-          "named": true
-        },
-        {
-          "type": "table_type",
-          "named": true
-        },
-        {
-          "type": "typearg",
+          "type": "typeargs",
           "named": true
         }
       ]
@@ -1491,6 +1424,10 @@
       "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "anon_function",
+          "named": true
+        },
         {
           "type": "bin_op",
           "named": true
@@ -1521,10 +1458,6 @@
         },
         {
           "type": "function_statement",
-          "named": true
-        },
-        {
-          "type": "functiondef",
           "named": true
         },
         {
@@ -1560,7 +1493,7 @@
           "named": true
         },
         {
-          "type": "retstat",
+          "type": "return_statement",
           "named": true
         },
         {
@@ -1599,7 +1532,7 @@
     }
   },
   {
-    "type": "ret",
+    "type": "return_statement",
     "named": true,
     "fields": {},
     "children": {
@@ -1607,32 +1540,9 @@
       "required": false,
       "types": [
         {
-          "type": "function_type",
+          "type": "anon_function",
           "named": true
         },
-        {
-          "type": "simple_type",
-          "named": true
-        },
-        {
-          "type": "table_type",
-          "named": true
-        },
-        {
-          "type": "vararg",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "retstat",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
         {
           "type": "bin_op",
           "named": true
@@ -1643,10 +1553,6 @@
         },
         {
           "type": "function_call",
-          "named": true
-        },
-        {
-          "type": "functiondef",
           "named": true
         },
         {
@@ -1681,8 +1587,58 @@
     }
   },
   {
+    "type": "return_type",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "function_type",
+          "named": true
+        },
+        {
+          "type": "simple_type",
+          "named": true
+        },
+        {
+          "type": "table_type",
+          "named": true
+        },
+        {
+          "type": "vararg",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "signature",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "arguments",
+          "named": true
+        },
+        {
+          "type": "return_type",
+          "named": true
+        },
+        {
+          "type": "typeargs",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "simple_type",
-    "named": false,
+    "named": true,
     "fields": {},
     "children": {
       "multiple": true,
@@ -1693,7 +1649,7 @@
           "named": true
         },
         {
-          "type": "typearg",
+          "type": "typeargs",
           "named": true
         }
       ]
@@ -1739,6 +1695,10 @@
       "required": false,
       "types": [
         {
+          "type": "anon_function",
+          "named": true
+        },
+        {
           "type": "bin_op",
           "named": true
         },
@@ -1748,10 +1708,6 @@
         },
         {
           "type": "function_call",
-          "named": true
-        },
-        {
-          "type": "functiondef",
           "named": true
         },
         {
@@ -1844,6 +1800,10 @@
       "required": true,
       "types": [
         {
+          "type": "anon_function",
+          "named": true
+        },
+        {
           "type": "bin_op",
           "named": true
         },
@@ -1853,10 +1813,6 @@
         },
         {
           "type": "function_call",
-          "named": true
-        },
-        {
-          "type": "functiondef",
           "named": true
         },
         {
@@ -1922,6 +1878,10 @@
       "required": true,
       "types": [
         {
+          "type": "anon_record",
+          "named": true
+        },
+        {
           "type": "enum_block",
           "named": true
         },
@@ -1931,10 +1891,6 @@
         },
         {
           "type": "function_type",
-          "named": true
-        },
-        {
-          "type": "record_block",
           "named": true
         },
         {
@@ -1957,6 +1913,21 @@
     }
   },
   {
+    "type": "typeargs",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "unary_op",
     "named": true,
     "fields": {},
@@ -1964,6 +1935,10 @@
       "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "anon_function",
+          "named": true
+        },
         {
           "type": "bin_op",
           "named": true
@@ -1974,10 +1949,6 @@
         },
         {
           "type": "function_call",
-          "named": true
-        },
-        {
-          "type": "functiondef",
           "named": true
         },
         {
@@ -2020,6 +1991,10 @@
       "required": true,
       "types": [
         {
+          "type": "anon_function",
+          "named": true
+        },
+        {
           "type": "attribute",
           "named": true
         },
@@ -2033,10 +2008,6 @@
         },
         {
           "type": "function_call",
-          "named": true
-        },
-        {
-          "type": "functiondef",
           "named": true
         },
         {
@@ -2079,6 +2050,10 @@
       "required": true,
       "types": [
         {
+          "type": "anon_function",
+          "named": true
+        },
+        {
           "type": "bin_op",
           "named": true
         },
@@ -2088,10 +2063,6 @@
         },
         {
           "type": "function_call",
-          "named": true
-        },
-        {
-          "type": "functiondef",
           "named": true
         },
         {
@@ -2138,6 +2109,10 @@
       "required": true,
       "types": [
         {
+          "type": "anon_function",
+          "named": true
+        },
+        {
           "type": "bin_op",
           "named": true
         },
@@ -2147,10 +2122,6 @@
         },
         {
           "type": "function_call",
-          "named": true
-        },
-        {
-          "type": "functiondef",
           "named": true
         },
         {
@@ -2268,7 +2239,7 @@
           "named": true
         },
         {
-          "type": "retstat",
+          "type": "return_statement",
           "named": true
         },
         {
@@ -2299,6 +2270,10 @@
       "required": true,
       "types": [
         {
+          "type": "anon_function",
+          "named": true
+        },
+        {
           "type": "bin_op",
           "named": true
         },
@@ -2308,10 +2283,6 @@
         },
         {
           "type": "function_call",
-          "named": true
-        },
-        {
-          "type": "functiondef",
           "named": true
         },
         {
@@ -2462,10 +2433,6 @@
     "named": false
   },
   {
-    "type": "arg_name",
-    "named": true
-  },
-  {
     "type": "as",
     "named": false
   },
@@ -2562,6 +2529,10 @@
     "named": true
   },
   {
+    "type": "name",
+    "named": false
+  },
+  {
     "type": "nil",
     "named": true
   },
@@ -2619,10 +2590,6 @@
   },
   {
     "type": "type_name",
-    "named": true
-  },
-  {
-    "type": "typearg",
     "named": true
   },
   {
