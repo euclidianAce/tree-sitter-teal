@@ -1,13 +1,13 @@
 
-all: test parser
+all: test parser.so
 
-gen: grammar.js
+src/parser.c: grammar.js
 	./node_modules/tree-sitter-cli/tree-sitter generate
 
-test: gen
+test: parser.so
 	./node_modules/tree-sitter-cli/tree-sitter test
 
-parser: src/parser.c src/scanner.c
+parser.so: src/parser.c src/scanner.c
 	gcc -fPIC -shared src/parser.c src/scanner.c -o parser.so
 
 .PHONY: test

@@ -9,7 +9,7 @@ end
 
 (program
   (var_declaration (var (identifier))
-  (anon_function (signature) (body))))
+  (anon_function (function_signature) (function_body))))
 
 ==============================
 Named
@@ -21,7 +21,7 @@ end
 ---
 
 (program
-  (function_statement (name) (signature) (body)))
+  (function_statement (function_name) (function_signature) (function_body)))
 
 ==============================
 A function that actually does something
@@ -41,12 +41,12 @@ end
 ---
 
 (program
-  (function_statement (name) (signature) (body
+  (function_statement (function_name) (function_signature) (function_body
     (var_declaration (var (identifier)) (number))
     (var_declaration (var (identifier)) (table_constructor
-      (table_key) (table_value (anon_function (signature) (body
+      (table_key) (table_value (anon_function (function_signature) (function_body
         (var_declaration (var (identifier)) (number)))))
-      (table_key) (table_value (anon_function (signature) (body))))))))
+      (table_key) (table_value (anon_function (function_signature) (function_body))))))))
 
 
 ==============================
@@ -61,7 +61,7 @@ end
 ---
 
 (program
-  (function_statement (name) (signature) (body
+  (function_statement (function_name) (function_signature) (function_body
     (var_declaration (var (identifier)) (string))
     (return_statement (identifier)))))
 
@@ -77,10 +77,10 @@ end
 ---
 
 (program 
-  (function_statement (name)
-    (signature
-      (arguments (arg) (arg)))
-    (body
+  (function_statement (function_name)
+    (function_signature
+      (arguments (arg (arg_name)) (arg (arg_name))))
+    (function_body
       (return_statement (identifier) (identifier)))))
 
 ==============================
@@ -95,12 +95,12 @@ end
 
 (program 
   (function_statement
-    (name)
-    (signature
+    (function_name)
+    (function_signature
       (arguments
-        (arg (simple_type))
-        (arg (simple_type))))
-    (body
+        (arg (arg_name) (simple_type))
+        (arg (arg_name) (simple_type))))
+    (function_body
       (return_statement (identifier) (identifier)))))
 
 ==============================
@@ -113,8 +113,8 @@ end
 ---
 
 (program 
-  (function_statement (name) (signature
-  (return_type (simple_type) (simple_type))) (body)))
+  (function_statement (function_name) (function_signature
+  (return_type (simple_type) (simple_type))) (function_body)))
 
 ==============================
 A function in a table/record
@@ -126,7 +126,7 @@ end
 ---
 
 (program 
-  (function_statement (name (base) (entry)) (signature) (body)))
+  (function_statement (function_name (base) (entry)) (function_signature) (function_body)))
 
 ==============================
 A method in a table/record
@@ -139,8 +139,8 @@ end
 
 (program 
   (function_statement
-    (name (base) (method))
-    (signature) (body)))
+    (function_name (base) (method))
+    (function_signature) (function_body)))
 
 ==============================
 Argument with typearg
@@ -151,19 +151,48 @@ end
 
 ---
 
-(program (function_statement (name)
-  (signature
+(program (function_statement (function_name)
+  (function_signature
     (typeargs (identifier))
     (arguments
-      (arg (simple_type))
-      (arg (simple_type))
-      (arg (table_type
+      (arg (arg_name) (simple_type))
+      (arg (arg_name) (simple_type))
+      (arg (arg_name) (table_type
         value_type: (simple_type)))
-      (arg (table_type
+      (arg (arg_name) (table_type
         key_type: (simple_type)
         value_type: (simple_type)))
-      (arg (simple_type))
-      (arg (simple_type (typeargs (identifier)))))
+      (arg (arg_name) (simple_type))
+      (arg (arg_name) (simple_type (typeargs (identifier)))))
     (return_type (simple_type) (table_type value_type: (simple_type))))
-  (body)))
+  (function_body)))
 
+==============================
+Variadic argument
+==============================
+
+local function thing(...: number)
+end
+
+---
+
+(program
+  (function_statement
+    (function_name)
+    (function_signature (arguments (varargs) (simple_type)))
+    (function_body)))
+
+==============================
+Variadic return
+==============================
+
+local function thing(): string...
+end
+
+---
+
+(program
+  (function_statement
+    (function_name)
+    (function_signature (return_type (simple_type) (vararg)))
+    (function_body)))

@@ -242,15 +242,15 @@ module.exports = grammar({
       prec(100, seq(
         choice("local", "global"),
         "function",
-        alias($.identifier, $.name),
-        alias($.function_signature, $.signature),
-        alias($.function_body, $.body)
+        alias($.identifier, $.function_name),
+        $.function_signature,
+        $.function_body
       )),
       seq(
         "function",
-        alias($.function_name, $.name),
-        alias($.function_signature, $.signature),
-        alias($.function_body, $.body)
+        $.function_name,
+        $.function_signature,
+        $.function_body
       )
     ),
 
@@ -280,19 +280,19 @@ module.exports = grammar({
       )
     ),
 
-    _partypelist: $ => list($._partype),
-    _partype: $ => seq(optional(seq(alias($.identifier, $.name), ":")), $._type),
+    _partypelist: $ => list(alias($._partype, $.arg)),
+    _partype: $ => seq(optional(seq(alias($.identifier, $.arg_name), ":")), $._type),
     _parnamelist: $ => list(alias($._parname, $.arg)),
     _parname: $ => seq(
-      alias($.identifier, "name"),
+      alias($.identifier, $.arg_name),
       optional(seq(":", $._type))
     ),
     typeargs: $ => seq("<", list($.identifier), ">"),
 
     anon_function: $ => seq(
       "function",
-      alias($.function_signature, $.signature),
-      alias($.function_body, $.body)
+      $.function_signature,
+      $.function_body
     ),
 
     function_signature: $ => seq(
@@ -316,6 +316,7 @@ module.exports = grammar({
         seq(alias("enum", $.record_entry), ":", $._type),
         seq(alias("record", $.record_entry), ":", $._type),
         seq(alias($.identifier, $.record_entry), ":", $._type),
+
         alias($._record_def, $.record_block),
         alias($._enum_def, $.enum_block)
       )),
@@ -401,31 +402,33 @@ module.exports = grammar({
       )
     ),
 
-    function_type: $ => prec.right(1, seq(
-      "function",
-      optional($.typeargs),
+    function_type_args: $ => seq(
       "(",
       choice(
         seq(
-          optional(alias($._partypelist, $.arg)),
-          alias(optional(
+          optional($._partypelist),
+          optional(alias(
             seq(
               alias(",", "comma"),
               alias(seq("...", ":"), "vararg_annotation"),
               $._type
-            )
-          ), $.vararg),
+            ), $.vararg)
+          )
         ),
         seq(
-          alias(optional(
-            seq(
-              alias(seq("...", ":"), "vararg_annotation"),
-              $._type
-            )
-          ), $.vararg)
+          alias(optional(seq(
+            alias(seq("...", ":"), "vararg_annotation"),
+            $._type
+          )), $.vararg)
         )
       ),
       ")",
+    ),
+
+    function_type: $ => prec.right(1, seq(
+      "function",
+      optional($.typeargs),
+      alias($.function_type_args, $.arguments),
       optional(seq(
         ":",
         alias($._retlist, $.return_type)

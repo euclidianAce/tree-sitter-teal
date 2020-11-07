@@ -8,11 +8,11 @@
       "required": true,
       "types": [
         {
-          "type": "body",
+          "type": "function_body",
           "named": true
         },
         {
-          "type": "signature",
+          "type": "function_signature",
           "named": true
         }
       ]
@@ -43,14 +43,14 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
         {
-          "type": "function_type",
+          "type": "arg_name",
           "named": true
         },
         {
-          "type": "name",
+          "type": "function_type",
           "named": true
         },
         {
@@ -126,6 +126,10 @@
         },
         {
           "type": "unary_op",
+          "named": true
+        },
+        {
+          "type": "vararg",
           "named": true
         },
         {
@@ -428,81 +432,6 @@
         },
         {
           "type": "varargs",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "body",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "break",
-          "named": true
-        },
-        {
-          "type": "do_statement",
-          "named": true
-        },
-        {
-          "type": "enum_declaration",
-          "named": true
-        },
-        {
-          "type": "for_statement",
-          "named": true
-        },
-        {
-          "type": "function_call",
-          "named": true
-        },
-        {
-          "type": "function_statement",
-          "named": true
-        },
-        {
-          "type": "goto",
-          "named": true
-        },
-        {
-          "type": "if_statement",
-          "named": true
-        },
-        {
-          "type": "label",
-          "named": true
-        },
-        {
-          "type": "record_declaration",
-          "named": true
-        },
-        {
-          "type": "repeat_statement",
-          "named": true
-        },
-        {
-          "type": "return_statement",
-          "named": true
-        },
-        {
-          "type": "type_declaration",
-          "named": true
-        },
-        {
-          "type": "var_assignment",
-          "named": true
-        },
-        {
-          "type": "var_declaration",
-          "named": true
-        },
-        {
-          "type": "while_statement",
           "named": true
         }
       ]
@@ -951,6 +880,81 @@
     }
   },
   {
+    "type": "function_body",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "break",
+          "named": true
+        },
+        {
+          "type": "do_statement",
+          "named": true
+        },
+        {
+          "type": "enum_declaration",
+          "named": true
+        },
+        {
+          "type": "for_statement",
+          "named": true
+        },
+        {
+          "type": "function_call",
+          "named": true
+        },
+        {
+          "type": "function_statement",
+          "named": true
+        },
+        {
+          "type": "goto",
+          "named": true
+        },
+        {
+          "type": "if_statement",
+          "named": true
+        },
+        {
+          "type": "label",
+          "named": true
+        },
+        {
+          "type": "record_declaration",
+          "named": true
+        },
+        {
+          "type": "repeat_statement",
+          "named": true
+        },
+        {
+          "type": "return_statement",
+          "named": true
+        },
+        {
+          "type": "type_declaration",
+          "named": true
+        },
+        {
+          "type": "var_assignment",
+          "named": true
+        },
+        {
+          "type": "var_declaration",
+          "named": true
+        },
+        {
+          "type": "while_statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "function_call",
     "named": true,
     "fields": {},
@@ -1010,6 +1014,52 @@
     }
   },
   {
+    "type": "function_name",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "base",
+          "named": true
+        },
+        {
+          "type": "entry",
+          "named": true
+        },
+        {
+          "type": "method",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "function_signature",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "arguments",
+          "named": true
+        },
+        {
+          "type": "return_type",
+          "named": true
+        },
+        {
+          "type": "typeargs",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "function_statement",
     "named": true,
     "fields": {},
@@ -1018,15 +1068,15 @@
       "required": true,
       "types": [
         {
-          "type": "body",
+          "type": "function_body",
           "named": true
         },
         {
-          "type": "name",
+          "type": "function_name",
           "named": true
         },
         {
-          "type": "signature",
+          "type": "function_signature",
           "named": true
         }
       ]
@@ -1038,10 +1088,10 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
         {
-          "type": "arg",
+          "type": "arguments",
           "named": true
         },
         {
@@ -1050,10 +1100,6 @@
         },
         {
           "type": "typeargs",
-          "named": true
-        },
-        {
-          "type": "vararg",
           "named": true
         }
       ]
@@ -1192,29 +1238,6 @@
         },
         {
           "type": "while_statement",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "name",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "base",
-          "named": true
-        },
-        {
-          "type": "entry",
-          "named": true
-        },
-        {
-          "type": "method",
           "named": true
         }
       ]
@@ -1608,29 +1631,6 @@
         },
         {
           "type": "vararg",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "signature",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "arguments",
-          "named": true
-        },
-        {
-          "type": "return_type",
-          "named": true
-        },
-        {
-          "type": "typeargs",
           "named": true
         }
       ]
@@ -2433,6 +2433,10 @@
     "named": false
   },
   {
+    "type": "arg_name",
+    "named": true
+  },
+  {
     "type": "as",
     "named": false
   },
@@ -2527,10 +2531,6 @@
   {
     "type": "method",
     "named": true
-  },
-  {
-    "type": "name",
-    "named": false
   },
   {
     "type": "nil",

@@ -94,7 +94,11 @@ local tl = {
 (program
   (var_declaration (var (identifier)) (table_constructor
     (table_key) (function_type
-      (arg (simple_type) (simple_type) (simple_type) (table_type value_type: (simple_type)))
+      (arguments
+        (arg (simple_type))
+        (arg (simple_type))
+        (arg (simple_type))
+        (arg (table_type value_type: (simple_type))))
       (return_type (simple_type) (simple_type)))
     (table_value (nil)))))
 

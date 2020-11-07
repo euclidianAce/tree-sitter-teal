@@ -7,7 +7,7 @@ local foo: function()
 ---
 
 (program 
-  (var_declaration (var (identifier)) (type_annotation (function_type))))
+  (var_declaration (var (identifier)) (type_annotation (function_type (arguments)))))
 
 ==============================
 One arg, no returns
@@ -20,7 +20,8 @@ local foo: function(string)
 (program 
   (var_declaration (var (identifier))
     (type_annotation (function_type
-       (arg (simple_type))))))
+      (arguments
+       (arg (simple_type)))))))
 
 ==============================
 No args, one return
@@ -33,6 +34,7 @@ local foo: function(): string
 (program 
   (var_declaration (var (identifier))
     (type_annotation (function_type
+      (arguments)
       (return_type (simple_type))))))
 
 ==============================
@@ -46,7 +48,8 @@ local foo: function(number): string
 (program 
   (var_declaration (var (identifier))
     (type_annotation (function_type
-      (arg (simple_type))
+      (arguments
+        (arg (simple_type)))
       (return_type (simple_type))))))
 
 ==============================
@@ -60,10 +63,11 @@ local foo: function(number, {string}, string)
 (program 
   (var_declaration (var (identifier))
     (type_annotation (function_type
-      (arg (simple_type)
-        (table_type
-          value_type: (simple_type))
-        (simple_type))))))
+      (arguments
+        (arg (simple_type))
+        (arg (table_type
+            value_type: (simple_type)))
+        (arg (simple_type)))))))
 
 ==============================
 No args, multiple returns
@@ -76,6 +80,7 @@ local foo: function(): string, {number}, number, thread
 (program 
   (var_declaration (var (identifier))
     (type_annotation (function_type
+      (arguments)
       (return_type
         (simple_type)
         (table_type
@@ -94,11 +99,11 @@ local foo: function(number, {string}, string): string, {number}, number, thread
 (program 
   (var_declaration (var (identifier))
     (type_annotation (function_type
-      (arg
-        (simple_type)
-        (table_type
-          value_type: (simple_type))
-        (simple_type))
+      (arguments
+        (arg (simple_type))
+        (arg (table_type
+          value_type: (simple_type)))
+        (arg (simple_type)))
       (return_type
         (simple_type)
         (table_type
@@ -116,8 +121,10 @@ local foo: function(bar: number)
 
 (program 
   (var_declaration (var (identifier))
-    (type_annotation (function_type
-      (arg (name) (simple_type))))))
+    (type_annotation
+      (function_type
+        (arguments
+          (arg (arg_name) (simple_type)))))))
 
 ==============================
 Named arguments
@@ -130,9 +137,9 @@ local foo: function(bar: number, baz: {string})
 (program 
   (var_declaration (var (identifier))
     (type_annotation (function_type
-      (arg
-        (name) (simple_type)
-        (name) (table_type value_type: (simple_type)))))))
+      (arguments
+        (arg (arg_name) (simple_type))
+        (arg (arg_name) (table_type value_type: (simple_type))))))))
 
 ==============================
 Variadic args
@@ -145,7 +152,8 @@ local foo: function(...: string)
 (program 
   (var_declaration (var (identifier))
     (type_annotation (function_type
-      (vararg (simple_type))))))
+      (arguments
+        (vararg (simple_type)))))))
 
 ==============================
 Args + variadic last arg
@@ -158,7 +166,10 @@ local foo: function(number, string, ...: string)
 (program 
   (var_declaration (var (identifier))
     (type_annotation (function_type
-      (arg (simple_type) (simple_type)) (vararg (simple_type))))))
+      (arguments
+        (arg (simple_type))
+        (arg (simple_type))
+        (vararg (simple_type)))))))
 
 ==============================
 Variadic return
@@ -171,4 +182,5 @@ local foo: function(): string...
 (program 
   (var_declaration (var (identifier))
     (type_annotation (function_type
+      (arguments)
       (return_type (simple_type) (vararg))))))
