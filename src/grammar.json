@@ -3152,32 +3152,45 @@
             ]
           },
           {
-            "type": "ALIAS",
-            "content": {
-              "type": "SYMBOL",
-              "name": "function_type_args"
-            },
-            "named": true,
-            "value": "arguments"
-          },
-          {
             "type": "CHOICE",
             "members": [
               {
                 "type": "SEQ",
                 "members": [
                   {
-                    "type": "STRING",
-                    "value": ":"
-                  },
-                  {
                     "type": "ALIAS",
                     "content": {
                       "type": "SYMBOL",
-                      "name": "_retlist"
+                      "name": "function_type_args"
                     },
                     "named": true,
-                    "value": "return_type"
+                    "value": "arguments"
+                  },
+                  {
+                    "type": "CHOICE",
+                    "members": [
+                      {
+                        "type": "SEQ",
+                        "members": [
+                          {
+                            "type": "STRING",
+                            "value": ":"
+                          },
+                          {
+                            "type": "ALIAS",
+                            "content": {
+                              "type": "SYMBOL",
+                              "name": "_retlist"
+                            },
+                            "named": true,
+                            "value": "return_type"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "BLANK"
+                      }
+                    ]
                   }
                 ]
               },

@@ -440,10 +440,12 @@ module.exports = grammar({
     function_type: $ => prec.right(1, seq(
       "function",
       optional($.typeargs),
-      alias($.function_type_args, $.arguments),
       optional(seq(
-        ":",
-        alias($._retlist, $.return_type)
+        alias($.function_type_args, $.arguments),
+        optional(seq(
+          ":",
+          alias($._retlist, $.return_type)
+        ))
       ))
     )),
 
