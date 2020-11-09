@@ -550,7 +550,7 @@
               },
               {
                 "type": "FIELD",
-                "name": "or_op",
+                "name": "op",
                 "content": {
                   "type": "STRING",
                   "value": "or"
@@ -575,7 +575,7 @@
               },
               {
                 "type": "FIELD",
-                "name": "and_op",
+                "name": "op",
                 "content": {
                   "type": "STRING",
                   "value": "and"
@@ -600,7 +600,7 @@
               },
               {
                 "type": "FIELD",
-                "name": "lt_op",
+                "name": "op",
                 "content": {
                   "type": "STRING",
                   "value": "<"
@@ -625,7 +625,7 @@
               },
               {
                 "type": "FIELD",
-                "name": "le_op",
+                "name": "op",
                 "content": {
                   "type": "STRING",
                   "value": "<="
@@ -650,7 +650,7 @@
               },
               {
                 "type": "FIELD",
-                "name": "eq_op",
+                "name": "op",
                 "content": {
                   "type": "STRING",
                   "value": "=="
@@ -675,7 +675,7 @@
               },
               {
                 "type": "FIELD",
-                "name": "ne_op",
+                "name": "op",
                 "content": {
                   "type": "STRING",
                   "value": "~="
@@ -700,7 +700,7 @@
               },
               {
                 "type": "FIELD",
-                "name": "ge_op",
+                "name": "op",
                 "content": {
                   "type": "STRING",
                   "value": ">="
@@ -725,7 +725,7 @@
               },
               {
                 "type": "FIELD",
-                "name": "gt_op",
+                "name": "op",
                 "content": {
                   "type": "STRING",
                   "value": ">"
@@ -750,7 +750,7 @@
               },
               {
                 "type": "FIELD",
-                "name": "bor_op",
+                "name": "op",
                 "content": {
                   "type": "STRING",
                   "value": "|"
@@ -775,7 +775,7 @@
               },
               {
                 "type": "FIELD",
-                "name": "bnot_op",
+                "name": "op",
                 "content": {
                   "type": "STRING",
                   "value": "~"
@@ -800,7 +800,7 @@
               },
               {
                 "type": "FIELD",
-                "name": "band_op",
+                "name": "op",
                 "content": {
                   "type": "STRING",
                   "value": "&"
@@ -825,7 +825,7 @@
               },
               {
                 "type": "FIELD",
-                "name": "bls_op",
+                "name": "op",
                 "content": {
                   "type": "STRING",
                   "value": "<<"
@@ -850,7 +850,7 @@
               },
               {
                 "type": "FIELD",
-                "name": "brs_op",
+                "name": "op",
                 "content": {
                   "type": "STRING",
                   "value": ">>"
@@ -875,7 +875,7 @@
               },
               {
                 "type": "FIELD",
-                "name": "add_op",
+                "name": "op",
                 "content": {
                   "type": "STRING",
                   "value": "+"
@@ -900,7 +900,7 @@
               },
               {
                 "type": "FIELD",
-                "name": "sub_op",
+                "name": "op",
                 "content": {
                   "type": "STRING",
                   "value": "-"
@@ -925,7 +925,7 @@
               },
               {
                 "type": "FIELD",
-                "name": "mul_op",
+                "name": "op",
                 "content": {
                   "type": "STRING",
                   "value": "*"
@@ -950,7 +950,7 @@
               },
               {
                 "type": "FIELD",
-                "name": "div_op",
+                "name": "op",
                 "content": {
                   "type": "STRING",
                   "value": "/"
@@ -975,7 +975,7 @@
               },
               {
                 "type": "FIELD",
-                "name": "idiv_op",
+                "name": "op",
                 "content": {
                   "type": "STRING",
                   "value": "//"
@@ -1000,7 +1000,7 @@
               },
               {
                 "type": "FIELD",
-                "name": "mod_op",
+                "name": "op",
                 "content": {
                   "type": "STRING",
                   "value": "%"
@@ -1025,7 +1025,7 @@
               },
               {
                 "type": "FIELD",
-                "name": "concat_op",
+                "name": "op",
                 "content": {
                   "type": "STRING",
                   "value": ".."
@@ -1050,7 +1050,7 @@
               },
               {
                 "type": "FIELD",
-                "name": "pow_op",
+                "name": "op",
                 "content": {
                   "type": "STRING",
                   "value": "^"
@@ -1075,7 +1075,7 @@
               },
               {
                 "type": "FIELD",
-                "name": "is_op",
+                "name": "op",
                 "content": {
                   "type": "STRING",
                   "value": "is"
@@ -1100,7 +1100,7 @@
               },
               {
                 "type": "FIELD",
-                "name": "as_op",
+                "name": "op",
                 "content": {
                   "type": "STRING",
                   "value": "as"
@@ -1112,6 +1112,103 @@
               }
             ]
           }
+        },
+        {
+          "type": "PREC_RIGHT",
+          "value": 3,
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "_expression"
+              },
+              {
+                "type": "FIELD",
+                "name": "op",
+                "content": {
+                  "type": "STRING",
+                  "value": "is"
+                }
+              },
+              {
+                "type": "SYMBOL",
+                "name": "_type"
+              }
+            ]
+          }
+        },
+        {
+          "type": "PREC_RIGHT",
+          "value": 100,
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "_expression"
+              },
+              {
+                "type": "FIELD",
+                "name": "op",
+                "content": {
+                  "type": "STRING",
+                  "value": "as"
+                }
+              },
+              {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "_type"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "type_tuple"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "type_tuple": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_type"
+            },
+            {
+              "type": "REPEAT",
+              "content": {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "STRING",
+                    "value": ","
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "_type"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": ")"
         }
       ]
     },

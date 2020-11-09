@@ -1,0 +1,22 @@
+
+==============================
+Simple cast
+==============================
+
+return "thing" as number
+
+---
+
+(program
+  (return_statement (bin_op (string) (simple_type))))
+
+==============================
+Tuple cast
+==============================
+
+return thing() as (string, string)
+
+---
+
+(program
+  (return_statement (bin_op (function_call (identifier) (arguments)) (type_tuple (simple_type) (simple_type)))))

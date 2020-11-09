@@ -143,232 +143,100 @@
     "type": "bin_op",
     "named": true,
     "fields": {
-      "add_op": {
+      "op": {
         "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "+",
-            "named": false
-          }
-        ]
-      },
-      "and_op": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "and",
-            "named": false
-          }
-        ]
-      },
-      "as_op": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "as",
-            "named": false
-          }
-        ]
-      },
-      "band_op": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "&",
-            "named": false
-          }
-        ]
-      },
-      "bls_op": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "<<",
-            "named": false
-          }
-        ]
-      },
-      "bnot_op": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "~",
-            "named": false
-          }
-        ]
-      },
-      "bor_op": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "|",
-            "named": false
-          }
-        ]
-      },
-      "brs_op": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": ">>",
-            "named": false
-          }
-        ]
-      },
-      "concat_op": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "..",
-            "named": false
-          }
-        ]
-      },
-      "div_op": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "/",
-            "named": false
-          }
-        ]
-      },
-      "eq_op": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "==",
-            "named": false
-          }
-        ]
-      },
-      "ge_op": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": ">=",
-            "named": false
-          }
-        ]
-      },
-      "gt_op": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": ">",
-            "named": false
-          }
-        ]
-      },
-      "idiv_op": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "//",
-            "named": false
-          }
-        ]
-      },
-      "is_op": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "is",
-            "named": false
-          }
-        ]
-      },
-      "le_op": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "<=",
-            "named": false
-          }
-        ]
-      },
-      "lt_op": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "<",
-            "named": false
-          }
-        ]
-      },
-      "mod_op": {
-        "multiple": false,
-        "required": false,
+        "required": true,
         "types": [
           {
             "type": "%",
             "named": false
-          }
-        ]
-      },
-      "mul_op": {
-        "multiple": false,
-        "required": false,
-        "types": [
+          },
+          {
+            "type": "&",
+            "named": false
+          },
           {
             "type": "*",
             "named": false
-          }
-        ]
-      },
-      "ne_op": {
-        "multiple": false,
-        "required": false,
-        "types": [
+          },
           {
-            "type": "~=",
+            "type": "+",
             "named": false
-          }
-        ]
-      },
-      "or_op": {
-        "multiple": false,
-        "required": false,
-        "types": [
+          },
           {
-            "type": "or",
+            "type": "-",
             "named": false
-          }
-        ]
-      },
-      "pow_op": {
-        "multiple": false,
-        "required": false,
-        "types": [
+          },
+          {
+            "type": "..",
+            "named": false
+          },
+          {
+            "type": "/",
+            "named": false
+          },
+          {
+            "type": "//",
+            "named": false
+          },
+          {
+            "type": "<",
+            "named": false
+          },
+          {
+            "type": "<<",
+            "named": false
+          },
+          {
+            "type": "<=",
+            "named": false
+          },
+          {
+            "type": "==",
+            "named": false
+          },
+          {
+            "type": ">",
+            "named": false
+          },
+          {
+            "type": ">=",
+            "named": false
+          },
+          {
+            "type": ">>",
+            "named": false
+          },
           {
             "type": "^",
             "named": false
-          }
-        ]
-      },
-      "sub_op": {
-        "multiple": false,
-        "required": false,
-        "types": [
+          },
           {
-            "type": "-",
+            "type": "and",
+            "named": false
+          },
+          {
+            "type": "as",
+            "named": false
+          },
+          {
+            "type": "is",
+            "named": false
+          },
+          {
+            "type": "or",
+            "named": false
+          },
+          {
+            "type": "|",
+            "named": false
+          },
+          {
+            "type": "~",
+            "named": false
+          },
+          {
+            "type": "~=",
             "named": false
           }
         ]
@@ -424,6 +292,10 @@
         },
         {
           "type": "table_type",
+          "named": true
+        },
+        {
+          "type": "type_tuple",
           "named": true
         },
         {
@@ -1907,6 +1779,29 @@
         },
         {
           "type": "type_name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "type_tuple",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "function_type",
+          "named": true
+        },
+        {
+          "type": "simple_type",
+          "named": true
+        },
+        {
+          "type": "table_type",
           "named": true
         }
       ]
