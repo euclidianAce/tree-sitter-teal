@@ -1,70 +1,81 @@
 
+;; Basic statements
 (if_statement [ "if" "then" "end" ] @conditional)
 (elseif_block [ "elseif" "then" ] @conditional)
 (else_block [ "else" ] @conditional)
 
-[ "else" "elseif" ] @conditional
-(for_statement [ "for" ] @repeat)
-(for_statement "in" @keyword)
-(for_body [ "do" "end" ] @repeat)
-(while_statement [ "while" ] @repeat)
-(while_body [ "do" "end" ] @repeat)
-(repeat_statement [ "repeat" "until" ] @repeat)
 (do_statement [ "do" "end" ] @keyword)
-(record_declaration [ "record" "end" ] @keyword)
-(enum_declaration [ "enum" "end" ] @keyword)
+(for_statement
+  "for" @repeat
+  (for_body [ "do" "end" ] @keyword))
+(while_statement
+  "while" @repeat
+  (while_body [ "do" "end" ] @keyword))
+(repeat_statement [ "repeat" "until" ] @repeat)
 
-[ "in" "local" "return" (break) (goto) ] @keyword
+[ "in" "local" "return" (break) (goto) "do" "end" ] @keyword
 (label) @label
 
-; Global isn't a real keyword, but it gets special treatment
+;; Global isn't a real keyword, but it gets special treatment
 (var_declaration "global" @keyword)
 (function_statement "global" @keyword)
 
-
-; Ops
+;; Ops
 [ "not" "and" "or" "as" "is" ] @keyword.operator
 
 [ "=" "~=" "==" "<=" ">=" "<" ">"
 "+" "-" "%" "/" "//" "*" "^"
 "&" "~" "|" ">>" "<<"
-".." "#"
- ] @operator
+".." "#" ] @operator
 
-[ "," "." ":"] @punctuation.delimiter
-[ "(" ")" "[" "]" "{" "}" ] @punctuation.bracket
-("<" @punctuation.bracket
-. (typeargs (_)) @parameter .
-">" @punctuation.bracket)
+;; function stuffs
 
-(identifier) @variable
-(boolean) @boolean
-(nil) @constant.builtin
-(varargs) @constant
+(function_statement
+  "function" @keyword.function)
+(anon_function
+  "function" @keyword.function)
+(function_body "end" @keyword)
+(function_name) @function
+(arg_name) @parameter
 
-; function stuffs
-(anon_function ["function" "end"] @keyword.function)
-
-(function_statement [(function_name) (function_name (_)) "." ":"] @function)
-(function_statement ["function" "end"] @keyword.function)
+(typeargs
+  "<" @punctuation.bracket .
+  (identifier) @parameter
+  .
+  ("," . (identifier) @parameter)*
+  . ">" @punctuation.bracket)
 
 (function_call
-   (identifier) @function . (arguments))
+  (identifier) @function . (arguments))
 
-(arg (arg_name) @parameter)
+;; type stuffs
+(record_declaration
+  "record" @keyword)
+(record_block
+  "record" @keyword)
+(record_body "end" @keyword)
 
-; type stuffs
+(enum_declaration [ "enum" "end" ] @keyword)
+(enum_block [ "enum" "end" ] @keyword)
 (type_declaration "type" @keyword)
 (type_declaration (type_name) @type)
 (simple_type) @type
 (function_type "function" @type)
+
 (record_name) @type
 (enum_name) @type
-(typeargs (_)) @parameter
 
-(table_constructor ["{" "}"] @constructor)
+;; The rest of it
+
+[ "(" ")" "[" "]" "{" "}" ] @punctuation.bracket
+(boolean) @boolean
 (comment) @comment
-(string) @string
+(identifier) @variable
+(nil) @constant.builtin
 (number) @number
+(string) @string
+(table_constructor ["{" "}"] @constructor)
+(varargs) @constant.builtin
+"," @punctuation.delimiter
 
 (ERROR) @error
