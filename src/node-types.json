@@ -40,28 +40,39 @@
   {
     "type": "arg",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "arg_name",
-          "named": true
-        },
-        {
-          "type": "function_type",
-          "named": true
-        },
-        {
-          "type": "simple_type",
-          "named": true
-        },
-        {
-          "type": "table_type",
-          "named": true
-        }
-      ]
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "type": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "function_type",
+            "named": true
+          },
+          {
+            "type": "simple_type",
+            "named": true
+          },
+          {
+            "type": "table_type",
+            "named": true
+          },
+          {
+            "type": "|",
+            "named": false
+          }
+        ]
+      }
     }
   },
   {
@@ -908,24 +919,37 @@
   {
     "type": "function_name",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "base",
-          "named": true
-        },
-        {
-          "type": "entry",
-          "named": true
-        },
-        {
-          "type": "method",
-          "named": true
-        }
-      ]
+    "fields": {
+      "base": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "entry": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "method": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -954,17 +978,28 @@
   {
     "type": "function_statement",
     "named": true,
-    "fields": {},
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "function_name",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": true,
       "types": [
         {
           "type": "function_body",
-          "named": true
-        },
-        {
-          "type": "function_name",
           "named": true
         },
         {
@@ -1362,6 +1397,10 @@
         },
         {
           "type": "simple_type",
+          "named": true
+        },
+        {
+          "type": "string",
           "named": true
         },
         {
@@ -2447,19 +2486,11 @@
     "named": false
   },
   {
-    "type": "arg_name",
-    "named": true
-  },
-  {
     "type": "as",
     "named": false
   },
   {
     "type": "attribute",
-    "named": true
-  },
-  {
-    "type": "base",
     "named": true
   },
   {
@@ -2485,10 +2516,6 @@
   {
     "type": "end",
     "named": false
-  },
-  {
-    "type": "entry",
-    "named": true
   },
   {
     "type": "enum",
@@ -2541,10 +2568,6 @@
   {
     "type": "local",
     "named": false
-  },
-  {
-    "type": "method",
-    "named": true
   },
   {
     "type": "nil",

@@ -175,4 +175,4 @@ end
 ---
 
 (program (record_declaration (record_name) (record_body
-  (record_entry) (simple_type))))
+  (string) (simple_type))))

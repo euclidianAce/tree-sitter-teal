@@ -21,7 +21,7 @@ end
 ---
 
 (program
-  (function_statement (function_name) (function_signature) (function_body)))
+  (function_statement name: (identifier) (function_signature) (function_body)))
 
 ==============================
 A function that actually does something
@@ -41,7 +41,7 @@ end
 ---
 
 (program
-  (function_statement (function_name) (function_signature) (function_body
+  (function_statement name: (identifier) (function_signature) (function_body
     (var_declaration (var (identifier)) (number))
     (var_declaration (var (identifier)) (table_constructor
       (table_key) (table_value (anon_function (function_signature) (function_body
@@ -61,7 +61,7 @@ end
 ---
 
 (program
-  (function_statement (function_name) (function_signature) (function_body
+  (function_statement name: (identifier) (function_signature) (function_body
     (var_declaration (var (identifier)) (string))
     (return_statement (identifier)))))
 
@@ -77,9 +77,9 @@ end
 ---
 
 (program 
-  (function_statement (function_name)
+  (function_statement name: (identifier)
     (function_signature
-      (arguments (arg (arg_name)) (arg (arg_name))))
+      (arguments (arg name: (identifier)) (arg name: (identifier))))
     (function_body
       (return_statement (identifier) (identifier)))))
 
@@ -95,11 +95,11 @@ end
 
 (program 
   (function_statement
-    (function_name)
+    name: (identifier)
     (function_signature
       (arguments
-        (arg (arg_name) (simple_type))
-        (arg (arg_name) (simple_type))))
+        (arg name: (identifier) type: (simple_type))
+        (arg name: (identifier) type: (simple_type))))
     (function_body
       (return_statement (identifier) (identifier)))))
 
@@ -113,7 +113,7 @@ end
 ---
 
 (program 
-  (function_statement (function_name) (function_signature
+  (function_statement name: (identifier) (function_signature
   (return_type (simple_type) (simple_type))) (function_body)))
 
 ==============================
@@ -126,7 +126,11 @@ end
 ---
 
 (program 
-  (function_statement (function_name (base) (entry)) (function_signature) (function_body)))
+  (function_statement
+    name: (function_name
+      base: (identifier)
+      entry: (identifier))
+    (function_signature) (function_body)))
 
 ==============================
 A method in a table/record
@@ -139,7 +143,7 @@ end
 
 (program 
   (function_statement
-    (function_name (base) (method))
+    name: (function_name base: (identifier) method: (identifier))
     (function_signature) (function_body)))
 
 ==============================
@@ -151,19 +155,19 @@ end
 
 ---
 
-(program (function_statement (function_name)
+(program (function_statement name: (identifier)
   (function_signature
     (typeargs (identifier))
     (arguments
-      (arg (arg_name) (simple_type))
-      (arg (arg_name) (simple_type))
-      (arg (arg_name) (table_type
+      (arg name: (identifier) type: (simple_type))
+      (arg name: (identifier) type: (simple_type))
+      (arg name: (identifier) type: (table_type
         value_type: (simple_type)))
-      (arg (arg_name) (table_type
+      (arg name: (identifier) type: (table_type
         key_type: (simple_type)
         value_type: (simple_type)))
-      (arg (arg_name) (simple_type))
-      (arg (arg_name) (simple_type (typeargs (identifier)))))
+      (arg name: (identifier) type: (simple_type))
+      (arg name: (identifier) type: (simple_type (typeargs (identifier)))))
     (return_type (simple_type) (table_type value_type: (simple_type))))
   (function_body)))
 
@@ -178,7 +182,7 @@ end
 
 (program
   (function_statement
-    (function_name)
+    name: (identifier)
     (function_signature (arguments (varargs) (simple_type)))
     (function_body)))
 
@@ -193,6 +197,6 @@ end
 
 (program
   (function_statement
-    (function_name)
+    name: (identifier)
     (function_signature (return_type (simple_type) (vararg)))
     (function_body)))

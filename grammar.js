@@ -241,26 +241,26 @@ module.exports = grammar({
     ),
 
     function_name: $ => seq(
-      alias($.identifier, $.base),
+      field("base", $.identifier),
       choice(
         seq(
-          repeat(seq(".", alias($.identifier, $.entry))),
-          seq(":", alias($.identifier, $.method))
+          repeat(seq(".", field("entry", $.identifier))),
+          seq(":", field("method", $.identifier))
         ),
-        repeat1(seq(".", alias($.identifier, $.entry)))
+        repeat1(seq(".", field("entry", $.identifier)))
       )
     ),
     function_statement: $ => choice(
-      prec(100, seq(
+      seq(
         choice("local", "global"),
         "function",
-        alias($.identifier, $.function_name),
+        field("name", $.identifier),
         $.function_signature,
         $.function_body
-      )),
+      ),
       seq(
         "function",
-        $.function_name,
+        field("name", $.function_name),
         $.function_signature,
         $.function_body
       )
@@ -293,11 +293,11 @@ module.exports = grammar({
     ),
 
     _partypelist: $ => list(alias($._partype, $.arg)),
-    _partype: $ => seq(optional(seq(alias($.identifier, $.arg_name), ":")), $._type),
+    _partype: $ => seq(optional(seq(field("name", $.identifier), ":")), field("type", $._type)),
     _parnamelist: $ => list(alias($._parname, $.arg)),
     _parname: $ => seq(
-      alias($.identifier, $.arg_name),
-      optional(seq(":", $._type))
+      field("name", $.identifier),
+      optional(seq(":", field("type", $._type)))
     ),
     typeargs: $ => seq("<", list($.identifier), ">"),
 
@@ -328,7 +328,7 @@ module.exports = grammar({
         seq(alias("enum", $.record_entry), ":", $._type),
         seq(alias("record", $.record_entry), ":", $._type),
         seq(alias($.identifier, $.record_entry), ":", $._type),
-        seq("[", alias($.string, $.record_entry), "]", ":", $._type),
+        seq("[", $.string, "]", ":", $._type),
 
         alias($._record_def, $.record_block),
         alias($._enum_def, $.enum_block)

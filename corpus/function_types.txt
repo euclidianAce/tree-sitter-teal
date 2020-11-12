@@ -21,7 +21,7 @@ local foo: function(string)
   (var_declaration (var (identifier))
     (type_annotation (function_type
       (arguments
-       (arg (simple_type)))))))
+       (arg type: (simple_type)))))))
 
 ==============================
 No args, one return
@@ -49,7 +49,7 @@ local foo: function(number): string
   (var_declaration (var (identifier))
     (type_annotation (function_type
       (arguments
-        (arg (simple_type)))
+        (arg type: (simple_type)))
       (return_type (simple_type))))))
 
 ==============================
@@ -64,10 +64,10 @@ local foo: function(number, {string}, string)
   (var_declaration (var (identifier))
     (type_annotation (function_type
       (arguments
-        (arg (simple_type))
-        (arg (table_type
+        (arg type: (simple_type))
+        (arg type: (table_type
             value_type: (simple_type)))
-        (arg (simple_type)))))))
+        (arg type: (simple_type)))))))
 
 ==============================
 No args, multiple returns
@@ -100,10 +100,10 @@ local foo: function(number, {string}, string): string, {number}, number, thread
   (var_declaration (var (identifier))
     (type_annotation (function_type
       (arguments
-        (arg (simple_type))
-        (arg (table_type
+        (arg type: (simple_type))
+        (arg type: (table_type
           value_type: (simple_type)))
-        (arg (simple_type)))
+        (arg type: (simple_type)))
       (return_type
         (simple_type)
         (table_type
@@ -124,7 +124,7 @@ local foo: function(bar: number)
     (type_annotation
       (function_type
         (arguments
-          (arg (arg_name) (simple_type)))))))
+          (arg name: (identifier) type: (simple_type)))))))
 
 ==============================
 Named arguments
@@ -138,8 +138,8 @@ local foo: function(bar: number, baz: {string})
   (var_declaration (var (identifier))
     (type_annotation (function_type
       (arguments
-        (arg (arg_name) (simple_type))
-        (arg (arg_name) (table_type value_type: (simple_type))))))))
+        (arg name: (identifier) type: (simple_type))
+        (arg name: (identifier) type: (table_type value_type: (simple_type))))))))
 
 ==============================
 Variadic args
@@ -167,8 +167,8 @@ local foo: function(number, string, ...: string)
   (var_declaration (var (identifier))
     (type_annotation (function_type
       (arguments
-        (arg (simple_type))
-        (arg (simple_type))
+        (arg type: (simple_type))
+        (arg type: (simple_type))
         (vararg (simple_type)))))))
 
 ==============================
