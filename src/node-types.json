@@ -101,6 +101,10 @@
           "named": true
         },
         {
+          "type": "index",
+          "named": true
+        },
+        {
           "type": "nil",
           "named": true
         },
@@ -268,6 +272,10 @@
         },
         {
           "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "index",
           "named": true
         },
         {
@@ -521,6 +529,10 @@
           "named": true
         },
         {
+          "type": "index",
+          "named": true
+        },
+        {
           "type": "label",
           "named": true
         },
@@ -725,6 +737,10 @@
           "named": true
         },
         {
+          "type": "index",
+          "named": true
+        },
+        {
           "type": "nil",
           "named": true
         },
@@ -856,6 +872,10 @@
         },
         {
           "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "index",
           "named": true
         },
         {
@@ -1057,6 +1077,10 @@
           "named": true
         },
         {
+          "type": "index",
+          "named": true
+        },
+        {
           "type": "label",
           "named": true
         },
@@ -1110,6 +1134,65 @@
         },
         {
           "type": "while_statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "index",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "anon_function",
+          "named": true
+        },
+        {
+          "type": "bin_op",
+          "named": true
+        },
+        {
+          "type": "boolean",
+          "named": true
+        },
+        {
+          "type": "function_call",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "index",
+          "named": true
+        },
+        {
+          "type": "nil",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "table_constructor",
+          "named": true
+        },
+        {
+          "type": "unary_op",
+          "named": true
+        },
+        {
+          "type": "varargs",
           "named": true
         }
       ]
@@ -1368,6 +1451,10 @@
           "named": true
         },
         {
+          "type": "index",
+          "named": true
+        },
+        {
           "type": "label",
           "named": true
         },
@@ -1452,6 +1539,10 @@
         },
         {
           "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "index",
           "named": true
         },
         {
@@ -1587,6 +1678,10 @@
           "named": true
         },
         {
+          "type": "index",
+          "named": true
+        },
+        {
           "type": "nil",
           "named": true
         },
@@ -1689,6 +1784,10 @@
         },
         {
           "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "index",
           "named": true
         },
         {
@@ -1851,6 +1950,10 @@
           "named": true
         },
         {
+          "type": "index",
+          "named": true
+        },
+        {
           "type": "nil",
           "named": true
         },
@@ -1910,6 +2013,10 @@
           "named": true
         },
         {
+          "type": "index",
+          "named": true
+        },
+        {
           "type": "nil",
           "named": true
         },
@@ -1962,6 +2069,10 @@
         },
         {
           "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "index",
           "named": true
         },
         {
@@ -2021,6 +2132,10 @@
         },
         {
           "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "index",
           "named": true
         },
         {
@@ -2182,6 +2297,10 @@
         },
         {
           "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "index",
           "named": true
         },
         {

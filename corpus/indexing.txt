@@ -1,0 +1,32 @@
+
+==============================
+Indexing with identifier
+==============================
+
+local a = b[c]
+
+---
+
+(program (var_declaration (var (identifier)) (identifier) (index (identifier))))
+
+==============================
+Assigning to table entry
+==============================
+
+a[b] = c
+
+---
+
+(program
+  (var_assignment (var (identifier) (index (identifier))) (identifier)))
+
+==============================
+Indexing with string
+==============================
+
+local a = b["hi"]
+
+---
+
+(program (var_declaration (var (identifier)) (identifier) (index (string))))
+

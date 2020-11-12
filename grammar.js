@@ -41,7 +41,7 @@ module.exports = grammar({
 
   rules: {
     program: $ => repeat($._statement),
-    _statement: $ => prec(1, choice(
+    _statement: $ => prec(1, seq(choice(
       $.var_declaration,
       $.var_assignment,
       $.type_declaration,
@@ -58,7 +58,7 @@ module.exports = grammar({
       $.if_statement,
       seq("::", alias($.identifier, $.label), "::"),
       $.goto
-    )),
+    ), optional(";"))),
 
     return_statement: $ => prec.right(1, seq('return', optional(list($._expression)))),
     break: $ => 'break',
@@ -321,13 +321,14 @@ module.exports = grammar({
     record_body: $ => seq(
       optional(seq("{", alias($._type, $.record_array_type), "}")),
       repeat(choice(
-        seq("type", alias($.identifier, $.record_type), "=", $._newtype),
+        seq("type", alias($.identifier, $.record_type), "=", choice($._newtype, $._type)),
 
         // TODO: there's gotta be a way around this, but precedence doesn't seem to work
         seq(alias("type", $.record_entry), ":", $._type),
         seq(alias("enum", $.record_entry), ":", $._type),
         seq(alias("record", $.record_entry), ":", $._type),
         seq(alias($.identifier, $.record_entry), ":", $._type),
+        seq("[", alias($.string, $.record_entry), "]", ":", $._type),
 
         alias($._record_def, $.record_block),
         alias($._enum_def, $.enum_block)
@@ -369,8 +370,13 @@ module.exports = grammar({
       $.record_body
     ),
 
+    _anon_enum: $ => seq(
+      "enum",
+      alias($._enum_body, $.enum_block)
+    ),
+
     _newtype: $ => choice(
-      seq("enum", alias($._enum_body, $.enum_block)),
+      $._anon_enum,
       $.anon_record,
     ),
 
@@ -456,7 +462,7 @@ module.exports = grammar({
       seq(
         $._prefix_expression,
         choice(
-          seq("[", $._expression, "]"),
+          seq("[", alias($._expression, $.index), "]"),
           seq(".", $.identifier)
         )
       ),

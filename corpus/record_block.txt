@@ -163,3 +163,16 @@ end
 
 (program (record_declaration (record_name) (record_body
   (record_entry) (simple_type))))
+
+==============================
+Record with ['entry']
+==============================
+
+local record Foo
+   ["things"]: number
+end
+
+---
+
+(program (record_declaration (record_name) (record_body
+  (record_entry) (simple_type))))
