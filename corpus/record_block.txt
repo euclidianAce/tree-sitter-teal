@@ -8,7 +8,11 @@ end
 
 ---
 
-(program (type_declaration (type_name) (anon_record (record_body))))
+(program
+  (type_declaration
+    (type_name)
+    (anon_record
+      (record_body))))
 
 ==============================
 Empty record (shorthand)
@@ -19,7 +23,10 @@ end
 
 ---
 
-(program (record_declaration (record_name) (record_body)))
+(program
+  (record_declaration
+    name: (identifier)
+    (record_body)))
 
 ==============================
 Record with stuff
@@ -32,10 +39,18 @@ end
 
 ---
 
-(program (type_declaration (type_name) (anon_record (record_body
-  (record_entry) (table_type
-    value_type: (simple_type))
-  (record_entry) (simple_type)))))
+(program
+  (type_declaration
+    (type_name)
+    (anon_record
+      (record_body
+        (record_entry
+          key: (identifier)
+          type: (table_type
+                  value_type: (simple_type)))
+        (record_entry
+          key: (identifier)
+          type: (simple_type))))))
 
 ==============================
 Arrayrecord with stuff
@@ -49,10 +64,19 @@ end
 
 ---
 
-(program (type_declaration (type_name) (anon_record (record_body
-  (record_array_type (simple_type))
-  (record_entry) (table_type value_type: (simple_type))
-  (record_entry) (simple_type)))))
+(program
+  (type_declaration
+    (type_name)
+    (anon_record
+      (record_body
+        (record_array_type (simple_type))
+        (record_entry
+          key: (identifier)
+          type: (table_type
+                  value_type: (simple_type)))
+        (record_entry
+          key: (identifier)
+          type: (simple_type))))))
 
 ==============================
 Nested records
@@ -67,10 +91,21 @@ end
 
 ---
 
-(program (type_declaration (type_name) (anon_record (record_body
-  (record_type) (anon_record (record_body
-    (record_entry) (simple_type)))
-  (record_entry) (simple_type)))))
+(program
+  (type_declaration
+    (type_name)
+      (anon_record
+        (record_body
+          (record_entry
+            key: (identifier)
+            value: (anon_record
+                     (record_body
+                       (record_entry
+                         key: (identifier)
+                         type: (simple_type)))))
+          (record_entry
+            key: (identifier)
+            type: (simple_type))))))
 
 ==============================
 Generic record
@@ -83,11 +118,14 @@ end
 ---
 
 (program
-   (type_declaration (type_name)
-   (anon_record
+  (type_declaration
+    (type_name)
+    (anon_record
       (typeargs (identifier))
       (record_body
-        (record_entry) (simple_type)))))
+        (record_entry
+          key: (identifier)
+          type: (simple_type))))))
 
 ==============================
 Record with a 'type' entry
@@ -99,8 +137,14 @@ end
 
 ---
 
-(program (type_declaration (type_name) (anon_record (record_body
-  (record_entry) (simple_type)))))
+(program
+  (type_declaration
+    (type_name)
+    (anon_record
+      (record_body
+        (record_entry
+          key: (identifier)
+          type: (simple_type))))))
 
 ==============================
 Record with a 'type' entry and types
@@ -117,11 +161,21 @@ end
 
 ---
 
-(program (type_declaration (type_name) (anon_record (record_body
-  (record_entry) (simple_type)
-  (record_type) (anon_record (record_body))
-  (record_type) (enum_block
-    (string) (string))))))
+(program
+  (type_declaration
+    (type_name)
+    (anon_record
+      (record_body
+        (record_entry
+          key: (identifier)
+          type: (simple_type))
+        (record_entry
+          key: (identifier)
+          value: (anon_record (record_body)))
+        (record_entry
+          key: (identifier)
+          value: (enum_body
+                   (string) (string)))))))
 
 ==============================
 Nested record shorthand syntax
@@ -129,14 +183,39 @@ Nested record shorthand syntax
 
 local record Foo
    record Bar
-
    end
 end
 
 ---
 
-(program (record_declaration (record_name) (record_body
-  (record_block (record_name) (record_body)))))
+(program
+  (record_declaration
+    name: (identifier)
+    (record_body
+      (record_entry
+        key: (identifier)
+        value: (record_body)))))
+
+==============================
+Nested enum shorthand syntax
+==============================
+
+local record Foo
+   enum Bar
+    "foo" "bar"
+   end
+end
+
+---
+
+(program
+  (record_declaration
+    name: (identifier)
+    (record_body
+      (record_entry
+        key: (identifier)
+        value: (enum_body
+                 (string) (string))))))
 
 ==============================
 Record with a 'record' entry
@@ -148,8 +227,13 @@ end
 
 ---
 
-(program (record_declaration (record_name) (record_body
-  (record_entry) (simple_type))))
+(program
+  (record_declaration
+    name: (identifier)
+    (record_body
+      (record_entry
+        key: (identifier)
+        type: (simple_type)))))
 
 ==============================
 Record with a 'enum' entry
@@ -161,8 +245,13 @@ end
 
 ---
 
-(program (record_declaration (record_name) (record_body
-  (record_entry) (simple_type))))
+(program
+  (record_declaration
+    name: (identifier)
+    (record_body
+      (record_entry
+        key: (identifier)
+        type: (simple_type)))))
 
 ==============================
 Record with ['entry']
@@ -174,5 +263,10 @@ end
 
 ---
 
-(program (record_declaration (record_name) (record_body
-  (string) (simple_type))))
+(program
+  (record_declaration
+    name: (identifier)
+    (record_body
+      (record_entry
+        key: (string)
+        type: (simple_type)))))

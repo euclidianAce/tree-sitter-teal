@@ -41,12 +41,26 @@ end
 ---
 
 (program
-  (function_statement name: (identifier) (function_signature) (function_body
-    (var_declaration (var (identifier)) (number))
-    (var_declaration (var (identifier)) (table_constructor
-      (table_key) (table_value (anon_function (function_signature) (function_body
-        (var_declaration (var (identifier)) (number)))))
-      (table_key) (table_value (anon_function (function_signature) (function_body))))))))
+  (function_statement
+    name: (identifier)
+    (function_signature)
+    (function_body
+      (var_declaration
+        (var (identifier)) (number))
+      (var_declaration
+        (var (identifier))
+        (table_constructor
+          (table_entry
+            key: (identifier)
+            value: (anon_function
+                     (function_signature)
+                     (function_body
+                       (var_declaration (var (identifier)) (number)))))
+          (table_entry
+            key: (identifier)
+            value: (anon_function
+                     (function_signature)
+                     (function_body))))))))
 
 
 ==============================
@@ -76,7 +90,7 @@ end
 
 ---
 
-(program 
+(program
   (function_statement name: (identifier)
     (function_signature
       (arguments (arg name: (identifier)) (arg name: (identifier))))
@@ -93,7 +107,7 @@ end
 
 ---
 
-(program 
+(program
   (function_statement
     name: (identifier)
     (function_signature
@@ -112,7 +126,7 @@ end
 
 ---
 
-(program 
+(program
   (function_statement name: (identifier) (function_signature
   (return_type (simple_type) (simple_type))) (function_body)))
 
@@ -125,7 +139,7 @@ end
 
 ---
 
-(program 
+(program
   (function_statement
     name: (function_name
       base: (identifier)
@@ -141,7 +155,7 @@ end
 
 ---
 
-(program 
+(program
   (function_statement
     name: (function_name base: (identifier) method: (identifier))
     (function_signature) (function_body)))

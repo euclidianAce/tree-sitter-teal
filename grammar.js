@@ -31,14 +31,17 @@ module.exports = grammar({
 
   extras: $ => [
     $.comment,
-    /[\s\n]/
+    /[\s\n]/,
   ],
 
   externals: $ => [
     $.comment,
-    $.string
+    $.string,
   ],
 
+  inline: $ => [
+    $._scope,
+  ],
   word: $ => $.identifier,
 
   rules: {
@@ -182,7 +185,7 @@ module.exports = grammar({
     ),
 
     var_declaration: $ => seq(
-      choice("local", "global"),
+      $._scope,
       list(alias($.var_declarator, $.var)),
       optional($.type_annotation),
       optional(seq("=", list($._expression)))
@@ -190,7 +193,7 @@ module.exports = grammar({
 
     type_declaration: $ => choice(
       seq(
-        choice("local", "global"),
+        $._scope,
         "type",
         alias($.identifier, $.type_name),
         "=",
@@ -228,19 +231,19 @@ module.exports = grammar({
       $.arguments
     )),
 
-    _table_field: $ => prec(2, choice(
-      seq("[", alias($._expression, $.table_key), "]", "=", alias($._expression, $.table_value)),
+    table_entry: $ => prec(5, choice(
+      seq("[", field("key", $._expression), "]", "=", field("value", $._expression)),
       seq(
-        alias($.identifier, $.table_key),
-        optional(seq(":", $._type)),
+        field("key", $.identifier),
+        field("type", optional(seq(":", $._type))),
         "=",
-        alias($._expression, $.table_value)
+        field("value", $._expression)
       ),
-      alias($._expression, $.table_value)
+      field("value", $._expression)
     )),
     table_constructor: $ => seq(
       "{",
-      optional(list($._table_field, choice(",", ";"))),
+      optional(list($.table_entry, choice(",", ";"))),
       optional(choice(",", ";")),
       "}"
     ),
@@ -255,9 +258,12 @@ module.exports = grammar({
         repeat1(seq(".", field("entry", $.identifier)))
       )
     ),
+
+    _scope: $ => field("scope", choice("local", "global")),
+
     function_statement: $ => choice(
       seq(
-        choice("local", "global"),
+        $._scope,
         "function",
         field("name", $.identifier),
         $.function_signature,
@@ -323,52 +329,68 @@ module.exports = grammar({
       "end"
     ),
 
+    record_entry: $ => choice(
+        seq(
+          field("key", $.identifier),
+          ":", field("type", $._type)
+        ),
+        seq(
+          "[", field("key", $.string), "]",
+          ":", field("type", $._type)
+        ),
+        // TODO: there has to be a way around doing this, but I can't figure it out
+        ...[ "type", "record", "enum", ].map((reserved_id) => seq(
+          field("key", alias(reserved_id, $.identifier)),
+          ":", field("type", $._type)
+        )),
+        seq(
+          "type", field("key", $.identifier), "=", field("value", choice($._type, $._newtype))
+        ),
+        seq(
+          "record", field("key", $.identifier),
+          field("value", $.record_body),
+        ),
+        seq(
+          "enum", field("key", $.identifier),
+          field("value", $.enum_body),
+        ),
+    ),
+
     record_body: $ => seq(
       optional(seq("{", alias($._type, $.record_array_type), "}")),
-      repeat(choice(
-        seq("type", alias($.identifier, $.record_type), "=", choice($._newtype, $._type)),
-
-        // TODO: there's gotta be a way around this, but precedence doesn't seem to work
-        seq(alias("type", $.record_entry), ":", $._type),
-        seq(alias("enum", $.record_entry), ":", $._type),
-        seq(alias("record", $.record_entry), ":", $._type),
-        seq(alias($.identifier, $.record_entry), ":", $._type),
-        seq("[", $.string, "]", ":", $._type),
-
-        alias($._record_def, $.record_block),
-        alias($._enum_def, $.enum_block)
-      )),
+      repeat($.record_entry),
       "end"
     ),
 
     _record_def: $ => seq(
       "record",
-      alias($.identifier, $.record_name),
+      field("name", $.identifier),
       optional($.typeargs),
       $.record_body
     ),
 
     record_declaration: $ => seq(
-      choice("local", "global"),
-      $._record_def
+      $._scope,
+      $._record_def,
     ),
 
-    _enum_body: $ => seq(
+    enum_body: $ => seq(
       repeat($.string),
       "end"
     ),
 
     _enum_def: $ => seq(
       "enum",
-      alias($.identifier, $.enum_name),
-      $._enum_body
+      field("name", $.identifier),
+      $.enum_body
     ),
 
     enum_declaration: $ => seq(
-      choice("local", "global"),
+      $._scope,
       $._enum_def
     ),
 
+    // TODO: this node is kinda useless
     anon_record: $ => seq(
       "record",
       optional($.typeargs),
@@ -377,7 +399,7 @@ module.exports = grammar({
 
     _anon_enum: $ => seq(
       "enum",
-      alias($._enum_body, $.enum_block)
+      $.enum_body
     ),
 
     _newtype: $ => choice(

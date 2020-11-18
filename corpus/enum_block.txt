@@ -8,7 +8,9 @@ end
 
 ---
 
-(program (type_declaration (type_name) (enum_block)))
+(program
+  (type_declaration
+    (type_name) (enum_body)))
 
 ==============================
 Enum with stuff
@@ -22,7 +24,7 @@ end
 ---
 
 (program (type_declaration (type_name)
-  (enum_block
+  (enum_body
     (string)
     (string))))
 
@@ -35,7 +37,9 @@ end
 
 ---
 
-(program (enum_declaration (enum_name)))
+(program (enum_declaration
+           name: (identifier)
+           (enum_body)))
 
 ==============================
 Enum with stuff (shorthand)
@@ -49,8 +53,10 @@ end
 
 ---
 
-(program (enum_declaration (enum_name)
-  (string)
-  (string)
-  (string)))
+(program (enum_declaration
+           name: (identifier)
+           (enum_body
+             (string)
+             (string)
+             (string))))
 

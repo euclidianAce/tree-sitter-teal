@@ -134,11 +134,15 @@ func_that_returns_func "hello" { this = "is" } "getting" "silly"
 ---
 
 (program
- (function_call
-  called_object: (function_call
+  (function_call
     called_object: (function_call
+     called_object: (function_call
       called_object: (function_call
-        called_object: (identifier) (arguments (string)))
-      (arguments (table_constructor (table_key) (table_value (string)))))
-    (arguments (string)))
-  (arguments (string))))
+       called_object: (identifier) (arguments (string)))
+      (arguments
+        (table_constructor
+          (table_entry
+            key: (identifier)
+            value: (string)))))
+      (arguments (string)))
+     (arguments (string))))
