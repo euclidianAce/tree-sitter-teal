@@ -508,13 +508,8 @@
           "name": "unary_op"
         },
         {
-          "type": "ALIAS",
-          "content": {
-            "type": "STRING",
-            "value": "..."
-          },
-          "named": true,
-          "value": "varargs"
+          "type": "SYMBOL",
+          "name": "varargs"
         }
       ]
     },
@@ -1965,12 +1960,54 @@
         }
       ]
     },
+    "variadic_type": {
+      "type": "PREC",
+      "value": 1,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "_type"
+          },
+          {
+            "type": "STRING",
+            "value": "..."
+          }
+        ]
+      }
+    },
     "_retlist": {
       "type": "PREC_RIGHT",
       "value": 0,
       "content": {
         "type": "CHOICE",
         "members": [
+          {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "_type"
+              },
+              {
+                "type": "REPEAT",
+                "content": {
+                  "type": "SEQ",
+                  "members": [
+                    {
+                      "type": "STRING",
+                      "value": ","
+                    },
+                    {
+                      "type": "SYMBOL",
+                      "name": "_type"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
           {
             "type": "SEQ",
             "members": [
@@ -2012,23 +2049,6 @@
                 ]
               },
               {
-                "type": "CHOICE",
-                "members": [
-                  {
-                    "type": "ALIAS",
-                    "content": {
-                      "type": "STRING",
-                      "value": "..."
-                    },
-                    "named": true,
-                    "value": "vararg"
-                  },
-                  {
-                    "type": "BLANK"
-                  }
-                ]
-              },
-              {
                 "type": "STRING",
                 "value": ")"
               }
@@ -2063,122 +2083,21 @@
                 ]
               },
               {
-                "type": "CHOICE",
-                "members": [
-                  {
-                    "type": "ALIAS",
-                    "content": {
-                      "type": "STRING",
-                      "value": "..."
-                    },
-                    "named": true,
-                    "value": "vararg"
-                  },
-                  {
-                    "type": "BLANK"
-                  }
-                ]
+                "type": "STRING",
+                "value": ","
+              },
+              {
+                "type": "SYMBOL",
+                "name": "variadic_type"
               }
             ]
+          },
+          {
+            "type": "SYMBOL",
+            "name": "variadic_type"
           }
         ]
       }
-    },
-    "_parlist": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "_parnamelist"
-            },
-            {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "SEQ",
-                  "members": [
-                    {
-                      "type": "STRING",
-                      "value": ","
-                    },
-                    {
-                      "type": "ALIAS",
-                      "content": {
-                        "type": "STRING",
-                        "value": "..."
-                      },
-                      "named": true,
-                      "value": "varargs"
-                    },
-                    {
-                      "type": "CHOICE",
-                      "members": [
-                        {
-                          "type": "SEQ",
-                          "members": [
-                            {
-                              "type": "STRING",
-                              "value": ":"
-                            },
-                            {
-                              "type": "SYMBOL",
-                              "name": "_type"
-                            }
-                          ]
-                        },
-                        {
-                          "type": "BLANK"
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "type": "BLANK"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "ALIAS",
-              "content": {
-                "type": "STRING",
-                "value": "..."
-              },
-              "named": true,
-              "value": "varargs"
-            },
-            {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "SEQ",
-                  "members": [
-                    {
-                      "type": "STRING",
-                      "value": ":"
-                    },
-                    {
-                      "type": "SYMBOL",
-                      "name": "_type"
-                    }
-                  ]
-                },
-                {
-                  "type": "BLANK"
-                }
-              ]
-            }
-          ]
-        }
-      ]
     },
     "_partypelist": {
       "type": "SEQ",
@@ -2254,43 +2173,39 @@
       ]
     },
     "_parnamelist": {
-      "type": "PREC_RIGHT",
-      "value": 0,
-      "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "ALIAS",
-            "content": {
-              "type": "SYMBOL",
-              "name": "_parname"
-            },
-            "named": true,
-            "value": "arg"
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_parname"
           },
-          {
-            "type": "REPEAT",
-            "content": {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "STRING",
-                  "value": ","
+          "named": true,
+          "value": "arg"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "STRING",
+                "value": ","
+              },
+              {
+                "type": "ALIAS",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "_parname"
                 },
-                {
-                  "type": "ALIAS",
-                  "content": {
-                    "type": "SYMBOL",
-                    "name": "_parname"
-                  },
-                  "named": true,
-                  "value": "arg"
-                }
-              ]
-            }
+                "named": true,
+                "value": "arg"
+              }
+            ]
           }
-        ]
-      }
+        }
+      ]
     },
     "_parname": {
       "type": "SEQ",
@@ -2385,6 +2300,88 @@
         }
       ]
     },
+    "_annotated_var_arg": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "..."
+        },
+        {
+          "type": "STRING",
+          "value": ":"
+        },
+        {
+          "type": "FIELD",
+          "name": "type",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_type"
+          }
+        }
+      ]
+    },
+    "signature_arguments": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "_parnamelist"
+                },
+                {
+                  "type": "SEQ",
+                  "members": [
+                    {
+                      "type": "SYMBOL",
+                      "name": "_parnamelist"
+                    },
+                    {
+                      "type": "STRING",
+                      "value": ","
+                    },
+                    {
+                      "type": "ALIAS",
+                      "content": {
+                        "type": "SYMBOL",
+                        "name": "_annotated_var_arg"
+                      },
+                      "named": true,
+                      "value": "varargs"
+                    }
+                  ]
+                },
+                {
+                  "type": "ALIAS",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "_annotated_var_arg"
+                  },
+                  "named": true,
+                  "value": "varargs"
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": ")"
+        }
+      ]
+    },
     "function_signature": {
       "type": "SEQ",
       "members": [
@@ -2401,29 +2398,13 @@
           ]
         },
         {
-          "type": "STRING",
-          "value": "("
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "ALIAS",
-              "content": {
-                "type": "SYMBOL",
-                "name": "_parlist"
-              },
-              "named": true,
-              "value": "arguments"
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
-          "type": "STRING",
-          "value": ")"
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "signature_arguments"
+          },
+          "named": true,
+          "value": "arguments"
         },
         {
           "type": "CHOICE",
@@ -2939,7 +2920,7 @@
     },
     "_type": {
       "type": "PREC_RIGHT",
-      "value": 1,
+      "value": 0,
       "content": {
         "type": "SEQ",
         "members": [
@@ -3121,115 +3102,56 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "SEQ",
+              "type": "CHOICE",
               "members": [
                 {
-                  "type": "CHOICE",
+                  "type": "SEQ",
                   "members": [
                     {
                       "type": "SYMBOL",
                       "name": "_partypelist"
                     },
                     {
-                      "type": "BLANK"
+                      "type": "CHOICE",
+                      "members": [
+                        {
+                          "type": "SEQ",
+                          "members": [
+                            {
+                              "type": "STRING",
+                              "value": ","
+                            },
+                            {
+                              "type": "ALIAS",
+                              "content": {
+                                "type": "SYMBOL",
+                                "name": "_annotated_var_arg"
+                              },
+                              "named": true,
+                              "value": "varargs"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "BLANK"
+                        }
+                      ]
                     }
                   ]
                 },
                 {
-                  "type": "CHOICE",
-                  "members": [
-                    {
-                      "type": "ALIAS",
-                      "content": {
-                        "type": "SEQ",
-                        "members": [
-                          {
-                            "type": "ALIAS",
-                            "content": {
-                              "type": "STRING",
-                              "value": ","
-                            },
-                            "named": false,
-                            "value": "comma"
-                          },
-                          {
-                            "type": "ALIAS",
-                            "content": {
-                              "type": "SEQ",
-                              "members": [
-                                {
-                                  "type": "STRING",
-                                  "value": "..."
-                                },
-                                {
-                                  "type": "STRING",
-                                  "value": ":"
-                                }
-                              ]
-                            },
-                            "named": false,
-                            "value": "vararg_annotation"
-                          },
-                          {
-                            "type": "SYMBOL",
-                            "name": "_type"
-                          }
-                        ]
-                      },
-                      "named": true,
-                      "value": "vararg"
-                    },
-                    {
-                      "type": "BLANK"
-                    }
-                  ]
+                  "type": "ALIAS",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "_annotated_var_arg"
+                  },
+                  "named": true,
+                  "value": "varargs"
                 }
               ]
             },
             {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "ALIAS",
-                  "content": {
-                    "type": "CHOICE",
-                    "members": [
-                      {
-                        "type": "SEQ",
-                        "members": [
-                          {
-                            "type": "ALIAS",
-                            "content": {
-                              "type": "SEQ",
-                              "members": [
-                                {
-                                  "type": "STRING",
-                                  "value": "..."
-                                },
-                                {
-                                  "type": "STRING",
-                                  "value": ":"
-                                }
-                              ]
-                            },
-                            "named": false,
-                            "value": "vararg_annotation"
-                          },
-                          {
-                            "type": "SYMBOL",
-                            "name": "_type"
-                          }
-                        ]
-                      },
-                      {
-                        "type": "BLANK"
-                      }
-                    ]
-                  },
-                  "named": true,
-                  "value": "vararg"
-                }
-              ]
+              "type": "BLANK"
             }
           ]
         },
@@ -3386,6 +3308,10 @@
         ]
       }
     },
+    "varargs": {
+      "type": "STRING",
+      "value": "..."
+    },
     "identifier": {
       "type": "PATTERN",
       "value": "[a-zA-Z_][a-zA-Z_0-9]*"
@@ -3431,11 +3357,7 @@
       "value": "[\\s\\n]"
     }
   ],
-  "conflicts": [
-    [
-      "_partypelist"
-    ]
-  ],
+  "conflicts": [],
   "externals": [
     {
       "type": "SYMBOL",
@@ -3447,7 +3369,9 @@
     }
   ],
   "inline": [
-    "_scope"
+    "_scope",
+    "_partypelist",
+    "_parnamelist"
   ],
   "supertypes": []
 }

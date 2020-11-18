@@ -23,10 +23,6 @@ const prec_op = {
 module.exports = grammar({
   name: 'teal',
 
-  conflicts: $ => [
-    [$._partypelist],
-  ],
-
   extras: $ => [
     $.comment,
     /[\s\n]/,
@@ -39,7 +35,10 @@ module.exports = grammar({
 
   inline: $ => [
     $._scope,
+    $._partypelist,
+    $._parnamelist,
   ],
+
   word: $ => $.identifier,
 
   rules: {
@@ -113,7 +112,7 @@ module.exports = grammar({
       $._prefix_expression,
       $.bin_op,
       $.unary_op,
-      alias("...", $.varargs)
+      $.varargs
     ),
 
     unary_op: $ => prec.left(prec_op.unary, seq(
@@ -275,35 +274,17 @@ module.exports = grammar({
       )
     ),
 
+    variadic_type: $ => prec(1, seq($._type, "...")),
     _retlist: $ => prec.right(choice(
-      seq(
-        "(",
-        optional(list($._type)),
-        optional(alias("...", $.vararg)),
-        ")"
-      ),
-      seq(
-        list($._type),
-        optional(alias("...", $.vararg)),
-      )
+      list($._type),
+      seq("(", optional(list($._type)), ")"),
+      seq(list($._type), ",", $.variadic_type),
+      $.variadic_type,
     )),
-    _parlist: $ => choice(
-      seq(
-        $._parnamelist,
-        optional(seq(
-          ",", alias("...", $.varargs),
-          optional(seq(":", $._type))
-        ))
-      ),
-      seq(
-        alias("...", $.varargs),
-        optional(seq(":", $._type))
-      )
-    ),
 
     _partypelist: $ => list(alias($._partype, $.arg)),
     _partype: $ => seq(optional(seq(field("name", $.identifier), ":")), field("type", $._type)),
-    _parnamelist: $ => prec.right(list(alias($._parname, $.arg))),
+    _parnamelist: $ => list(alias($._parname, $.arg)),
     _parname: $ => seq(
       field("name", $.identifier),
       optional(seq(":", field("type", $._type)))
@@ -316,9 +297,23 @@ module.exports = grammar({
       $.function_body
     ),
 
+    _annotated_var_arg: $ => seq("...", ":", field("type", $._type)),
+    signature_arguments: $ => seq("(",
+      optional(choice(
+        $._parnamelist,
+        seq(
+          $._parnamelist,
+          ",",
+          alias($._annotated_var_arg, $.varargs)
+        ),
+        alias($._annotated_var_arg, $.varargs)
+      )),
+      ")"
+    ),
+
     function_signature: $ => seq(
       optional($.typeargs),
-      "(", optional(alias($._parlist, $.arguments)), ")",
+      alias($.signature_arguments, $.arguments),
       optional(seq(":", alias($._retlist, $.return_type))),
     ),
 
@@ -410,7 +405,7 @@ module.exports = grammar({
       list($._type)
     ),
 
-    _type: $ => prec.right(1, seq(
+    _type: $ => prec.right(seq(
       choice(
         $.simple_type,
         $.table_type,
@@ -447,24 +442,13 @@ module.exports = grammar({
 
     function_type_args: $ => seq(
       "(",
-      choice(
+      optional(choice(
         seq(
-          optional($._partypelist),
-          optional(alias(
-            seq(
-              alias(",", "comma"),
-              alias(seq("...", ":"), "vararg_annotation"),
-              $._type
-            ), $.vararg)
-          )
+          $._partypelist,
+          optional(seq(",", alias($._annotated_var_arg, $.varargs)))
         ),
-        seq(
-          alias(optional(seq(
-            alias(seq("...", ":"), "vararg_annotation"),
-            $._type
-          )), $.vararg)
-        )
-      ),
+        alias($._annotated_var_arg, $.varargs)
+      )),
       ")",
     ),
 
@@ -495,6 +479,7 @@ module.exports = grammar({
       $.index,
     )),
 
+    varargs: $ => "...",
     identifier: $ => /[a-zA-Z_][a-zA-Z_0-9]*/,
     number: $ => choice(
       /\d+(\.\d+)?(e\d+)?/i,
@@ -506,4 +491,3 @@ module.exports = grammar({
   }
 })
 
-// vim: sw=2:ts=2:set expandtab:

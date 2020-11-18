@@ -10,7 +10,7 @@ end
 ---
 
 (program (return_statement
-  (anon_function (function_signature (typeargs (identifier))) (function_body))))
+  (anon_function (function_signature (typeargs (identifier)) (arguments)) (function_body))))
 
 ==============================
 Generic named function
@@ -23,7 +23,7 @@ end
 ---
 
 (program (function_statement
-  name: (identifier) (function_signature (typeargs (identifier))) (function_body)))
+  name: (identifier) (function_signature (typeargs (identifier)) (arguments)) (function_body)))
 
 ==============================
 Many typeargs
@@ -45,5 +45,6 @@ end
         (identifier)
         (identifier)
         (identifier)
-        (identifier)))
+        (identifier))
+      (arguments))
     (function_body)))
