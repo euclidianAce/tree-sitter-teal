@@ -24,8 +24,6 @@ module.exports = grammar({
   name: 'teal',
 
   conflicts: $ => [
-    [$._retlist],
-    [$._parnamelist],
     [$._partypelist],
   ],
 
@@ -277,7 +275,7 @@ module.exports = grammar({
       )
     ),
 
-    _retlist: $ => choice(
+    _retlist: $ => prec.right(choice(
       seq(
         "(",
         optional(list($._type)),
@@ -288,7 +286,7 @@ module.exports = grammar({
         list($._type),
         optional(alias("...", $.vararg)),
       )
-    ),
+    )),
     _parlist: $ => choice(
       seq(
         $._parnamelist,
@@ -305,7 +303,7 @@ module.exports = grammar({
 
     _partypelist: $ => list(alias($._partype, $.arg)),
     _partype: $ => seq(optional(seq(field("name", $.identifier), ":")), field("type", $._type)),
-    _parnamelist: $ => list(alias($._parname, $.arg)),
+    _parnamelist: $ => prec.right(list(alias($._parname, $.arg))),
     _parname: $ => seq(
       field("name", $.identifier),
       optional(seq(":", field("type", $._type)))
