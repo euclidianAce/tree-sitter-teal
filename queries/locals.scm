@@ -5,7 +5,7 @@
 (var_assignment
    (var (identifier) @definition.var) @definition.associated)
 
-(arg_name) @definition.parameter
+(arg name: (identifier) @definition.parameter)
 
 (anon_function) @scope
 ((function_statement

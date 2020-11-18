@@ -1,24 +1,15 @@
 
-;; Basic statements
-(if_statement [ "if" "then" "end" ] @conditional)
-(elseif_block [ "elseif" "then" ] @conditional)
-(else_block [ "else" ] @conditional)
-
-(do_statement [ "do" "end" ] @keyword)
-(for_statement
-  "for" @repeat
-  (for_body [ "do" "end" ] @keyword))
-(while_statement
-  "while" @repeat
-  (while_body [ "do" "end" ] @keyword))
-(repeat_statement [ "repeat" "until" ] @repeat)
-
+;; Basic statements/Keywords
+[ "if" "then" "elseif" "else" ] @keyword.conditional
+[ "for" "while" "repeat" "until" ] @keyword.repeat
 [ "in" "local" "return" (break) (goto) "do" "end" ] @keyword
 (label) @label
 
-;; Global isn't a real keyword, but it gets special treatment
+;; Global isn't a real keyword, but it gets special treatment in these places
 (var_declaration "global" @keyword)
 (function_statement "global" @keyword)
+(record_declaration "global" @keyword)
+(enum_declaration "global" @keyword)
 
 ;; Ops
 [ "not" "and" "or" "as" "is" ] @keyword.operator
@@ -31,18 +22,17 @@
 ;; function stuffs
 
 (function_statement
-  "function" @keyword.function)
+  "function" @keyword.function
+  name: (_) @function)
 (anon_function
   "function" @keyword.function)
-(function_body "end" @keyword)
-(function_name) @function
-(arg_name) @parameter
+(function_body "end" @keyword.function)
+(arg name: (identifier) @parameter)
 
 (typeargs
-  "<" @punctuation.bracket .
-  (identifier) @parameter
-  .
-  ("," . (identifier) @parameter)*
+  "<" @punctuation.bracket
+  . (identifier) @parameter
+  . ("," . (identifier) @parameter)*
   . ">" @punctuation.bracket)
 
 (function_call
@@ -53,7 +43,12 @@
   "record" @keyword)
 (record_block
   "record" @keyword)
-(record_body "end" @keyword)
+(anon_record
+  "record" @keyword)
+(record_body
+  "end" @keyword)
+(record_body
+  "type" @keyword . (record_type) @type . "=")
 
 (enum_declaration [ "enum" "end" ] @keyword)
 (enum_block [ "enum" "end" ] @keyword)
@@ -67,6 +62,11 @@
 
 ;; The rest of it
 
+(var_declaration
+  (var
+    "<" @punctuation.bracket
+    . (attribute) @keyword
+    . ">" @punctuation.bracket))
 [ "(" ")" "[" "]" "{" "}" ] @punctuation.bracket
 (boolean) @boolean
 (comment) @comment
