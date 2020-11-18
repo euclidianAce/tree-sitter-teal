@@ -16,6 +16,8 @@ const prec_op = {
   power: 13,
 
   as: 100,
+
+  index: 1000,
 }
 
 module.exports = grammar({
@@ -396,8 +398,8 @@ module.exports = grammar({
       ))
     )),
 
-    _simple_type: $ => alias(seq(
-      $.identifier, repeat(seq(".", $.identifier)),
+    _simple_type: $ => alias(prec.right(prec_op.index,
+      seq($.identifier, repeat(seq(".", $.identifier)))
     ), 'simple_type'),
 
     simple_type: $ => prec.left(1, seq(
@@ -457,15 +459,21 @@ module.exports = grammar({
 
     goto: $ => seq("goto", $.identifier),
 
+    index: $ => choice(
+      seq($._prefix_expression, ".", $.identifier),
+      seq($._prefix_expression, "[", $._expression, "]")
+    ),
+
     _var: $ => prec(1, choice(
       $.identifier,
-      seq(
-        $._prefix_expression,
-        choice(
-          seq("[", alias($._expression, $.index), "]"),
-          seq(".", $.identifier)
-        )
-      ),
+      $.index,
+      // seq(
+        // $._prefix_expression,
+        // choice(
+          // seq("[", alias($._expression, $.index), "]"),
+          // seq(".", $.identifier)
+        // )
+      // ),
     )),
 
     identifier: $ => /[a-zA-Z_][a-zA-Z_0-9]*/,

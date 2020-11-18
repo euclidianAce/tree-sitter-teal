@@ -70,4 +70,4 @@ foo.bar = "hi"
 ---
 
 (program
-  (var_assignment (var (identifier) (identifier)) (string)))
+  (var_assignment (var (index (identifier) (identifier))) (string)))

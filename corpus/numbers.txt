@@ -42,13 +42,3 @@ local x = 3e2
 (program
   (var_declaration (var (identifier)) (number)))
 
-==============================
-Float Exponent (malformed number)
-==============================
-
-local x = 3e2.2
-
----
-
-(program
-  (var_declaration (var (identifier)) (ERROR (number)) (number)))

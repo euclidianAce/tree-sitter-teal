@@ -55,7 +55,7 @@ foo.bar()
 ---
 
 (program (function_call
-  (identifier) (identifier) (arguments)))
+  (index (identifier) (identifier)) (arguments)))
 
 ==============================
 Call table entry of table entry
@@ -66,7 +66,7 @@ foo.bar.baz()
 ---
 
 (program (function_call
-  (identifier) (identifier) (identifier) (arguments)))
+  (index (index (identifier) (identifier)) (identifier)) (arguments)))
 
 ==============================
 Higher order calls
