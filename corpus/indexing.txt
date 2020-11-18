@@ -64,3 +64,36 @@ local a = b.c[d].e.f[g]
   (index (index (index (index (index
   (identifier) (identifier)) (identifier)) (identifier)) (identifier)) (identifier))))
 
+==============================
+Colon indexing
+==============================
+
+local a = b:c()
+
+---
+
+(program (var_declaration (var (identifier))
+  (function_call
+    called_object: (method_index (identifier) (identifier)) (arguments))))
+
+==============================
+The whole dang thing
+==============================
+
+local a = b[c].d.e[f]:g()
+
+---
+
+(program (var_declaration
+           (var (identifier))
+           (function_call
+            called_object: (method_index
+              (index
+               (index
+                (index
+                 (index (identifier) (identifier))
+                 (identifier))
+                (identifier))
+               (identifier))
+              (identifier))
+            (arguments))))

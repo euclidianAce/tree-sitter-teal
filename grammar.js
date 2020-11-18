@@ -212,16 +212,19 @@ module.exports = grammar({
       $.function_call,
       seq("(", $._expression, ")")
     )),
+    method_index: $ => seq(
+      $._prefix_expression, ":", $.identifier
+    ),
     arguments: $ => choice(
       seq("(", optional(list($._expression)), ")"),
       $.string,
       $.table_constructor
     ),
     function_call: $ => prec(10, seq(
-      seq(
+      field("called_object", choice(
         $._prefix_expression,
-        optional(seq(":", $.identifier))
-      ),
+        $.method_index
+      )),
       $.arguments
     )),
 
@@ -459,21 +462,17 @@ module.exports = grammar({
 
     goto: $ => seq("goto", $.identifier),
 
-    index: $ => choice(
-      seq($._prefix_expression, ".", $.identifier),
-      seq($._prefix_expression, "[", $._expression, "]")
+    index: $ => seq(
+      $._prefix_expression,
+      choice(
+        seq(".", $.identifier),
+        seq("[", $._expression, "]")
+      )
     ),
 
     _var: $ => prec(1, choice(
       $.identifier,
       $.index,
-      // seq(
-        // $._prefix_expression,
-        // choice(
-          // seq("[", alias($._expression, $.index), "]"),
-          // seq(".", $.identifier)
-        // )
-      // ),
     )),
 
     identifier: $ => /[a-zA-Z_][a-zA-Z_0-9]*/,
