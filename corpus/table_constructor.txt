@@ -61,10 +61,10 @@ local arr = {
   (var_declaration (var (identifier))
     (table_constructor
       (table_entry
-        key: (string)
+        expr_key: (string)
         value: (number))
       (table_entry
-        key: (identifier)
+        expr_key: (identifier)
         value: (number)))))
 
 ==============================
@@ -95,7 +95,7 @@ local arr = {
                    key: (identifier)
                    value: (string))))
       (table_entry
-        key: (table_constructor)
+        expr_key: (table_constructor)
         value: (table_constructor)))))
 
 ==============================

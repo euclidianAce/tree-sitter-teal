@@ -470,23 +470,74 @@
   {
     "type": "elseif_block",
     "named": true,
-    "fields": {},
+    "fields": {
+      "condition": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": "anon_function",
+            "named": true
+          },
+          {
+            "type": "bin_op",
+            "named": true
+          },
+          {
+            "type": "boolean",
+            "named": true
+          },
+          {
+            "type": "function_call",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "index",
+            "named": true
+          },
+          {
+            "type": "nil",
+            "named": true
+          },
+          {
+            "type": "number",
+            "named": true
+          },
+          {
+            "type": "string",
+            "named": true
+          },
+          {
+            "type": "table_constructor",
+            "named": true
+          },
+          {
+            "type": "unary_op",
+            "named": true
+          },
+          {
+            "type": "varargs",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
-        {
-          "type": "anon_function",
-          "named": true
-        },
-        {
-          "type": "bin_op",
-          "named": true
-        },
-        {
-          "type": "boolean",
-          "named": true
-        },
         {
           "type": "break",
           "named": true
@@ -516,27 +567,11 @@
           "named": true
         },
         {
-          "type": "identifier",
-          "named": true
-        },
-        {
           "type": "if_statement",
           "named": true
         },
         {
-          "type": "index",
-          "named": true
-        },
-        {
           "type": "label",
-          "named": true
-        },
-        {
-          "type": "nil",
-          "named": true
-        },
-        {
-          "type": "number",
           "named": true
         },
         {
@@ -552,19 +587,7 @@
           "named": true
         },
         {
-          "type": "string",
-          "named": true
-        },
-        {
-          "type": "table_constructor",
-          "named": true
-        },
-        {
           "type": "type_declaration",
-          "named": true
-        },
-        {
-          "type": "unary_op",
           "named": true
         },
         {
@@ -573,10 +596,6 @@
         },
         {
           "type": "var_declaration",
-          "named": true
-        },
-        {
-          "type": "varargs",
           "named": true
         },
         {
@@ -1084,23 +1103,74 @@
   {
     "type": "if_statement",
     "named": true,
-    "fields": {},
+    "fields": {
+      "condition": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": "anon_function",
+            "named": true
+          },
+          {
+            "type": "bin_op",
+            "named": true
+          },
+          {
+            "type": "boolean",
+            "named": true
+          },
+          {
+            "type": "function_call",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "index",
+            "named": true
+          },
+          {
+            "type": "nil",
+            "named": true
+          },
+          {
+            "type": "number",
+            "named": true
+          },
+          {
+            "type": "string",
+            "named": true
+          },
+          {
+            "type": "table_constructor",
+            "named": true
+          },
+          {
+            "type": "unary_op",
+            "named": true
+          },
+          {
+            "type": "varargs",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
-        {
-          "type": "anon_function",
-          "named": true
-        },
-        {
-          "type": "bin_op",
-          "named": true
-        },
-        {
-          "type": "boolean",
-          "named": true
-        },
         {
           "type": "break",
           "named": true
@@ -1138,27 +1208,11 @@
           "named": true
         },
         {
-          "type": "identifier",
-          "named": true
-        },
-        {
           "type": "if_statement",
           "named": true
         },
         {
-          "type": "index",
-          "named": true
-        },
-        {
           "type": "label",
-          "named": true
-        },
-        {
-          "type": "nil",
-          "named": true
-        },
-        {
-          "type": "number",
           "named": true
         },
         {
@@ -1174,19 +1228,7 @@
           "named": true
         },
         {
-          "type": "string",
-          "named": true
-        },
-        {
-          "type": "table_constructor",
-          "named": true
-        },
-        {
           "type": "type_declaration",
-          "named": true
-        },
-        {
-          "type": "unary_op",
           "named": true
         },
         {
@@ -1195,10 +1237,6 @@
         },
         {
           "type": "var_declaration",
-          "named": true
-        },
-        {
-          "type": "varargs",
           "named": true
         },
         {
@@ -1575,23 +1613,74 @@
   {
     "type": "repeat_statement",
     "named": true,
-    "fields": {},
+    "fields": {
+      "condition": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": "anon_function",
+            "named": true
+          },
+          {
+            "type": "bin_op",
+            "named": true
+          },
+          {
+            "type": "boolean",
+            "named": true
+          },
+          {
+            "type": "function_call",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "index",
+            "named": true
+          },
+          {
+            "type": "nil",
+            "named": true
+          },
+          {
+            "type": "number",
+            "named": true
+          },
+          {
+            "type": "string",
+            "named": true
+          },
+          {
+            "type": "table_constructor",
+            "named": true
+          },
+          {
+            "type": "unary_op",
+            "named": true
+          },
+          {
+            "type": "varargs",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
-        {
-          "type": "anon_function",
-          "named": true
-        },
-        {
-          "type": "bin_op",
-          "named": true
-        },
-        {
-          "type": "boolean",
-          "named": true
-        },
         {
           "type": "break",
           "named": true
@@ -1621,27 +1710,11 @@
           "named": true
         },
         {
-          "type": "identifier",
-          "named": true
-        },
-        {
           "type": "if_statement",
           "named": true
         },
         {
-          "type": "index",
-          "named": true
-        },
-        {
           "type": "label",
-          "named": true
-        },
-        {
-          "type": "nil",
-          "named": true
-        },
-        {
-          "type": "number",
           "named": true
         },
         {
@@ -1657,19 +1730,7 @@
           "named": true
         },
         {
-          "type": "string",
-          "named": true
-        },
-        {
-          "type": "table_constructor",
-          "named": true
-        },
-        {
           "type": "type_declaration",
-          "named": true
-        },
-        {
-          "type": "unary_op",
           "named": true
         },
         {
@@ -1678,10 +1739,6 @@
         },
         {
           "type": "var_declaration",
-          "named": true
-        },
-        {
-          "type": "varargs",
           "named": true
         },
         {
@@ -1815,7 +1872,7 @@
     "type": "table_entry",
     "named": true,
     "fields": {
-      "key": {
+      "expr_key": {
         "multiple": true,
         "required": false,
         "types": [
@@ -1873,6 +1930,16 @@
           },
           {
             "type": "varargs",
+            "named": true
+          }
+        ]
+      },
+      "key": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
             "named": true
           }
         ]
@@ -2198,15 +2265,32 @@
   {
     "type": "var",
     "named": true,
-    "fields": {},
+    "fields": {
+      "attribute": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "attribute",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
-      "multiple": true,
-      "required": true,
+      "multiple": false,
+      "required": false,
       "types": [
-        {
-          "type": "attribute",
-          "named": true
-        },
         {
           "type": "identifier",
           "named": true
@@ -2492,59 +2576,74 @@
   {
     "type": "while_statement",
     "named": true,
-    "fields": {},
+    "fields": {
+      "condition": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": "anon_function",
+            "named": true
+          },
+          {
+            "type": "bin_op",
+            "named": true
+          },
+          {
+            "type": "boolean",
+            "named": true
+          },
+          {
+            "type": "function_call",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "index",
+            "named": true
+          },
+          {
+            "type": "nil",
+            "named": true
+          },
+          {
+            "type": "number",
+            "named": true
+          },
+          {
+            "type": "string",
+            "named": true
+          },
+          {
+            "type": "table_constructor",
+            "named": true
+          },
+          {
+            "type": "unary_op",
+            "named": true
+          },
+          {
+            "type": "varargs",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "types": [
-        {
-          "type": "anon_function",
-          "named": true
-        },
-        {
-          "type": "bin_op",
-          "named": true
-        },
-        {
-          "type": "boolean",
-          "named": true
-        },
-        {
-          "type": "function_call",
-          "named": true
-        },
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "index",
-          "named": true
-        },
-        {
-          "type": "nil",
-          "named": true
-        },
-        {
-          "type": "number",
-          "named": true
-        },
-        {
-          "type": "string",
-          "named": true
-        },
-        {
-          "type": "table_constructor",
-          "named": true
-        },
-        {
-          "type": "unary_op",
-          "named": true
-        },
-        {
-          "type": "varargs",
-          "named": true
-        },
         {
           "type": "while_body",
           "named": true

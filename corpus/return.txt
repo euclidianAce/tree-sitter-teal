@@ -37,3 +37,13 @@ return 4, (5), 4
 ---
 
 (program (return_statement (number) (number) (number)))
+
+==============================
+Return that looks like a function call
+==============================
+
+return(4, 5, 4)
+
+---
+
+(program (return_statement (number) (number) (number)))

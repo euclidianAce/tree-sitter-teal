@@ -77,7 +77,7 @@ end
 ---
 
 (program
-  (while_statement (number) (while_body)))
+  (while_statement condition: (number) (while_body)))
 
 ==============================
 Repeat loop
@@ -89,7 +89,7 @@ until 1
 ---
 
 (program
-  (repeat_statement (number)))
+  (repeat_statement condition: (number)))
 
 ==============================
 A whole bunch of loops
@@ -107,6 +107,12 @@ end
 ---
 
 (program
-  (for_statement (identifier) (number) (number) (for_body
-    (while_statement (bin_op (identifier) (number)) (while_body
-      (repeat_statement (do_statement) (bin_op (identifier) (number))))))))
+  (for_statement
+    (identifier) (number) (number)
+    (for_body
+      (while_statement
+        condition: (bin_op (identifier) (number))
+        (while_body
+          (repeat_statement
+            (do_statement)
+            condition: (bin_op (identifier) (number))))))))

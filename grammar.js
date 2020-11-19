@@ -34,7 +34,7 @@ module.exports = grammar({
   ],
 
   inline: $ => [
-    $._scope,
+    $.scope,
     $._partypelist,
     $._parnamelist,
   ],
@@ -62,18 +62,25 @@ module.exports = grammar({
       $.goto
     ), optional(";"))),
 
-    return_statement: $ => prec.right(1, seq('return', optional(list($._expression)))),
+    return_statement: $ => prec.right(1, seq(
+      'return',
+      optional(choice(
+        list($._expression),
+        seq("(", list($._expression), ")")
+      ))
+    )),
+
     break: $ => 'break',
 
     if_statement: $ => seq(
-      "if", $._expression, "then",
+      "if", field("condition", $._expression), "then",
       repeat($._statement),
       repeat($.elseif_block),
       optional($.else_block),
       "end"
     ),
 
-    elseif_block: $ => seq("elseif", $._expression, "then", repeat($._statement)),
+    elseif_block: $ => seq("elseif", field("condition", $._expression), "then", repeat($._statement)),
     else_block: $ => seq("else", repeat($._statement)),
 
     for_statement: $ => choice(
@@ -86,11 +93,11 @@ module.exports = grammar({
     ),
 
     while_statement: $ => seq(
-      "while", $._expression, alias($.do_statement, $.while_body)
+      "while", field("condition", $._expression), alias($.do_statement, $.while_body)
     ),
 
     repeat_statement: $ => seq(
-      "repeat", repeat($._statement), "until", $._expression
+      "repeat", repeat($._statement), "until", field("condition", $._expression)
     ),
 
     do_statement: $ => seq(
@@ -177,12 +184,12 @@ module.exports = grammar({
     type_tuple: $ => seq("(", list($._type), ")"),
 
     var_declarator: $ => choice(
-      seq($.identifier, "<", alias($.identifier, $.attribute), ">"),
+      seq(field("name", $.identifier), "<", field("attribute", alias($.identifier, $.attribute)), ">"),
       $.identifier,
     ),
 
     var_declaration: $ => seq(
-      $._scope,
+      $.scope,
       list(alias($.var_declarator, $.var)),
       optional($.type_annotation),
       optional(seq("=", list($._expression)))
@@ -190,7 +197,7 @@ module.exports = grammar({
 
     type_declaration: $ => choice(
       seq(
-        $._scope,
+        $.scope,
         "type",
         alias($.identifier, $.type_name),
         "=",
@@ -212,9 +219,7 @@ module.exports = grammar({
       $.function_call,
       seq("(", $._expression, ")")
     )),
-    method_index: $ => seq(
-      $._prefix_expression, ":", $.identifier
-    ),
+    method_index: $ => seq($._prefix_expression, ":", $.identifier),
     arguments: $ => choice(
       seq("(", optional(list($._expression)), ")"),
       $.string,
@@ -229,7 +234,7 @@ module.exports = grammar({
     )),
 
     table_entry: $ => prec(5, choice(
-      seq("[", field("key", $._expression), "]", "=", field("value", $._expression)),
+      seq("[", field("expr_key", $._expression), "]", "=", field("value", $._expression)),
       seq(
         field("key", $.identifier),
         field("type", optional(seq(":", $._type))),
@@ -256,11 +261,11 @@ module.exports = grammar({
       )
     ),
 
-    _scope: $ => field("scope", choice("local", "global")),
+    scope: $ => field("scope", choice("local", "global")),
 
     function_statement: $ => choice(
       seq(
-        $._scope,
+        $.scope,
         "function",
         field("name", $.identifier),
         $.function_signature,
@@ -363,7 +368,7 @@ module.exports = grammar({
     ),
 
     record_declaration: $ => seq(
-      $._scope,
+      $.scope,
       $._record_def,
     ),
 
@@ -379,7 +384,7 @@ module.exports = grammar({
     ),
 
     enum_declaration: $ => seq(
-      $._scope,
+      $.scope,
       $._enum_def
     ),
 

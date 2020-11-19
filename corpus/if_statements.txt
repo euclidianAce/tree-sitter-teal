@@ -10,7 +10,8 @@ end
 ---
 
 (program
-  (if_statement (identifier)))
+  (if_statement
+    condition: (identifier)))
 
 ==============================
 Basic if+else
@@ -25,7 +26,8 @@ end
 ---
 
 (program
-  (if_statement (identifier)
+  (if_statement
+    condition: (identifier)
     (else_block)))
 
 ==============================
@@ -41,8 +43,10 @@ end
 ---
 
 (program
-  (if_statement (identifier)
-    (elseif_block (identifier))))
+  (if_statement
+    condition: (identifier)
+    (elseif_block
+      condition: (identifier))))
 
 ==============================
 Basic if+multiple elseif
@@ -57,10 +61,10 @@ end
 ---
 
 (program
-  (if_statement (identifier)
-    (elseif_block (identifier))
-    (elseif_block (identifier))
-    (elseif_block (identifier))))
+  (if_statement condition: (identifier)
+    (elseif_block condition: (identifier))
+    (elseif_block condition: (identifier))
+    (elseif_block condition: (identifier))))
 
 ==============================
 Basic if+elseif+else
@@ -74,8 +78,8 @@ end
 ---
 
 (program
-  (if_statement (identifier)
-    (elseif_block (identifier))
+  (if_statement condition: (identifier)
+    (elseif_block condition: (identifier))
     (else_block)))
 
 ==============================
@@ -93,9 +97,9 @@ end
 ---
 
 (program
-  (if_statement (identifier)
+  (if_statement condition: (identifier)
     (var_declaration (var (identifier)) (number))
-    (elseif_block (identifier)
+    (elseif_block condition: (identifier)
       (var_declaration (var (identifier)) (string)))
     (else_block
       (var_declaration (var (identifier)) (table_constructor)))))
