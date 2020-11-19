@@ -97,7 +97,8 @@ module.exports = grammar({
     ),
 
     repeat_statement: $ => seq(
-      "repeat", repeat($._statement), "until", field("condition", $._expression)
+      "repeat", repeat($._statement),
+      "until", field("condition", $._expression)
     ),
 
     do_statement: $ => seq(
@@ -488,7 +489,7 @@ module.exports = grammar({
     identifier: $ => /[a-zA-Z_][a-zA-Z_0-9]*/,
     number: $ => choice(
       /\d+(\.\d+)?(e\d+)?/i,
-      /0x[0-9a-f]+(\.[0-9a-f]+)?/i,
+      /0x[0-9a-f]+(\.[0-9a-f]+)?(p\d+)?/i,
     ),
     boolean: $ => choice("true", "false"),
     nil: $ => "nil"

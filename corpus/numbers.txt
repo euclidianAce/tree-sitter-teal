@@ -42,3 +42,13 @@ local x = 3e2
 (program
   (var_declaration (var (identifier)) (number)))
 
+==============================
+Hex Exponent
+==============================
+
+local x = 0xfp10
+
+---
+
+(program
+  (var_declaration (var (identifier)) (number)))
