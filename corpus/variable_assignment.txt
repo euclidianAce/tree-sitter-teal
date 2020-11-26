@@ -7,7 +7,7 @@ local x = 5
 ---
 
 (program
-  (var_declaration (var (identifier)) (number)))
+  (var_declaration (var name: (identifier)) (number)))
 
 ==============================
 Global Variable Declaration
@@ -18,7 +18,7 @@ global x = 5
 ---
 
 (program
-  (var_declaration (var (identifier)) (number)))
+  (var_declaration (var name: (identifier)) (number)))
 
 
 ==============================
@@ -30,8 +30,8 @@ local x, y, z = 1, 2, 3
 ---
 
 (program
-  (var_declaration 
-    (var (identifier)) (var (identifier)) (var (identifier))
+  (var_declaration
+    (var name: (identifier)) (var name: (identifier)) (var name: (identifier))
     (number) (number) (number)))
 
 ==============================
@@ -43,8 +43,8 @@ global x, y, z = 1, 2, "hey"
 ---
 
 (program
-  (var_declaration 
-    (var (identifier)) (var (identifier)) (var (identifier))
+  (var_declaration
+    (var name: (identifier)) (var name: (identifier)) (var name: (identifier))
     (number) (number) (string)))
 
 
@@ -58,7 +58,7 @@ x = "hi"
 ---
 
 (program
-  (var_declaration (var (identifier)) (string))
+  (var_declaration (var name: (identifier)) (string))
   (var_assignment (var (identifier)) (string)))
 
 ==============================

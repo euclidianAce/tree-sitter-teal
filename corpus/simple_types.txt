@@ -52,7 +52,7 @@ local x: string | number
 ---
 
 (program
-  (var_declaration (var (identifier)) (type_annotation (simple_type) (simple_type))))
+  (var_declaration (var (identifier)) (type_annotation (type_union (simple_type) (simple_type)))))
 
 ==============================
 Array type
@@ -63,7 +63,7 @@ local x: {string}
 ---
 
 (program
-  (var_declaration (var (identifier)) (type_annotation (table_type value_type: (simple_type)))))
+  (var_declaration (var name: (identifier)) (type_annotation (table_type value_type: (simple_type)))))
 
 ==============================
 Array type with initialization
@@ -74,7 +74,7 @@ local x: {string} = {}
 ---
 
 (program
-  (var_declaration (var (identifier)) (type_annotation
+  (var_declaration (var name: (identifier)) (type_annotation
     (table_type value_type: (simple_type)))
     (table_constructor)))
 
@@ -87,7 +87,7 @@ local x: {string:number}
 ---
 
 (program
-  (var_declaration (var (identifier)) (type_annotation (table_type (simple_type) (simple_type)))))
+  (var_declaration (var name: (identifier)) (type_annotation (table_type key_type: (simple_type) value_type: (simple_type)))))
 
 ==============================
 Map type with initialization
@@ -98,8 +98,10 @@ local x: {string:number} = {}
 ---
 
 (program
-  (var_declaration (var (identifier)) (type_annotation (table_type (simple_type) (simple_type)))
-    (table_constructor)))
+  (var_declaration (var name: (identifier))
+                   (type_annotation
+                     (table_type key_type: (simple_type) value_type: (simple_type)))
+                   (table_constructor)))
 
 ==============================
 Union of array and non-array type
@@ -110,9 +112,11 @@ local x: thread | {string:number} = {}
 ---
 
 (program
-  (var_declaration (var (identifier)) (type_annotation
-    (simple_type)
-    (table_type
-      key_type: (simple_type)
-      value_type: (simple_type)))
-        (table_constructor)))
+  (var_declaration (var name: (identifier))
+                   (type_annotation
+                     (type_union
+                       (simple_type)
+                       (table_type
+                         key_type: (simple_type)
+                         value_type: (simple_type))))
+                   (table_constructor)))

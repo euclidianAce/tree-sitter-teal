@@ -46,16 +46,16 @@ end
     (function_signature (arguments))
     (function_body
       (var_declaration
-        (var (identifier)) (number))
+        (var name: (identifier)) (number))
       (var_declaration
-        (var (identifier))
+        (var name: (identifier))
         (table_constructor
           (table_entry
             key: (identifier)
             value: (anon_function
                      (function_signature (arguments))
                      (function_body
-                       (var_declaration (var (identifier)) (number)))))
+                       (var_declaration (var name: (identifier)) (number)))))
           (table_entry
             key: (identifier)
             value: (anon_function
@@ -76,7 +76,7 @@ end
 
 (program
   (function_statement name: (identifier) (function_signature (arguments)) (function_body
-    (var_declaration (var (identifier)) (string))
+    (var_declaration (var name: (identifier)) (string))
     (return_statement (identifier)))))
 
 

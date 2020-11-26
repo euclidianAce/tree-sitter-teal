@@ -1,15 +1,15 @@
-// https://github.com/Azganoth/tree-sitter-lua
+// adapted from https://github.com/Azganoth/tree-sitter-lua
 
 #include <stdbool.h>
 #include <tree_sitter/parser.h>
 
 enum TokenType {
   COMMENT,
-  STRING
+  STRING,
 };
 
-static void skip(TSLexer *lexer) { lexer->advance(lexer, true); }
-static void advance(TSLexer *lexer) { lexer->advance(lexer, false); }
+static inline void skip(TSLexer *lexer) { lexer->advance(lexer, true); }
+static inline void advance(TSLexer *lexer) { lexer->advance(lexer, false); }
 static bool scan_sequence(TSLexer *lexer, const char *sequence) {
   // Try to match all characters in the given 'sequence'
   for (const char *c = sequence; *c; c++) {
@@ -85,7 +85,7 @@ static bool scan_multiline_content(TSLexer *lexer) {
   return false;
 }
 
-static bool is_whitespace(char c) {
+static inline bool is_whitespace(char c) {
   switch (c) {
     default: break;
     case ' ': case '\n': case '\r': case '\t':

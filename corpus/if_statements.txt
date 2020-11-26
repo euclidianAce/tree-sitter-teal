@@ -98,8 +98,8 @@ end
 
 (program
   (if_statement condition: (identifier)
-    (var_declaration (var (identifier)) (number))
+    (var_declaration (var name: (identifier)) (number))
     (elseif_block condition: (identifier)
-      (var_declaration (var (identifier)) (string)))
+      (var_declaration (var name: (identifier)) (string)))
     (else_block
-      (var_declaration (var (identifier)) (table_constructor)))))
+      (var_declaration (var name: (identifier)) (table_constructor)))))

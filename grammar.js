@@ -183,10 +183,11 @@ module.exports = grammar({
     ),
 
     type_tuple: $ => seq("(", list($._type), ")"),
+    type_union: $ => prec.left(1, seq($._type, "|", $._type)),
 
-    var_declarator: $ => choice(
-      seq(field("name", $.identifier), "<", field("attribute", alias($.identifier, $.attribute)), ">"),
-      $.identifier,
+    var_declarator: $ => seq(
+      field("name", $.identifier),
+      optional(seq("<", field("attribute", alias($.identifier, $.attribute)), ">")),
     ),
 
     var_declaration: $ => seq(
@@ -411,16 +412,12 @@ module.exports = grammar({
       list($._type)
     ),
 
-    _type: $ => prec.right(seq(
-      choice(
-        $.simple_type,
-        $.table_type,
-        $.function_type
-      ),
-      repeat(seq(
-        "|", choice($.simple_type, $.table_type, $.function_type)
-      ))
-    )),
+    _type: $ => choice(
+      $.simple_type,
+      $.table_type,
+      $.function_type,
+      $.type_union
+    ),
 
     _simple_type: $ => alias(prec.right(prec_op.index,
       seq($.identifier, repeat(seq(".", $.identifier)))
@@ -489,7 +486,7 @@ module.exports = grammar({
     identifier: $ => /[a-zA-Z_][a-zA-Z_0-9]*/,
     number: $ => choice(
       /\d+(\.\d+)?(e\d+)?/i,
-      /0x[0-9a-f]+(\.[0-9a-f]+)?(p\d+)?/i,
+      /0x[0-9a-fA-F]+(\.[0-9a-fA-F]+)?(p\d+)?/,
     ),
     boolean: $ => choice("true", "false"),
     nil: $ => "nil"

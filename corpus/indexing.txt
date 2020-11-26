@@ -72,7 +72,7 @@ local a = b:c()
 
 ---
 
-(program (var_declaration (var (identifier))
+(program (var_declaration (var name: (identifier))
   (function_call
     called_object: (method_index (identifier) (identifier)) (arguments))))
 
@@ -85,7 +85,7 @@ local a = b[c].d.e[f]:g()
 ---
 
 (program (var_declaration
-           (var (identifier))
+           (var name: (identifier))
            (function_call
             called_object: (method_index
               (index

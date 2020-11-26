@@ -19,7 +19,7 @@ local arr = {1, 2, 3}
 ---
 
 (program
-  (var_declaration (var (identifier))
+  (var_declaration (var name: (identifier))
                    (table_constructor
                      (table_entry value: (number))
                      (table_entry value: (number))
@@ -29,7 +29,7 @@ local arr = {1, 2, 3}
 Identifier-Map
 ==============================
 
-local arr = {
+local map = {
   x = 5,
   y = 6,
 }
@@ -37,7 +37,7 @@ local arr = {
 ---
 
 (program
-  (var_declaration (var (identifier))
+  (var_declaration (var name: (identifier))
     (table_constructor
       (table_entry
         key: (identifier)
@@ -50,7 +50,7 @@ local arr = {
 Value-Map
 ==============================
 
-local arr = {
+local map = {
   ["x"] = 5,
   [y] = 6,
 }
@@ -58,7 +58,7 @@ local arr = {
 ---
 
 (program
-  (var_declaration (var (identifier))
+  (var_declaration (var name: (identifier))
     (table_constructor
       (table_entry
         expr_key: (string)
@@ -71,7 +71,7 @@ local arr = {
 Nested
 ==============================
 
-local arr = {
+local tab = {
     foo = {
         bar = "a",
         baz = "b",
@@ -83,7 +83,7 @@ local arr = {
 
 (program
   (var_declaration
-    (var (identifier))
+    (var name: (identifier))
     (table_constructor
       (table_entry
         key: (identifier)
@@ -110,7 +110,7 @@ local tl = {
 
 (program
   (var_declaration
-    (var (identifier))
+    (var name: (identifier))
     (table_constructor
       (table_entry
         key: (identifier)

@@ -52,7 +52,7 @@
         ]
       },
       "type": {
-        "multiple": true,
+        "multiple": false,
         "required": false,
         "types": [
           {
@@ -68,8 +68,8 @@
             "named": true
           },
           {
-            "type": "|",
-            "named": false
+            "type": "type_union",
+            "named": true
           }
         ]
       }
@@ -299,6 +299,10 @@
         },
         {
           "type": "type_tuple",
+          "named": true
+        },
+        {
+          "type": "type_union",
           "named": true
         },
         {
@@ -1449,7 +1453,7 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "types": [
         {
@@ -1462,6 +1466,10 @@
         },
         {
           "type": "table_type",
+          "named": true
+        },
+        {
+          "type": "type_union",
           "named": true
         }
       ]
@@ -1549,7 +1557,7 @@
         ]
       },
       "type": {
-        "multiple": true,
+        "multiple": false,
         "required": false,
         "types": [
           {
@@ -1565,8 +1573,8 @@
             "named": true
           },
           {
-            "type": "|",
-            "named": false
+            "type": "type_union",
+            "named": true
           }
         ]
       },
@@ -1603,8 +1611,8 @@
             "named": true
           },
           {
-            "type": "|",
-            "named": false
+            "type": "type_union",
+            "named": true
           }
         ]
       }
@@ -1828,6 +1836,10 @@
           "named": true
         },
         {
+          "type": "type_union",
+          "named": true
+        },
+        {
           "type": "variadic_type",
           "named": true
         }
@@ -1965,8 +1977,8 @@
             "named": true
           },
           {
-            "type": "|",
-            "named": false
+            "type": "type_union",
+            "named": true
           }
         ]
       },
@@ -2039,7 +2051,7 @@
     "named": true,
     "fields": {
       "key_type": {
-        "multiple": true,
+        "multiple": false,
         "required": false,
         "types": [
           {
@@ -2055,13 +2067,13 @@
             "named": true
           },
           {
-            "type": "|",
-            "named": false
+            "type": "type_union",
+            "named": true
           }
         ]
       },
       "value_type": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
           {
@@ -2077,8 +2089,8 @@
             "named": true
           },
           {
-            "type": "|",
-            "named": false
+            "type": "type_union",
+            "named": true
           }
         ]
       }
@@ -2102,6 +2114,10 @@
         },
         {
           "type": "table_type",
+          "named": true
+        },
+        {
+          "type": "type_union",
           "named": true
         }
       ]
@@ -2161,6 +2177,10 @@
         {
           "type": "type_name",
           "named": true
+        },
+        {
+          "type": "type_union",
+          "named": true
         }
       ]
     }
@@ -2183,6 +2203,37 @@
         },
         {
           "type": "table_type",
+          "named": true
+        },
+        {
+          "type": "type_union",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "type_union",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "function_type",
+          "named": true
+        },
+        {
+          "type": "simple_type",
+          "named": true
+        },
+        {
+          "type": "table_type",
+          "named": true
+        },
+        {
+          "type": "type_union",
           "named": true
         }
       ]
@@ -2452,7 +2503,7 @@
     "named": true,
     "fields": {
       "type": {
-        "multiple": true,
+        "multiple": false,
         "required": false,
         "types": [
           {
@@ -2468,8 +2519,8 @@
             "named": true
           },
           {
-            "type": "|",
-            "named": false
+            "type": "type_union",
+            "named": true
           }
         ]
       }
@@ -2480,7 +2531,7 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "types": [
         {
@@ -2493,6 +2544,10 @@
         },
         {
           "type": "table_type",
+          "named": true
+        },
+        {
+          "type": "type_union",
           "named": true
         }
       ]
