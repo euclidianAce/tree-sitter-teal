@@ -1,0 +1,84 @@
+
+==============================
+Array type
+==============================
+
+local x: {string}
+
+---
+
+(program
+  (var_declaration (var name: (identifier)) (type_annotation (table_type value_type: (simple_type)))))
+
+==============================
+Array type with initialization
+==============================
+
+local x: {string} = {}
+
+---
+
+(program
+  (var_declaration (var name: (identifier)) (type_annotation
+    (table_type value_type: (simple_type)))
+    (table_constructor)))
+
+==============================
+Map type
+==============================
+
+local x: {string:number}
+
+---
+
+(program
+  (var_declaration (var name: (identifier)) (type_annotation (table_type key_type: (simple_type) value_type: (simple_type)))))
+
+==============================
+Map type with initialization
+==============================
+
+local x: {string:number} = {}
+
+---
+
+(program
+  (var_declaration (var name: (identifier))
+                   (type_annotation
+                     (table_type key_type: (simple_type) value_type: (simple_type)))
+                   (table_constructor)))
+
+==============================
+Tuple type
+==============================
+
+local x: {number, string}
+
+---
+
+(program
+  (var_declaration
+    (var
+      name: (identifier))
+    (type_annotation
+      (table_type
+        tuple_type: (simple_type)
+        tuple_type: (simple_type)))))
+
+==============================
+Tuple type with initialization
+==============================
+
+local x: {number, string} = {}
+
+---
+
+(program
+  (var_declaration
+    (var
+      name: (identifier))
+    (type_annotation
+      (table_type
+        tuple_type: (simple_type)
+        tuple_type: (simple_type)))
+    (table_constructor)))

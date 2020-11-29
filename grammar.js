@@ -434,20 +434,39 @@ module.exports = grammar({
       optional($.typeargs)
     )),
 
-    table_type: $ => choice(
-      seq( // array
-        "{",
-        field('value_type', $._type),
-        "}"
+    table_type: $ => seq(
+      "{",
+      choice(
+        field("value_type", $._type),
+        seq(
+          field("key_type", $._type),
+          ":",
+          field("value_type", $._type),
+        ),
+        seq(
+          field("tuple_type", $._type),
+          repeat1(seq(",", field("tuple_type", $._type)))
+        )
       ),
-      seq( // map
-        "{",
-        field('key_type', $._type),
-        ":",
-        field('value_type', $._type),
-        "}"
-      )
+      "}"
     ),
+    // choice(
+      // seq( // array
+        // "{",
+        // field('value_type', $._type),
+        // "}"
+      // ),
+      // seq( // tuple
+        // "{"
+      // )
+      // seq( // map
+        // "{",
+        // field('key_type', $._type),
+        // ":",
+        // field('value_type', $._type),
+        // "}"
+      // ),
+    // ),
 
     function_type_args: $ => seq(
       "(",

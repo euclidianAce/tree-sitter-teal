@@ -2185,9 +2185,35 @@
           }
         ]
       },
+      "tuple_type": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "function_type",
+            "named": true
+          },
+          {
+            "type": "simple_type",
+            "named": true
+          },
+          {
+            "type": "table_type",
+            "named": true
+          },
+          {
+            "type": "type_index",
+            "named": true
+          },
+          {
+            "type": "type_union",
+            "named": true
+          }
+        ]
+      },
       "value_type": {
         "multiple": false,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "function_type",
