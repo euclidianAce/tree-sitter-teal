@@ -120,3 +120,37 @@ local x: thread | {string:number} = {}
                          key_type: (simple_type)
                          value_type: (simple_type))))
                    (table_constructor)))
+
+==============================
+Type indexing
+==============================
+
+local x: foo.bar
+
+---
+
+(program
+  (var_declaration (var
+                     name: (identifier))
+                   (type_annotation
+                     (type_index
+                       (identifier)
+                       (identifier)))))
+
+==============================
+Multiple type indexing
+==============================
+
+local x: foo.bar.baz
+
+---
+
+(program
+  (var_declaration (var
+                     name: (identifier))
+                   (type_annotation
+                     (type_index
+                       (type_index
+                         (identifier)
+                         (identifier))
+                       (identifier)))))

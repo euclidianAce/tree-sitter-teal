@@ -91,9 +91,9 @@ local a = b[c].d.e[f]:g()
               (index
                (index
                 (index
-                 (index (identifier) (identifier))
-                 (identifier))
-                (identifier))
-               (identifier))
+                 (index (identifier) expr_key: (identifier))
+                 key: (identifier))
+                key: (identifier))
+               expr_key: (identifier))
               (identifier))
             (arguments))))

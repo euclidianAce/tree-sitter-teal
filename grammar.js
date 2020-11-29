@@ -414,17 +414,23 @@ module.exports = grammar({
 
     _type: $ => choice(
       $.simple_type,
+      $.type_index,
       $.table_type,
       $.function_type,
       $.type_union
     ),
 
-    _simple_type: $ => alias(prec.right(prec_op.index,
-      seq($.identifier, repeat(seq(".", $.identifier)))
-    ), 'simple_type'),
+    // _simple_type: $ => alias(prec.right(prec_op.index,
+      // seq($.identifier, repeat(seq(".", $.identifier)))
+    // ), 'simple_type'),
+
+    type_index: $ => prec.left(1, seq(
+      choice($.identifier, $.type_index), ".", $.identifier,
+      optional($.typeargs)
+    )),
 
     simple_type: $ => prec.left(1, seq(
-      $._simple_type,
+      alias($.identifier, "name"),
       optional($.typeargs)
     )),
 
@@ -472,8 +478,8 @@ module.exports = grammar({
     index: $ => seq(
       $._prefix_expression,
       choice(
-        seq(".", $.identifier),
-        seq("[", $._expression, "]")
+        field("key", seq(".", $.identifier)),
+        field("expr_key", seq("[", $._expression, "]"))
       )
     ),
 
