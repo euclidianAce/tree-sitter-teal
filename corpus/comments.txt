@@ -30,3 +30,11 @@ local x --[[ This is a comment ]] = 5
 
 (program (var_declaration (var (identifier)) (comment) (number)))
 
+==============================
+Shebang comment
+==============================
+#!/usr/bin/env tl run
+
+---------------------
+
+(program (shebang_comment))

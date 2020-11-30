@@ -1523,6 +1523,10 @@
           "named": true
         },
         {
+          "type": "shebang_comment",
+          "named": true
+        },
+        {
           "type": "type_declaration",
           "named": true
         },
@@ -3115,6 +3119,10 @@
   {
     "type": "return",
     "named": false
+  },
+  {
+    "type": "shebang_comment",
+    "named": true
   },
   {
     "type": "string",

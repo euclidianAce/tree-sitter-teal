@@ -3,11 +3,36 @@
   "word": "identifier",
   "rules": {
     "program": {
-      "type": "REPEAT",
-      "content": {
-        "type": "SYMBOL",
-        "name": "_statement"
-      }
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "IMMEDIATE_TOKEN",
+                "content": {
+                  "type": "PATTERN",
+                  "value": "#![^\\n\\r]*"
+                }
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          },
+          "named": true,
+          "value": "shebang_comment"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_statement"
+          }
+        }
+      ]
     },
     "_statement": {
       "type": "PREC",

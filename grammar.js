@@ -42,7 +42,11 @@ module.exports = grammar({
   word: $ => $.identifier,
 
   rules: {
-    program: $ => repeat($._statement),
+    program: $ => seq(
+      alias(optional(token.immediate(/#![^\n\r]*/)), $.shebang_comment),
+      repeat($._statement),
+    ),
+
     _statement: $ => prec(1, seq(choice(
       $.var_declaration,
       $.var_assignment,
@@ -420,10 +424,6 @@ module.exports = grammar({
       $.type_union
     ),
 
-    // _simple_type: $ => alias(prec.right(prec_op.index,
-      // seq($.identifier, repeat(seq(".", $.identifier)))
-    // ), 'simple_type'),
-
     type_index: $ => prec.left(1, seq(
       choice($.identifier, $.type_index), ".", $.identifier,
       optional($.typeargs)
@@ -450,23 +450,6 @@ module.exports = grammar({
       ),
       "}"
     ),
-    // choice(
-      // seq( // array
-        // "{",
-        // field('value_type', $._type),
-        // "}"
-      // ),
-      // seq( // tuple
-        // "{"
-      // )
-      // seq( // map
-        // "{",
-        // field('key_type', $._type),
-        // ":",
-        // field('value_type', $._type),
-        // "}"
-      // ),
-    // ),
 
     function_type_args: $ => seq(
       "(",
