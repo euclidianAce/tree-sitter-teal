@@ -268,5 +268,5 @@ end
     name: (identifier)
     (record_body
       (record_entry
-        key: (string)
+        string_key: (string)
         type: (simple_type)))))

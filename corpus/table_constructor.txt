@@ -115,11 +115,11 @@ local tl = {
       (table_entry
         key: (identifier)
         type: (function_type
-                (arguments
+                arguments: (arguments
                   (arg type: (simple_type))
                   (arg type: (simple_type))
                   (arg type: (simple_type))
                   (arg type: (table_type value_type: (simple_type))))
-                (return_type (simple_type) (simple_type)))
+                return_type: (return_type (simple_type) (simple_type)))
         value: (nil)))))
 

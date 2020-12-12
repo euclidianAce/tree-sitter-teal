@@ -197,7 +197,7 @@ module.exports = grammar({
     var_declaration: $ => seq(
       $.scope,
       list(alias($.var_declarator, $.var)),
-      optional($.type_annotation),
+      optional(field("type_annotation", $.type_annotation)),
       optional(seq("=", list($._expression)))
     ),
 
@@ -236,7 +236,7 @@ module.exports = grammar({
         $._prefix_expression,
         $.method_index
       )),
-      $.arguments
+      field("arguments", $.arguments)
     )),
 
     table_entry: $ => prec(5, choice(
@@ -274,19 +274,19 @@ module.exports = grammar({
         $.scope,
         "function",
         field("name", $.identifier),
-        $.function_signature,
-        $.function_body
+        field("signature", $.function_signature),
+        field("body", $.function_body)
       ),
       seq(
         "function",
         field("name", $.function_name),
-        $.function_signature,
-        $.function_body
+        field("signature", $.function_signature),
+        field("body", $.function_body)
       )
     ),
 
     variadic_type: $ => prec(1, seq($._type, "...")),
-    _retlist: $ => prec.right(choice(
+    return_type: $ => prec.right(choice(
       list($._type),
       seq("(", optional(list($._type)), ")"),
       seq(list($._type), ",", $.variadic_type),
@@ -304,8 +304,8 @@ module.exports = grammar({
 
     anon_function: $ => seq(
       "function",
-      $.function_signature,
-      $.function_body
+      field("signature", $.function_signature),
+      field("body", $.function_body)
     ),
 
     _annotated_var_arg: $ => seq("...", ":", field("type", $._type)),
@@ -323,9 +323,9 @@ module.exports = grammar({
     ),
 
     function_signature: $ => seq(
-      optional($.typeargs),
-      alias($.signature_arguments, $.arguments),
-      optional(seq(":", alias($._retlist, $.return_type))),
+      field("typeargs", optional($.typeargs)),
+      field("arguments", alias($.signature_arguments, $.arguments)),
+      optional(seq(":", field("return_type", $.return_type))),
     ),
 
     function_body: $ => seq(
@@ -339,7 +339,7 @@ module.exports = grammar({
           ":", field("type", $._type)
         ),
         seq(
-          "[", field("key", $.string), "]",
+          "[", field("string_key", $.string), "]",
           ":", field("type", $._type)
         ),
         // TODO: there has to be a way around doing this, but I can't figure it out
@@ -416,13 +416,14 @@ module.exports = grammar({
       list($._type)
     ),
 
-    _type: $ => choice(
+    _type: $ => prec(10, choice(
       $.simple_type,
       $.type_index,
       $.table_type,
       $.function_type,
-      $.type_union
-    ),
+      $.type_union,
+      seq("(", $._type, ")")
+    )),
 
     type_index: $ => prec.left(1, seq(
       choice($.identifier, $.type_index), ".", $.identifier,
@@ -465,12 +466,12 @@ module.exports = grammar({
 
     function_type: $ => prec.right(1, seq(
       "function",
-      optional($.typeargs),
+      field("typeargs", optional($.typeargs)),
       optional(seq(
-        alias($.function_type_args, $.arguments),
+        field("arguments", alias($.function_type_args, $.arguments)),
         optional(seq(
           ":",
-          alias($._retlist, $.return_type)
+          field("return_type", $.return_type)
         ))
       ))
     )),
@@ -494,6 +495,7 @@ module.exports = grammar({
     identifier: $ => /[a-zA-Z_][a-zA-Z_0-9]*/,
     number: $ => choice(
       /\d+(\.\d+)?(e\d+)?/i,
+      // TODO: case insensitive regex doesn't work here?
       /0x[0-9a-fA-F]+(\.[0-9a-fA-F]+)?(p\d+)?/,
     ),
     boolean: $ => choice("true", "false"),

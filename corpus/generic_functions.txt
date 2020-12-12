@@ -23,7 +23,11 @@ end
 ---
 
 (program (function_statement
-  name: (identifier) (function_signature (typeargs (identifier)) (arguments)) (function_body)))
+  name: (identifier)
+  signature: (function_signature
+    typeargs: (typeargs (identifier))
+    arguments: (arguments))
+    body: (function_body)))
 
 ==============================
 Many typeargs
@@ -38,13 +42,13 @@ end
 (program
   (function_statement
     name: (identifier)
-    (function_signature
-      (typeargs
+    signature: (function_signature
+      typeargs: (typeargs
         (identifier)
         (identifier)
         (identifier)
         (identifier)
         (identifier)
         (identifier))
-      (arguments))
-    (function_body)))
+      arguments: (arguments))
+    body: (function_body)))

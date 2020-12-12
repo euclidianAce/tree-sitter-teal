@@ -1,1 +1,102 @@
-/home/corey/dotfiles/nvim/plugged/nvim-treesitter/queries/teal/highlights.scm
+
+;; Basic statements/Keywords
+[ "if" "then" "elseif" "else" ] @conditional
+[ "for" "while" "repeat" "until" ] @repeat
+[ "in" "local" "return" (break) (goto) "do" "end" ] @keyword
+(label) @label
+
+;; Global isn't a real keyword, but it gets special treatment in these places
+(var_declaration "global" @keyword)
+(type_declaration "global" @keyword)
+(function_statement "global" @keyword)
+(record_declaration "global" @keyword)
+(enum_declaration "global" @keyword)
+
+;; Ops
+[ "not" "and" "or" "as" "is" ] @keyword.operator
+
+[ "=" "~=" "==" "<=" ">=" "<" ">"
+"+" "-" "%" "/" "//" "*" "^"
+"&" "~" "|" ">>" "<<"
+".." "#" ] @operator
+
+;; Functions
+(function_statement
+  "function" @keyword.function
+  . name: (_) @function)
+(anon_function
+  "function" @keyword.function)
+(function_body "end" @keyword.function)
+(arg name: (identifier) @parameter)
+
+(function_signature
+  (arguments
+    . (arg name: (identifier) @variable.builtin))
+  (#eq? @variable.builtin "self"))
+
+(typeargs
+  "<" @punctuation.bracket
+  . (identifier) @parameter
+  . ("," . (identifier) @parameter)*
+  . ">" @punctuation.bracket)
+
+(function_call
+  (identifier) @function . (arguments))
+(function_call
+  (index (_) (identifier) @function) . (arguments))
+(function_call
+  (method_index (_) (identifier) @function) . (arguments))
+
+;; Types
+(record_declaration
+  . "record" @keyword
+  name: (identifier) @type)
+(anon_record . "record" @keyword)
+(record_body
+  (record_entry
+    . "type" @keyword
+    . key: (identifier) @type . "="))
+(record_body
+  (record_entry
+    . "record" @keyword
+    . key: (identifier) @type
+    . value: (record_body)))
+(record_body
+  (record_entry
+    . "enum" @keyword
+    . key: (identifier) @type
+    . value: (enum_body)))
+
+(enum_declaration
+  "enum" @keyword
+  name: (identifier) @type)
+
+(type_declaration "type" @keyword)
+(type_declaration (type_name) @type)
+(simple_type) @type
+(type_index) @type
+(function_type "function" @type)
+
+;; The rest of it
+(var_declaration
+  (var name: (identifier) @variable))
+(var_declaration
+  (var
+    "<" @punctuation.bracket
+    . attribute: (attribute) @attribute
+    . ">" @punctuation.bracket))
+[ "(" ")" "[" "]" "{" "}" ] @punctuation.bracket
+(boolean) @boolean
+(comment) @comment
+(shebang_comment) @comment
+(identifier) @variable
+((identifier) @variable.builtin
+  (#eq? @variable.builtin "self"))
+(nil) @constant.builtin
+(number) @number
+(string) @string
+(table_constructor ["{" "}"] @constructor)
+(varargs "..." @constant.builtin)
+"," @punctuation.delimiter
+
+(ERROR) @error

@@ -7,7 +7,7 @@ local foo: function()
 ---
 
 (program
-  (var_declaration (var name: (identifier)) (type_annotation (function_type (arguments)))))
+  (var_declaration (var name: (identifier)) type_annotation: (type_annotation (function_type arguments: (arguments)))))
 
 ==============================
 One arg, no returns
@@ -19,8 +19,8 @@ local foo: function(string)
 
 (program
   (var_declaration (var name: (identifier))
-    (type_annotation (function_type
-      (arguments
+    type_annotation: (type_annotation (function_type
+      arguments: (arguments
        (arg type: (simple_type)))))))
 
 ==============================
@@ -33,9 +33,9 @@ local foo: function(): string
 
 (program
   (var_declaration (var name: (identifier))
-    (type_annotation (function_type
-      (arguments)
-      (return_type (simple_type))))))
+    type_annotation: (type_annotation (function_type
+      arguments: (arguments)
+      return_type: (return_type (simple_type))))))
 
 ==============================
 One arg, one return
@@ -47,10 +47,10 @@ local foo: function(number): string
 
 (program
   (var_declaration (var name: (identifier))
-    (type_annotation (function_type
-      (arguments
+    type_annotation: (type_annotation (function_type
+      arguments: (arguments
         (arg type: (simple_type)))
-      (return_type (simple_type))))))
+      return_type: (return_type (simple_type))))))
 
 ==============================
 Multiple args, no return
@@ -62,8 +62,8 @@ local foo: function(number, {string}, string)
 
 (program
   (var_declaration (var name: (identifier))
-    (type_annotation (function_type
-      (arguments
+    type_annotation: (type_annotation (function_type
+      arguments: (arguments
         (arg type: (simple_type))
         (arg type: (table_type
             value_type: (simple_type)))
@@ -79,9 +79,9 @@ local foo: function(): string, {number}, number, thread
 
 (program
   (var_declaration (var name: (identifier))
-    (type_annotation (function_type
-      (arguments)
-      (return_type
+    type_annotation: (type_annotation (function_type
+      arguments: (arguments)
+      return_type: (return_type
         (simple_type)
         (table_type
           value_type: (simple_type))
@@ -98,13 +98,13 @@ local foo: function(number, {string}, string): string, {number}, number, thread
 
 (program
   (var_declaration (var name: (identifier))
-    (type_annotation (function_type
-      (arguments
+    type_annotation: (type_annotation (function_type
+      arguments: (arguments
         (arg type: (simple_type))
         (arg type: (table_type
           value_type: (simple_type)))
         (arg type: (simple_type)))
-      (return_type
+      return_type: (return_type
         (simple_type)
         (table_type
           value_type: (simple_type))
@@ -121,9 +121,9 @@ local foo: function(bar: number)
 
 (program
   (var_declaration (var name: (identifier))
-    (type_annotation
+    type_annotation: (type_annotation
       (function_type
-        (arguments
+        arguments: (arguments
           (arg name: (identifier) type: (simple_type)))))))
 
 ==============================
@@ -136,8 +136,8 @@ local foo: function(bar: number, baz: {string})
 
 (program
   (var_declaration (var name: (identifier))
-    (type_annotation (function_type
-      (arguments
+    type_annotation: (type_annotation (function_type
+      arguments: (arguments
         (arg name: (identifier) type: (simple_type))
         (arg name: (identifier) type: (table_type value_type: (simple_type))))))))
 
@@ -151,8 +151,8 @@ local foo: function(...: string)
 
 (program
   (var_declaration (var name: (identifier))
-    (type_annotation (function_type
-      (arguments
+    type_annotation: (type_annotation (function_type
+      arguments: (arguments
         (varargs type: (simple_type)))))))
 
 ==============================
@@ -165,8 +165,8 @@ local foo: function(number, string, ...: string)
 
 (program
   (var_declaration (var name: (identifier))
-    (type_annotation (function_type
-      (arguments
+    type_annotation: (type_annotation (function_type
+      arguments: (arguments
         (arg type: (simple_type))
         (arg type: (simple_type))
         (varargs type: (simple_type)))))))
@@ -181,6 +181,6 @@ local foo: function(): string...
 
 (program
   (var_declaration (var name: (identifier))
-    (type_annotation (function_type
-      (arguments)
-      (return_type (variadic_type (simple_type)))))))
+    type_annotation: (type_annotation (function_type
+      arguments: (arguments)
+      return_type: (return_type (variadic_type (simple_type)))))))
