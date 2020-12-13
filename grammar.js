@@ -225,7 +225,7 @@ module.exports = grammar({
       $.function_call,
       seq("(", $._expression, ")")
     )),
-    method_index: $ => seq($._prefix_expression, ":", $.identifier),
+    method_index: $ => seq($._prefix_expression, ":", field("key", $.identifier)),
     arguments: $ => choice(
       seq("(", optional(list($._expression)), ")"),
       $.string,

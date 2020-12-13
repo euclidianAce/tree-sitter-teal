@@ -58,6 +58,17 @@ foo.bar()
   called_object: (index (identifier) key: (identifier)) arguments: (arguments)))
 
 ==============================
+Call table index
+==============================
+
+foo[bar]()
+
+---
+
+(program (function_call
+  called_object: (index (identifier) expr_key: (identifier)) arguments: (arguments)))
+
+==============================
 Call table entry of table entry
 ==============================
 

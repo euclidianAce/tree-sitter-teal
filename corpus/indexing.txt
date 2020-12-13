@@ -74,7 +74,7 @@ local a = b:c()
 
 (program (var_declaration (var name: (identifier))
   (function_call
-    called_object: (method_index (identifier) (identifier)) arguments: (arguments))))
+    called_object: (method_index (identifier) key: (identifier)) arguments: (arguments))))
 
 ==============================
 The whole dang thing
@@ -95,5 +95,5 @@ local a = b[c].d.e[f]:g()
                  key: (identifier))
                 key: (identifier))
                expr_key: (identifier))
-              (identifier))
+              key: (identifier))
             arguments: (arguments))))

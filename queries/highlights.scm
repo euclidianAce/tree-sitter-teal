@@ -43,9 +43,9 @@
 (function_call
   (identifier) @function . (arguments))
 (function_call
-  (index (_) (identifier) @function) . (arguments))
+  (index (_) key: (identifier) @function) . (arguments))
 (function_call
-  (method_index (_) (identifier) @function) . (arguments))
+  (method_index (_) key: (identifier) @function) . (arguments))
 
 ;; Types
 (record_declaration
@@ -97,6 +97,6 @@
 (string) @string
 (table_constructor ["{" "}"] @constructor)
 (varargs "..." @constant.builtin)
-"," @punctuation.delimiter
+[ "," "." ":" ] @punctuation.delimiter
 
 (ERROR) @error
