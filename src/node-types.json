@@ -147,6 +147,10 @@
           "named": true
         },
         {
+          "type": "type_cast",
+          "named": true
+        },
+        {
           "type": "unary_op",
           "named": true
         },
@@ -234,10 +238,6 @@
             "named": false
           },
           {
-            "type": "as",
-            "named": false
-          },
-          {
             "type": "is",
             "named": false
           },
@@ -317,11 +317,11 @@
           "named": true
         },
         {
-          "type": "type_index",
+          "type": "type_cast",
           "named": true
         },
         {
-          "type": "type_tuple",
+          "type": "type_index",
           "named": true
         },
         {
@@ -548,6 +548,10 @@
           },
           {
             "type": "table_constructor",
+            "named": true
+          },
+          {
+            "type": "type_cast",
             "named": true
           },
           {
@@ -815,6 +819,10 @@
           "named": true
         },
         {
+          "type": "type_cast",
+          "named": true
+        },
+        {
           "type": "unary_op",
           "named": true
         },
@@ -968,6 +976,10 @@
           },
           {
             "type": "table_constructor",
+            "named": true
+          },
+          {
+            "type": "type_cast",
             "named": true
           },
           {
@@ -1216,6 +1228,10 @@
             "named": true
           },
           {
+            "type": "type_cast",
+            "named": true
+          },
+          {
             "type": "unary_op",
             "named": true
           },
@@ -1370,6 +1386,10 @@
             "named": true
           },
           {
+            "type": "type_cast",
+            "named": true
+          },
+          {
             "type": "unary_op",
             "named": true
           },
@@ -1436,6 +1456,10 @@
         },
         {
           "type": "table_constructor",
+          "named": true
+        },
+        {
+          "type": "type_cast",
           "named": true
         },
         {
@@ -1506,6 +1530,10 @@
         },
         {
           "type": "table_constructor",
+          "named": true
+        },
+        {
+          "type": "type_cast",
           "named": true
         },
         {
@@ -1864,6 +1892,10 @@
             "named": true
           },
           {
+            "type": "type_cast",
+            "named": true
+          },
+          {
             "type": "unary_op",
             "named": true
           },
@@ -1991,6 +2023,10 @@
         },
         {
           "type": "table_constructor",
+          "named": true
+        },
+        {
+          "type": "type_cast",
           "named": true
         },
         {
@@ -2126,6 +2162,10 @@
             "named": true
           },
           {
+            "type": "type_cast",
+            "named": true
+          },
+          {
             "type": "unary_op",
             "named": true
           },
@@ -2233,6 +2273,10 @@
           },
           {
             "type": "table_constructor",
+            "named": true
+          },
+          {
+            "type": "type_cast",
             "named": true
           },
           {
@@ -2381,6 +2425,104 @@
         },
         {
           "type": "type_union",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "type_cast",
+    "named": true,
+    "fields": {
+      "op": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "as",
+            "named": false
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "anon_function",
+          "named": true
+        },
+        {
+          "type": "bin_op",
+          "named": true
+        },
+        {
+          "type": "boolean",
+          "named": true
+        },
+        {
+          "type": "function_call",
+          "named": true
+        },
+        {
+          "type": "function_type",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "index",
+          "named": true
+        },
+        {
+          "type": "nil",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "simple_type",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "table_constructor",
+          "named": true
+        },
+        {
+          "type": "table_type",
+          "named": true
+        },
+        {
+          "type": "type_cast",
+          "named": true
+        },
+        {
+          "type": "type_index",
+          "named": true
+        },
+        {
+          "type": "type_tuple",
+          "named": true
+        },
+        {
+          "type": "type_union",
+          "named": true
+        },
+        {
+          "type": "unary_op",
+          "named": true
+        },
+        {
+          "type": "varargs",
           "named": true
         }
       ]
@@ -2601,6 +2743,10 @@
           "named": true
         },
         {
+          "type": "type_cast",
+          "named": true
+        },
+        {
           "type": "unary_op",
           "named": true
         },
@@ -2700,6 +2846,10 @@
           "named": true
         },
         {
+          "type": "type_cast",
+          "named": true
+        },
+        {
           "type": "unary_op",
           "named": true
         },
@@ -2785,6 +2935,10 @@
         },
         {
           "type": "table_constructor",
+          "named": true
+        },
+        {
+          "type": "type_cast",
           "named": true
         },
         {
@@ -3002,6 +3156,10 @@
           },
           {
             "type": "table_constructor",
+            "named": true
+          },
+          {
+            "type": "type_cast",
             "named": true
           },
           {

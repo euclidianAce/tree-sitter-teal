@@ -594,6 +594,10 @@
         {
           "type": "SYMBOL",
           "name": "varargs"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "type_cast"
         }
       ]
     },
@@ -1183,92 +1187,42 @@
               }
             ]
           }
-        },
-        {
-          "type": "PREC_RIGHT",
-          "value": 100,
-          "content": {
-            "type": "SEQ",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "_expression"
-              },
-              {
-                "type": "FIELD",
-                "name": "op",
-                "content": {
-                  "type": "STRING",
-                  "value": "as"
-                }
-              },
-              {
-                "type": "SYMBOL",
-                "name": "_type"
-              }
-            ]
-          }
-        },
-        {
-          "type": "PREC_RIGHT",
-          "value": 3,
-          "content": {
-            "type": "SEQ",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "_expression"
-              },
-              {
-                "type": "FIELD",
-                "name": "op",
-                "content": {
-                  "type": "STRING",
-                  "value": "is"
-                }
-              },
-              {
-                "type": "SYMBOL",
-                "name": "_type"
-              }
-            ]
-          }
-        },
-        {
-          "type": "PREC_RIGHT",
-          "value": 100,
-          "content": {
-            "type": "SEQ",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "_expression"
-              },
-              {
-                "type": "FIELD",
-                "name": "op",
-                "content": {
-                  "type": "STRING",
-                  "value": "as"
-                }
-              },
-              {
-                "type": "CHOICE",
-                "members": [
-                  {
-                    "type": "SYMBOL",
-                    "name": "_type"
-                  },
-                  {
-                    "type": "SYMBOL",
-                    "name": "type_tuple"
-                  }
-                ]
-              }
-            ]
-          }
         }
       ]
+    },
+    "type_cast": {
+      "type": "PREC_RIGHT",
+      "value": 100,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "_expression"
+          },
+          {
+            "type": "FIELD",
+            "name": "op",
+            "content": {
+              "type": "STRING",
+              "value": "as"
+            }
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "_type"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "type_tuple"
+              }
+            ]
+          }
+        ]
+      }
     },
     "type_tuple": {
       "type": "SEQ",
@@ -1521,22 +1475,12 @@
           ]
         },
         {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "record_declaration"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "enum_declaration"
-                }
-              ]
-            }
-          ]
+          "type": "SYMBOL",
+          "name": "record_declaration"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "enum_declaration"
         }
       ]
     },

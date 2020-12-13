@@ -30,7 +30,7 @@ return 4 as string .. 5 as string / 2 + {}
 ---
 
 (program (return_statement (bin_op
-  (bin_op (number) (simple_type))
+  (type_cast (number) (simple_type))
   (bin_op
-    (bin_op (bin_op (number) (simple_type)) (number))
+    (bin_op (type_cast (number) (simple_type)) (number))
     (table_constructor)))))

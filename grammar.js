@@ -124,7 +124,8 @@ module.exports = grammar({
       $._prefix_expression,
       $.bin_op,
       $.unary_op,
-      $.varargs
+      $.varargs,
+      $.type_cast,
     ),
 
     unary_op: $ => prec.left(prec_op.unary, seq(
@@ -166,25 +167,18 @@ module.exports = grammar({
         field('op', operator),
         $._expression
       ))),
-      ...[
-        ['is', prec_op.is],
-        ['as', prec_op.as]
-      ].map(([operator, precedence]) => prec.right(precedence, seq(
-        $._expression,
-        field('op', operator),
-        $._type
-      ))),
       prec.right(prec_op.is, seq(
         $._expression,
         field('op', "is"),
         $._type
       )),
-      prec.right(prec_op.as, seq(
-        $._expression,
-        field('op', "as"),
-        choice($._type, $.type_tuple)
-      ))
     ),
+
+    type_cast: $ => prec.right(prec_op.as, seq(
+      $._expression,
+      field('op', "as"),
+      choice($._type, $.type_tuple)
+    )),
 
     type_tuple: $ => seq("(", list($._type), ")"),
     type_union: $ => prec.left(1, seq($._type, "|", $._type)),
@@ -211,9 +205,8 @@ module.exports = grammar({
           $._type, $._newtype
         )
       ),
-      seq(
-        choice($.record_declaration, $.enum_declaration)
-      )
+      $.record_declaration,
+      $.enum_declaration,
     ),
 
     var_assignment: $ => seq(
