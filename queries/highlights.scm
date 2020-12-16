@@ -27,6 +27,7 @@
 (anon_function
   "function" @keyword.function)
 (function_body "end" @keyword.function)
+
 (arg name: (identifier) @parameter)
 
 (function_signature
@@ -58,14 +59,8 @@
     . key: (identifier) @type . "="))
 (record_body
   (record_entry
-    . "record" @keyword
-    . key: (identifier) @type
-    . value: (record_body)))
-(record_body
-  (record_entry
-    . "enum" @keyword
-    . key: (identifier) @type
-    . value: (enum_body)))
+    . [ "record" "enum" ] @keyword
+    . key: (identifier) @type))
 
 (enum_declaration
   "enum" @keyword
@@ -75,6 +70,7 @@
 (type_declaration (type_name) @type)
 (simple_type) @type
 (type_index) @type
+(type_union "|" @operator)
 (function_type "function" @type)
 
 ;; The rest of it
@@ -97,6 +93,6 @@
 (string) @string
 (table_constructor ["{" "}"] @constructor)
 (varargs "..." @constant.builtin)
-[ "," "." ":" ] @punctuation.delimiter
+[ "," "." ":" ";" ] @punctuation.delimiter
 
 (ERROR) @error
