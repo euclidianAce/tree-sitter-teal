@@ -1,0 +1,11 @@
+
+==============================
+Statement with a semi-colon
+==============================
+
+local x = 5;
+
+---
+
+(program (var_declaration (var name: (identifier)) (number)))
+

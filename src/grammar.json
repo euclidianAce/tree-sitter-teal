@@ -2760,6 +2760,22 @@
             },
             {
               "type": "FIELD",
+              "name": "typeargs",
+              "content": {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "typeargs"
+                  },
+                  {
+                    "type": "BLANK"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "FIELD",
               "name": "value",
               "content": {
                 "type": "SYMBOL",

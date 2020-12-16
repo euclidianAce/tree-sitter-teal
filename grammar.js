@@ -344,7 +344,9 @@ module.exports = grammar({
           "type", field("key", $.identifier), "=", field("value", choice($._type, $._newtype))
         ),
         seq(
-          "record", field("key", $.identifier),
+          "record",
+          field("key", $.identifier),
+          field("typeargs", optional($.typeargs)),
           field("value", $.record_body),
         ),
         seq(

@@ -270,3 +270,24 @@ end
       (record_entry
         string_key: (string)
         type: (simple_type)))))
+
+==============================
+Nested generic record shorthand
+==============================
+
+local record Foo
+   record Bar<T>
+   end
+end
+
+---
+
+(program
+  (record_declaration
+    name: (identifier)
+    (record_body
+      (record_entry
+        key: (identifier)
+        typeargs: (typeargs (identifier))
+        value: (record_body)))))
+

@@ -1783,6 +1783,16 @@
           }
         ]
       },
+      "typeargs": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "typeargs",
+            "named": true
+          }
+        ]
+      },
       "value": {
         "multiple": true,
         "required": false,
