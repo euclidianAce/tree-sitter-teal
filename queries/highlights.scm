@@ -37,8 +37,8 @@
 
 (typeargs
   "<" @punctuation.bracket
-  . (identifier) @parameter
-  . ("," . (identifier) @parameter)*
+  . (_) @parameter
+  . ("," . (_) @parameter)*
   . ">" @punctuation.bracket)
 
 (function_call
@@ -55,12 +55,16 @@
 (anon_record . "record" @keyword)
 (record_body
   (record_entry
+    . [ "record" "enum" ] @keyword
+    . key: (identifier) @type))
+(record_body
+  (record_entry
     . "type" @keyword
     . key: (identifier) @type . "="))
 (record_body
-  (record_entry
-    . [ "record" "enum" ] @keyword
-    . key: (identifier) @type))
+  (metamethod "metamethod" @keyword))
+(record_body
+  (userdata) @keyword)
 
 (enum_declaration
   "enum" @keyword
