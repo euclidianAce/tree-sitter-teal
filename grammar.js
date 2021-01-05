@@ -327,37 +327,45 @@ module.exports = grammar({
     ),
 
     record_entry: $ => choice(
-        seq(
-          field("key", $.identifier),
-          ":", field("type", $._type)
-        ),
-        seq(
-          "[", field("string_key", $.string), "]",
-          ":", field("type", $._type)
-        ),
-        // TODO: there has to be a way around doing this, but I can't figure it out
-        ...[ "type", "record", "enum", ].map((reserved_id) => seq(
-          field("key", alias(reserved_id, $.identifier)),
-          ":", field("type", $._type)
-        )),
-        seq(
-          "type", field("key", $.identifier), "=", field("value", choice($._type, $._newtype))
-        ),
-        seq(
-          "record",
-          field("key", $.identifier),
-          field("typeargs", optional($.typeargs)),
-          field("value", $.record_body),
-        ),
-        seq(
-          "enum", field("key", $.identifier),
-          field("value", $.enum_body),
-        ),
+      seq(
+        field("key", $.identifier),
+        ":", field("type", $._type)
+      ),
+      seq(
+        "[", field("string_key", $.string), "]",
+        ":", field("type", $._type)
+      ),
+      // TODO: there has to be a way around doing this, but I can't figure it out
+      ...[ "type", "record", "enum", "userdata", "metamethod" ].map((reserved_id) => seq(
+        field("key", alias(reserved_id, $.identifier)),
+        ":", field("type", $._type)
+      )),
+      seq(
+        "type", field("key", $.identifier), "=", field("value", choice($._type, $._newtype))
+      ),
+      seq(
+        "record",
+        field("key", $.identifier),
+        field("typeargs", optional($.typeargs)),
+        field("value", $.record_body),
+      ),
+      seq(
+        "enum", field("key", $.identifier),
+        field("value", $.enum_body),
+      ),
+    ),
+
+    metamethod_annotation: $ => seq(
+      "metamethod", field("name", $.identifier), ":", field("type", $._type)
     ),
 
     record_body: $ => seq(
       optional(seq("{", alias($._type, $.record_array_type), "}")),
-      repeat($.record_entry),
+      repeat(choice(
+        $.record_entry,
+        alias("userdata", $.userdata),
+        alias($.metamethod_annotation, $.metamethod),
+      )),
       "end"
     ),
 
@@ -411,7 +419,7 @@ module.exports = grammar({
       list($._type)
     ),
 
-    _type: $ => prec(10, choice(
+    _type: $ => prec.right(10, choice(
       $.simple_type,
       $.type_index,
       $.table_type,
@@ -420,14 +428,18 @@ module.exports = grammar({
       seq("(", $._type, ")")
     )),
 
-    type_index: $ => prec.left(1, seq(
-      choice($.identifier, $.type_index), ".", $.identifier,
-      optional($.typeargs)
+    typearg_params: $ => prec.right(1000, seq(
+      "<", list($._type), ">"
     )),
 
-    simple_type: $ => prec.left(1, seq(
+    type_index: $ => prec.right(1000, seq(
+      choice($.identifier, $.type_index), ".", $.identifier,
+      optional(alias($.typearg_params, $.typeargs))
+    )),
+
+    simple_type: $ => prec.right(1000, seq(
       alias($.identifier, "name"),
-      optional($.typeargs)
+      optional(alias($.typearg_params, $.typeargs))
     )),
 
     table_type: $ => seq(

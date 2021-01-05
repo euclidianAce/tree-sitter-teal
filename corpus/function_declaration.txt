@@ -189,7 +189,7 @@ end
         key_type: (simple_type)
         value_type: (simple_type)))
       (arg name: (identifier) type: (simple_type))
-      (arg name: (identifier) type: (simple_type (typeargs (identifier)))))
+      (arg name: (identifier) type: (simple_type (typeargs (simple_type)))))
     return_type: (return_type (simple_type) (table_type value_type: (simple_type))))
   body: (function_body)))
 

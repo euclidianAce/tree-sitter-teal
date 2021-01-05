@@ -1474,6 +1474,56 @@
     }
   },
   {
+    "type": "metamethod",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "type": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": "function_type",
+            "named": true
+          },
+          {
+            "type": "simple_type",
+            "named": true
+          },
+          {
+            "type": "table_type",
+            "named": true
+          },
+          {
+            "type": "type_index",
+            "named": true
+          },
+          {
+            "type": "type_union",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "method_index",
     "named": true,
     "fields": {
@@ -1671,11 +1721,19 @@
       "required": false,
       "types": [
         {
+          "type": "metamethod",
+          "named": true
+        },
+        {
           "type": "record_array_type",
           "named": true
         },
         {
           "type": "record_entry",
+          "named": true
+        },
+        {
+          "type": "userdata",
           "named": true
         }
       ]
@@ -2698,7 +2756,27 @@
       "required": true,
       "types": [
         {
+          "type": "function_type",
+          "named": true
+        },
+        {
           "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "simple_type",
+          "named": true
+        },
+        {
+          "type": "table_type",
+          "named": true
+        },
+        {
+          "type": "type_index",
+          "named": true
+        },
+        {
+          "type": "type_union",
           "named": true
         }
       ]
@@ -3387,6 +3465,10 @@
     "named": false
   },
   {
+    "type": "metamethod",
+    "named": false
+  },
+  {
     "type": "name",
     "named": false
   },
@@ -3441,6 +3523,10 @@
   {
     "type": "until",
     "named": false
+  },
+  {
+    "type": "userdata",
+    "named": true
   },
   {
     "type": "while",
