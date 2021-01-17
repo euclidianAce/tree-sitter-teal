@@ -123,3 +123,23 @@ local tl = {
                 return_type: (return_type (simple_type) (simple_type)))
         value: (nil)))))
 
+
+==============================
+Method call as expression inside table
+==============================
+
+local a = { b:c() }
+
+---
+
+(program
+  (var_declaration
+    (var name: (identifier))
+    (table_constructor
+      (table_entry
+        value: (function_call
+          called_object: (method_index
+            (identifier)
+            key: (identifier))
+          arguments: (arguments))))))
+

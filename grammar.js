@@ -39,6 +39,10 @@ module.exports = grammar({
     $._parnamelist,
   ],
 
+  conflicts : $ => [
+    [$._var, $.table_entry],
+  ],
+
   word: $ => $.identifier,
 
   rules: {
@@ -232,16 +236,17 @@ module.exports = grammar({
       field("arguments", $.arguments)
     )),
 
-    table_entry: $ => prec(5, choice(
+    table_entry: $ => choice(
       seq("[", field("expr_key", $._expression), "]", "=", field("value", $._expression)),
-      seq(
+      prec(1, seq(
         field("key", $.identifier),
         field("type", optional(seq(":", $._type))),
         "=",
         field("value", $._expression)
-      ),
-      field("value", $._expression)
-    )),
+      )),
+      prec(1, field("value", $._expression)),
+    ),
+
     table_constructor: $ => seq(
       "{",
       optional(list($.table_entry, choice(",", ";"))),
