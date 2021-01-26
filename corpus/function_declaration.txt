@@ -246,3 +246,30 @@ end
       arguments: (arguments)
       return_type: (return_type (variadic_type (simple_type))))
     body: (function_body)))
+
+==============================
+Function type arguments
+==============================
+
+local function foo(bar: function(): (number, number), baz: number)
+   return bar, baz
+end
+
+---
+
+(program
+  (function_statement
+    name: (identifier)
+    signature: (function_signature
+      arguments: (arguments
+        (arg
+          name: (identifier)
+          type: (function_type
+            arguments: (arguments)
+            return_type: (return_type (simple_type) (simple_type))))
+        (arg
+          name: (identifier)
+          type: (simple_type))))
+    body: (function_body
+      (return_statement (identifier) (identifier)))))
+

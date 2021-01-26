@@ -184,3 +184,4 @@ local foo: function(): string...
     type_annotation: (type_annotation (function_type
       arguments: (arguments)
       return_type: (return_type (variadic_type (simple_type)))))))
+

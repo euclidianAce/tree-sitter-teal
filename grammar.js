@@ -37,6 +37,7 @@ module.exports = grammar({
     $.scope,
     $._partypelist,
     $._parnamelist,
+    $._type_list_maybe_vararg,
   ],
 
   conflicts : $ => [
@@ -184,7 +185,7 @@ module.exports = grammar({
       choice($._type, $.type_tuple)
     )),
 
-    type_tuple: $ => seq("(", list($._type), ")"),
+    type_tuple: $ => prec(10, seq("(", list($._type), ")")),
     type_union: $ => prec.left(1, seq($._type, "|", $._type)),
 
     var_declarator: $ => seq(
@@ -284,11 +285,11 @@ module.exports = grammar({
     ),
 
     variadic_type: $ => prec(1, seq($._type, "...")),
+    _type_list_maybe_vararg: $ => seq(list($._type), optional(seq(",", $.variadic_type))),
     return_type: $ => prec.right(choice(
-      list($._type),
-      seq("(", optional(list($._type)), ")"),
-      seq(list($._type), ",", $.variadic_type),
       $.variadic_type,
+      $._type_list_maybe_vararg,
+      seq("(", optional($._type_list_maybe_vararg), ")"),
     )),
 
     _partypelist: $ => list(alias($._partype, $.arg)),
@@ -424,7 +425,7 @@ module.exports = grammar({
       list($._type)
     ),
 
-    _type: $ => prec.right(10, choice(
+    _type: $ => prec(2, choice(
       $.simple_type,
       $.type_index,
       $.table_type,

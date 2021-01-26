@@ -14,7 +14,8 @@
   "author": "euclidianAce",
   "license": "MIT",
   "dependencies": {
-    "nan": "^2.14.1"
+    "nan": "^2.14.1",
+    "tree-sitter": "^0.17.1"
   },
   "devDependencies": {
     "tree-sitter-cli": "^0.16.9"
