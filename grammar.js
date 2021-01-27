@@ -20,6 +20,11 @@ const prec_op = {
   index: 1000,
 }
 
+const prec_type_op = {
+  union: 100,
+  index: 1000,
+}
+
 module.exports = grammar({
   name: 'teal',
 
@@ -42,6 +47,7 @@ module.exports = grammar({
 
   conflicts : $ => [
     [$._var, $.table_entry],
+    [$.return_type],
   ],
 
   word: $ => $.identifier,
@@ -186,7 +192,7 @@ module.exports = grammar({
     )),
 
     type_tuple: $ => prec(10, seq("(", list($._type), ")")),
-    type_union: $ => prec.left(1, seq($._type, "|", $._type)),
+    type_union: $ => prec.left(prec_type_op.union, seq($._type, "|", $._type)),
 
     var_declarator: $ => seq(
       field("name", $.identifier),
@@ -284,13 +290,13 @@ module.exports = grammar({
       )
     ),
 
-    variadic_type: $ => prec(1, seq($._type, "...")),
+    variadic_type: $ => prec(prec_type_op.index - 1, seq($._type, "...")),
     _type_list_maybe_vararg: $ => seq(list($._type), optional(seq(",", $.variadic_type))),
-    return_type: $ => prec.right(choice(
+    return_type: $ => choice(
       $.variadic_type,
-      $._type_list_maybe_vararg,
-      seq("(", optional($._type_list_maybe_vararg), ")"),
-    )),
+      prec.dynamic(1, $._type_list_maybe_vararg),
+      prec.dynamic(10, seq("(", $._type_list_maybe_vararg, ")")),
+    ),
 
     _partypelist: $ => list(alias($._partype, $.arg)),
     _partype: $ => seq(optional(seq(field("name", $.identifier), ":")), field("type", $._type)),
@@ -438,7 +444,7 @@ module.exports = grammar({
       "<", list($._type), ">"
     )),
 
-    type_index: $ => prec.right(1000, seq(
+    type_index: $ => prec.right(prec_type_op.index, seq(
       choice($.identifier, $.type_index), ".", $.identifier,
       optional(alias($.typearg_params, $.typeargs))
     )),

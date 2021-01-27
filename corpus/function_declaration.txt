@@ -251,7 +251,7 @@ end
 Function type arguments
 ==============================
 
-local function foo(bar: function(): (number, number), baz: number)
+local function foo(bar: function(): (number), baz: number)
    return bar, baz
 end
 
@@ -266,7 +266,7 @@ end
           name: (identifier)
           type: (function_type
             arguments: (arguments)
-            return_type: (return_type (simple_type) (simple_type))))
+            return_type: (return_type (simple_type))))
         (arg
           name: (identifier)
           type: (simple_type))))

@@ -1268,7 +1268,7 @@
     },
     "type_union": {
       "type": "PREC_LEFT",
-      "value": 1,
+      "value": 100,
       "content": {
         "type": "SEQ",
         "members": [
@@ -2059,7 +2059,7 @@
     },
     "variadic_type": {
       "type": "PREC",
-      "value": 1,
+      "value": 999,
       "content": {
         "type": "SEQ",
         "members": [
@@ -2126,20 +2126,24 @@
       ]
     },
     "return_type": {
-      "type": "PREC_RIGHT",
-      "value": 0,
-      "content": {
-        "type": "CHOICE",
-        "members": [
-          {
-            "type": "SYMBOL",
-            "name": "variadic_type"
-          },
-          {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "variadic_type"
+        },
+        {
+          "type": "PREC_DYNAMIC",
+          "value": 1,
+          "content": {
             "type": "SYMBOL",
             "name": "_type_list_maybe_vararg"
-          },
-          {
+          }
+        },
+        {
+          "type": "PREC_DYNAMIC",
+          "value": 10,
+          "content": {
             "type": "SEQ",
             "members": [
               {
@@ -2147,16 +2151,8 @@
                 "value": "("
               },
               {
-                "type": "CHOICE",
-                "members": [
-                  {
-                    "type": "SYMBOL",
-                    "name": "_type_list_maybe_vararg"
-                  },
-                  {
-                    "type": "BLANK"
-                  }
-                ]
+                "type": "SYMBOL",
+                "name": "_type_list_maybe_vararg"
               },
               {
                 "type": "STRING",
@@ -2164,8 +2160,8 @@
               }
             ]
           }
-        ]
-      }
+        }
+      ]
     },
     "_partypelist": {
       "type": "SEQ",
@@ -3668,6 +3664,9 @@
     [
       "_var",
       "table_entry"
+    ],
+    [
+      "return_type"
     ]
   ],
   "externals": [
