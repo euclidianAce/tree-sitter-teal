@@ -8,7 +8,7 @@ return 3 + 3
 ---
 
 (program
-  (return_statement (bin_op (number) (number))))
+  (return_statement (bin_op (number) op: (op) (number))))
 
 ==============================
 Basic precedence
@@ -19,7 +19,7 @@ return 3 + 3 * 2
 ---
 
 (program
-  (return_statement (bin_op (number) (bin_op (number) (number)))))
+  (return_statement (bin_op (number) op: (op) (bin_op (number) op: (op) (number)))))
 
 ==============================
 A bunch of precedence
@@ -31,6 +31,8 @@ return 4 as string .. 5 as string / 2 + {}
 
 (program (return_statement (bin_op
   (type_cast (number) (simple_type))
+  op: (op)
   (bin_op
-    (bin_op (type_cast (number) (simple_type)) (number))
+    (bin_op (type_cast (number) (simple_type)) op: (op) (number))
+    op: (op)
     (table_constructor)))))

@@ -3,77 +3,122 @@
 
 void *tree_sitter_teal_external_scanner_create() { return NULL; }
 void tree_sitter_teal_external_scanner_destroy(void *payload) {}
-unsigned tree_sitter_teal_external_scanner_serialize(void *payload, char *buffer) { return 0; }
-void tree_sitter_teal_external_scanner_deserialize(void *payload, const char *buffer, unsigned length) {}
+
 static inline void consume(TSLexer *lexer) { lexer->advance(lexer, false); }
 static inline void skip(TSLexer *lexer) { lexer->advance(lexer, true); }
 
-#define ACTION_WHILE(action) \
-    static inline unsigned int action ## _while (bool (*fn)(TSLexer*), TSLexer *lexer) { \
-        unsigned int n = 0; \
-        while (fn(lexer)) { action(lexer); ++n; } \
-        return n; }
-ACTION_WHILE(consume)
-ACTION_WHILE(skip)
-
-#define PREDICATE_ANY_OF(name, cases) \
-    static inline bool name (TSLexer *lexer) { switch (lexer->lookahead) { \
-        cases return true; \
-        default: return false; } }
-
-#define PREDICATE_NONE_OF(name, cases) \
-    static inline bool name (TSLexer *lexer) { switch (lexer->lookahead) { \
-        cases return false; \
-        default: return true; } }
-
-#define C(x) case x :
-PREDICATE_NONE_OF (not_nl_or_eof,      C(0) C('\n'))
-PREDICATE_NONE_OF (not_right_bracket,  C(']'))
-PREDICATE_ANY_OF  (is_whitespace,      C(' ') C('\n') C('\r') C('\t'))
-PREDICATE_ANY_OF  (is_eq,              C('='))
-
 enum TokenType {
-    COMMENT,
-    LONG_STRING,
+    LONG_COMMENT_CONTENT,
+
+    LONG_STRING_START,
+    LONG_STRING_CHAR,
+    LONG_STRING_END,
 };
 
-#define RET_FALSE_IF_NOT(char) if (lexer->lookahead != char) return false; consume(lexer)
+#define EXPECT(char) if (lexer->lookahead != char) return false; consume(lexer)
+#define CONSUME_EQS(n) do { while (lexer->lookahead == '=') { consume(lexer); ++ n ; } } while (0)
 
-static bool scan_bracketed_content(TSLexer *lexer) {
-    RET_FALSE_IF_NOT('[');
-    const unsigned int start_eq = consume_while(is_eq, lexer);
-    RET_FALSE_IF_NOT('[');
+static bool scan_long_comment_content(TSLexer *lexer) {
+    EXPECT('[');
+    uint8_t eqs = 0;
+    CONSUME_EQS(eqs);
+    EXPECT('[');
 
-    while (lexer->lookahead != 0) {
-        consume_while(not_right_bracket, lexer);
-        RET_FALSE_IF_NOT(']');
+    while (lexer->lookahead > 0) {
+        while (lexer->lookahead != ']') consume(lexer);
+        EXPECT(']');
 
-        const unsigned int test_eq = consume_while(is_eq, lexer);
-        RET_FALSE_IF_NOT(']');
-
-        if (test_eq == start_eq) return true;
+        uint8_t test_eq = 0;
+        CONSUME_EQS(test_eq);
+        if (lexer->lookahead == ']') {
+            consume(lexer);
+            if (test_eq == eqs) return true;
+        } else if (lexer->lookahead != 0) {
+            consume(lexer);
+        }
     }
 
     return false;
 }
 
-bool tree_sitter_teal_external_scanner_scan(void *payload, TSLexer *lexer, const bool *valid_symbols) {
-    skip_while(is_whitespace, lexer);
+// state
+static bool in_long_string = false;
+static uint8_t opening_eqs = 0;
 
-    if (valid_symbols[COMMENT]) {
-        RET_FALSE_IF_NOT('-');
-        RET_FALSE_IF_NOT('-');
-        lexer->result_symbol = COMMENT;
-        if (scan_bracketed_content(lexer)) return true;
-        consume_while(not_nl_or_eof, lexer); return true;
-    } else if (valid_symbols[LONG_STRING]) {
-        if (scan_bracketed_content(lexer)) {
-            lexer->result_symbol = LONG_STRING;
+static inline void reset_state() {
+    in_long_string = false;
+    opening_eqs = 0;
+}
+
+unsigned tree_sitter_teal_external_scanner_serialize(void *payload, char *buffer) {
+    buffer[0] = in_long_string;
+    buffer[1] = opening_eqs;
+    return 2;
+}
+
+void tree_sitter_teal_external_scanner_deserialize(void *payload, const char *buffer, unsigned length) {
+    if (length < 2) return;
+
+    in_long_string = buffer[0];
+    opening_eqs = buffer[1];
+}
+
+static bool scan_long_string_start(TSLexer *lexer) {
+    EXPECT('[');
+    uint8_t eqs = 0;
+    CONSUME_EQS(eqs);
+    EXPECT('[');
+    reset_state();
+    lexer->result_symbol = LONG_STRING_START;
+    in_long_string = true;
+    opening_eqs = eqs;
+    return true;
+}
+
+static bool scan_long_string_end(TSLexer *lexer) {
+    EXPECT(']');
+
+    uint8_t eqs = 0;
+    CONSUME_EQS(eqs);
+    if (opening_eqs == eqs && lexer->lookahead == ']') {
+        consume(lexer);
+        lexer->result_symbol = LONG_STRING_END;
+        reset_state();
+        return true;
+    }
+    return false;
+}
+
+#define IF_VALID_TRY_SCAN(symbol, func) \
+    if (valid_symbols[ symbol ] && func (lexer)) return true
+
+static inline bool is_whitespace(char c) {
+    switch (c) {
+        default: return false;
+        case '\n': case '\r': case ' ': case '\t':
             return true;
+    }
+}
+
+bool tree_sitter_teal_external_scanner_scan(void *payload, TSLexer *lexer, const bool *valid_symbols) {
+    if (lexer->lookahead == 0) return false;
+
+    IF_VALID_TRY_SCAN(LONG_STRING_END, scan_long_string_end);
+    if (in_long_string) {
+        if (lexer->lookahead == '%') {
+            return false;
         }
-        return false;
+        consume(lexer);
+        lexer->result_symbol = LONG_STRING_CHAR;
+        return true;
     }
 
+    IF_VALID_TRY_SCAN(LONG_COMMENT_CONTENT, scan_long_comment_content);
+
+    while (is_whitespace(lexer->lookahead)) skip(lexer);
+    IF_VALID_TRY_SCAN(LONG_STRING_START, scan_long_string_start);
+
+    reset_state();
     return false;
 }
 

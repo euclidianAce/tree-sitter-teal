@@ -35,8 +35,11 @@ module.exports = grammar({
   ],
 
   externals: $ => [
-    $.comment,
-    $._long_string,
+    $._long_comment_content,
+
+    $._long_string_start,
+    $._long_string_char,
+    $._long_string_end,
   ],
 
   inline: $ => [
@@ -142,7 +145,7 @@ module.exports = grammar({
     ),
 
     unary_op: $ => prec.left(prec_op.unary, seq(
-      choice('not', '#', '-', '~'),
+      field("op", alias(choice('not', '#', '-', '~'), $.op)),
       $._expression
     )),
 
@@ -169,7 +172,7 @@ module.exports = grammar({
         ['%', prec_op.mult],
       ].map(([operator, precedence]) => prec.left(precedence, seq(
         $._expression,
-        field('op', operator),
+        field("op", alias(operator, $.op)),
         $._expression
       ))),
       ...[
@@ -177,19 +180,19 @@ module.exports = grammar({
         ['^', prec_op.power],
       ].map(([operator, precedence]) => prec.right(precedence, seq(
         $._expression,
-        field('op', operator),
+        field("op", alias(operator, $.op)),
         $._expression
       ))),
       prec.right(prec_op.is, seq(
         $._expression,
-        field('op', "is"),
+        field("op", alias("is", $.op)),
         $._type
       )),
     ),
 
     type_cast: $ => prec.right(prec_op.as, seq(
       $._expression,
-      field('op', "as"),
+      "as",
       choice($._type, $.type_tuple)
     )),
 
@@ -516,62 +519,71 @@ module.exports = grammar({
     identifier: $ => /[a-zA-Z_][a-zA-Z_0-9]*/,
     number: $ => choice(
       /\d+(\.\d+)?(e\d+)?/i,
-      // TODO: case insensitive regex doesn't work here?
+      /\.\d+(e\d+)?/i,
       /0x[0-9a-fA-F]+(\.[0-9a-fA-F]+)?(p\d+)?/,
     ),
     boolean: $ => choice("true", "false"),
 
+
     string: $ => choice(
-      $._long_string,
-      seq(
-        '"',
+      ...['"', "'"].map((delim) => seq(
+        delim,
         repeat(choice(
           $.format_specifier,
           $.escape_sequence,
-          token.immediate(/[^"\\\n%]+|%/),
+          token.immediate(prec(2, new RegExp('[^' + delim + '\\\r\\\n\\\\%]'))),
+          token.immediate(prec(1, '%')),
         )),
-        '"'
+        delim,
+      )),
+      seq(
+        $._long_string_start,
+        repeat(choice(
+          $.format_specifier,
+          $._long_string_char,
+          token.immediate(prec(1, '%')),
+        )),
+        $._long_string_end,
       ),
-      seq(
-        "'",
-        repeat(choice(
-          $.format_specifier,
-          $.escape_sequence,
-          token.immediate(/[^'\\\n%]+|%/),
-        )),
-        "'"
-      )
     ),
 
-    format_specifier: $ => token.immediate(choice(
-      seq(
+    format_specifier: $ => token.immediate(prec(3, seq(
+      '%',
+      choice(
         '%',
-        optional(/[\+\-]/),
-        optional(' '),
-        optional('#'),
-        optional(choice(
-          '.',
-          /\d+\.?/,
-          /\.\d+/,
-          /\d+\.\d+/,
-        )),
-        /[AaEefGgcdiouXxpqs]/
-      ),
-      "%%",
-    )),
+        seq(
+          optional(choice(
+            '+', '-'
+          )),
+          optional(' '),
+          optional('#'),
+          optional(/[0-9]+/),
+          optional('.'),
+          optional(/[0-9]+/),
+          /[AaEefGgcdiouXxpqs]/,
+        ),
+      )
+    ))),
 
     escape_sequence: $ => token.immediate(seq(
       '\\',
       choice(
-        'a', 'b', 'f', 'n', 'r',
-        't', 'v', '\\', '"', "'", 'z',
-        /x[a-fA-F0-9]{2}/,
-        /d[0-7]{3}/,
-        /u\{[a-fA-F0-9]{1,8}\}/,
+        /[abfnrtvz"'\\]/,
+        seq('x', /[0-9a-fA-F]{2}/),
+        seq('d', /[0-7]{3}/),
+        seq("u{", /[0-9a-fA-F]{1,8}/, '}'),
       ),
     )),
 
     nil: $ => "nil",
+
+    comment: $ => prec(1, seq(
+      "--",
+      choice(
+        $._long_comment_content,
+        /.*/,
+      )
+    ))
   }
 })
 

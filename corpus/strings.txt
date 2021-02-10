@@ -64,3 +64,111 @@ local x = "%"
 
 (program
   (var_declaration (var (identifier)) (string)))
+
+==============================
+Long [[string]]
+==============================
+
+local x = [[hello]]
+
+---
+
+(program
+  (var_declaration (var (identifier)) (string)))
+
+==============================
+Long [  [string]  ]
+==============================
+
+local x = [==[hello]==]
+
+---
+
+(program (var_declaration (var (identifier)) (string)))
+
+==============================
+Longer [    [string]    ]
+==============================
+
+local x = [====[hello]====]
+
+---
+
+(program (var_declaration (var (identifier)) (string)))
+
+==============================
+Long string with eq + almost terminating sequence
+==============================
+
+local x = [==[ ]== ]==]
+
+---
+
+(program
+  (var_declaration (var (identifier)) (string)))
+
+==============================
+"String" with -- in it
+==============================
+
+local x = "-- stuff"
+
+---
+
+(program
+  (var_declaration (var (identifier)) (string)))
+
+==============================
+'String' with -- in it
+==============================
+
+local x = '-- stuff'
+
+---
+
+(program
+  (var_declaration (var (identifier)) (string)))
+
+==============================
+String in return statement
+==============================
+
+return "hi"
+
+---
+
+(program
+  (return_statement (string)))
+
+==============================
+Unicode escape seq
+==============================
+
+local x = "a \u{123} b"
+
+---
+
+(program
+  (var_declaration (var (identifier)) (string (escape_sequence))))
+
+==============================
+% at end of long string
+==============================
+
+local x = [[ abcd %]]
+
+---
+
+(program
+  (var_declaration (var (identifier)) (string)))
+
+==============================
+Long string with format specifier
+==============================
+
+local x = [[ abcd %s ]]
+
+---
+
+(program
+  (var_declaration (var (identifier)) (string (format_specifier))))

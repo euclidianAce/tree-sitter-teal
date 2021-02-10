@@ -38,12 +38,12 @@ local x <const>, y <const>, z <const> = 1, 2, 3
 Global <const> Variable List Declaration
 ==============================
 
-global x <const>, y <const>, z <const> = 1, 2, "hey"
+global x <const>, y <const>, z <const> = 1, 2, 3
 
 ---
 
 (program
   (var_declaration
     (var (identifier) (attribute)) (var (identifier) (attribute)) (var (identifier) (attribute))
-    (number) (number) (string)))
+    (number) (number) (number)))
 
