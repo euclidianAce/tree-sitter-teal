@@ -1,216 +1,79 @@
-// adapted from https://github.com/Azganoth/tree-sitter-lua
-
-#include <stdbool.h>
 #include <tree_sitter/parser.h>
+#include <stdbool.h>
+
+void *tree_sitter_teal_external_scanner_create() { return NULL; }
+void tree_sitter_teal_external_scanner_destroy(void *payload) {}
+unsigned tree_sitter_teal_external_scanner_serialize(void *payload, char *buffer) { return 0; }
+void tree_sitter_teal_external_scanner_deserialize(void *payload, const char *buffer, unsigned length) {}
+static inline void consume(TSLexer *lexer) { lexer->advance(lexer, false); }
+static inline void skip(TSLexer *lexer) { lexer->advance(lexer, true); }
+
+#define ACTION_WHILE(action) \
+    static inline unsigned int action ## _while (bool (*fn)(TSLexer*), TSLexer *lexer) { \
+        unsigned int n = 0; \
+        while (fn(lexer)) { action(lexer); ++n; } \
+        return n; }
+ACTION_WHILE(consume)
+ACTION_WHILE(skip)
+
+#define PREDICATE_ANY_OF(name, cases) \
+    static inline bool name (TSLexer *lexer) { switch (lexer->lookahead) { \
+        cases return true; \
+        default: return false; } }
+
+#define PREDICATE_NONE_OF(name, cases) \
+    static inline bool name (TSLexer *lexer) { switch (lexer->lookahead) { \
+        cases return false; \
+        default: return true; } }
+
+#define C(x) case x :
+PREDICATE_NONE_OF (not_nl_or_eof,      C(0) C('\n'))
+PREDICATE_NONE_OF (not_right_bracket,  C(']'))
+PREDICATE_ANY_OF  (is_whitespace,      C(' ') C('\n') C('\r') C('\t'))
+PREDICATE_ANY_OF  (is_eq,              C('='))
 
 enum TokenType {
-  COMMENT,
-  STRING,
+    COMMENT,
+    LONG_STRING,
 };
 
-static inline void skip(TSLexer *lexer) { lexer->advance(lexer, true); }
-static inline void advance(TSLexer *lexer) { lexer->advance(lexer, false); }
-static bool scan_sequence(TSLexer *lexer, const char *sequence) {
-  // Try to match all characters in the given 'sequence'
-  for (const char *c = sequence; *c; c++) {
-    if (lexer->lookahead == *c) {
-      // Consume the character in 'c'
-      advance(lexer);
-    } else {
-      return false;
-    }
-  }
+#define RET_FALSE_IF_NOT(char) if (lexer->lookahead != char) return false; consume(lexer)
 
-  return true;
-}
+static bool scan_bracketed_content(TSLexer *lexer) {
+    RET_FALSE_IF_NOT('[');
+    const unsigned int start_eq = consume_while(is_eq, lexer);
+    RET_FALSE_IF_NOT('[');
 
-static bool scan_multiline_content(TSLexer *lexer) {
-  // Initialize teal multiline content level count
-  int start_level = 0;
-  int end_level = 0;
+    while (lexer->lookahead != 0) {
+        consume_while(not_right_bracket, lexer);
+        RET_FALSE_IF_NOT(']');
 
-  if (lexer->lookahead == '[') {
-    // Consume first appearance of '['
-    advance(lexer);
+        const unsigned int test_eq = consume_while(is_eq, lexer);
+        RET_FALSE_IF_NOT(']');
 
-    if (lexer->lookahead == '[' || lexer->lookahead == '=') {
-      while (lexer->lookahead == '=') {
-        // Increment level count
-        ++start_level;
-
-        // Consume all '=' characters
-        advance(lexer);
-      }
-
-      if (lexer->lookahead == '[') {
-        // Consume last appearance of '['
-        advance(lexer);
-
-        // Loop while not end of file (eof)
-        while (lexer->lookahead != 0) {
-          // Gives the end level count the same as start level count
-          end_level = start_level;
-
-          if (lexer->lookahead == ']') {
-            // Consume first appearance of ']'
-            advance(lexer);
-
-            if (lexer->lookahead == ']' || lexer->lookahead == '=') {
-              while (lexer->lookahead == '=' && end_level > 0) {
-                // Decrement level count
-                --end_level;
-
-                // Consume all '=' characters
-                advance(lexer);
-              }
-
-              if (lexer->lookahead == ']' && end_level == 0) {
-                // Consume last appearance of ']'
-                advance(lexer);
-
-                return true;
-              }
-            }
-          }
-
-          if (lexer->lookahead != 0) {
-            // Consume all but end of file (eof)
-            advance(lexer);
-          }
-        }
-      }
-    }
-  }
-
-  return false;
-}
-
-static inline bool is_whitespace(char c) {
-  switch (c) {
-    default: break;
-    case ' ': case '\n': case '\r': case '\t':
-      return true;
-  }
-  return false;
-}
-
-static bool scan(TSLexer *lexer, const bool *valid_symbols) {
-  if (valid_symbols[COMMENT] || valid_symbols[STRING]) {
-    while (is_whitespace(lexer->lookahead)) {
-      skip(lexer);
-    }
-
-    // Try to make a short literal string with single quote
-    if (lexer->lookahead == '\'') {
-      lexer->result_symbol = STRING;
-
-      // Consume first appearance of '\''
-      advance(lexer);
-
-      // Loop when isn't new line neither end of file (eof)
-      while (lexer->lookahead != '\n' && lexer->lookahead != 0) {
-        if (lexer->lookahead == '\\') {
-          // Consume '\\'
-          advance(lexer);
-
-          if (lexer->lookahead != '\n' && lexer->lookahead != 0) {
-            // Consume any character that isn't new line neither end of file (eof)
-            advance(lexer);
-          } else {
-            break;
-          }
-        } else {
-          if (lexer->lookahead == '\'') {
-            // Consume last appearance of '\''
-            advance(lexer);
-
-            return true;
-          } else {
-            if (lexer->lookahead != '\n' && lexer->lookahead != 0) {
-              // Consume any character that isn't new line neither end of file (eof)
-              advance(lexer);
-            } else {
-              break;
-            }
-          }
-        }
-      }
-    }
-
-    // Try to make a short literal string with double quote
-    else if (lexer->lookahead == '"') {
-      lexer->result_symbol = STRING;
-
-      // Consume first appearance of '"'
-      advance(lexer);
-
-      // Loop when next character isn't new line neither end of file (eof)
-      while (lexer->lookahead != '\n' && lexer->lookahead != 0) {
-        if (lexer->lookahead == '\\') {
-          // Consume '\\'
-          advance(lexer);
-
-          if (lexer->lookahead != '\n' && lexer->lookahead != 0) {
-            // Consume any character that isn't new line neither end of file (eof)
-            advance(lexer);
-          } else {
-            break;
-          }
-        } else {
-          if (lexer->lookahead == '"') {
-            // Consume last appearance of '"'
-            advance(lexer);
-
-            return true;
-          } else {
-            if (lexer->lookahead != '\n' && lexer->lookahead != 0) {
-              // Consume any character that isn't new line neither end of file (eof)
-              advance(lexer);
-            } else {
-              break;
-            }
-          }
-        }
-      }
-    }
-
-    // Try to make a comment
-    else if (scan_sequence(lexer, "--")) {
-      while (is_whitespace(lexer->lookahead) && lexer->lookahead != '\n' && lexer->lookahead != 0) {
-        advance(lexer);
-      }
-
-      lexer->result_symbol = COMMENT;
-
-      if (!scan_multiline_content(lexer)) {
-        while (lexer->lookahead != '\n' && lexer->lookahead != 0) {
-          // Consume any character that isn't new line neither end of file (eof)
-          advance(lexer);
-        }
-      }
-
-      return true;
-    }
-
-    // Try to make a long literal string with double bracket
-    else if (scan_multiline_content(lexer)) {
-      lexer->result_symbol = STRING;
-
-      return true;
+        if (test_eq == start_eq) return true;
     }
 
     return false;
-  }
-
-  return false;
 }
-
-void *tree_sitter_teal_external_scanner_create() { return NULL; }
-void tree_sitter_teal_external_scanner_destroy(void *payload) { }
 
 bool tree_sitter_teal_external_scanner_scan(void *payload, TSLexer *lexer, const bool *valid_symbols) {
-  return scan(lexer, valid_symbols);
+    skip_while(is_whitespace, lexer);
+
+    if (valid_symbols[COMMENT]) {
+        RET_FALSE_IF_NOT('-');
+        RET_FALSE_IF_NOT('-');
+        lexer->result_symbol = COMMENT;
+        if (scan_bracketed_content(lexer)) return true;
+        consume_while(not_nl_or_eof, lexer); return true;
+    } else if (valid_symbols[LONG_STRING]) {
+        if (scan_bracketed_content(lexer)) {
+            lexer->result_symbol = LONG_STRING;
+            return true;
+        }
+        return false;
+    }
+
+    return false;
 }
 
-unsigned tree_sitter_teal_external_scanner_serialize(void *payload, char *buffer) { return 0; }
-void tree_sitter_teal_external_scanner_deserialize(void *payload, const char *buffer, unsigned length) {}

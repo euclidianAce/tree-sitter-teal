@@ -21,6 +21,32 @@ This is a comment
 (program (comment))
 
 ==============================
+Multi line comment with multiple equal signs
+==============================
+
+--[==[
+This is a comment
+]==]
+
+---------------------
+
+(program (comment))
+
+==============================
+Nested comments
+==============================
+
+--[===[
+This is a comment
+[=[ with some ]=]
+[==[ nesting ]==]
+]===]
+
+---------------------
+
+(program (comment))
+
+==============================
 Inline comment
 ==============================
 

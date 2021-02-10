@@ -30,7 +30,7 @@ local x <const>, y <const>, z <const> = 1, 2, 3
 ---
 
 (program
-  (var_declaration 
+  (var_declaration
     (var (identifier) (attribute)) (var (identifier) (attribute)) (var (identifier) (attribute))
     (number) (number) (number)))
 
@@ -43,7 +43,7 @@ global x <const>, y <const>, z <const> = 1, 2, "hey"
 ---
 
 (program
-  (var_declaration 
+  (var_declaration
     (var (identifier) (attribute)) (var (identifier) (attribute)) (var (identifier) (attribute))
     (number) (number) (string)))
 

@@ -1,0 +1,66 @@
+
+==============================
+Simple "string"
+==============================
+
+local x = "hello"
+
+---
+
+(program
+  (var_declaration (var (identifier)) (string)))
+
+==============================
+Simple 'string'
+==============================
+
+local x = 'hello'
+
+---
+
+(program
+  (var_declaration (var (identifier)) (string)))
+
+==============================
+Simple "string" with \"
+==============================
+
+local x = "he\"llo"
+
+---
+
+(program
+  (var_declaration (var (identifier)) (string (escape_sequence))))
+
+==============================
+Simple 'string' with \'
+==============================
+
+local x = 'he\'llo'
+
+---
+
+(program
+  (var_declaration (var (identifier)) (string (escape_sequence))))
+
+==============================
+Simple "string" with format specifier
+==============================
+
+local x = "a %A"
+
+---
+
+(program
+  (var_declaration (var (identifier)) (string (format_specifier))))
+
+==============================
+Simple "string" with % but not a format specifier
+==============================
+
+local x = "%"
+
+---
+
+(program
+  (var_declaration (var (identifier)) (string)))

@@ -2159,6 +2159,25 @@
     }
   },
   {
+    "type": "string",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "escape_sequence",
+          "named": true
+        },
+        {
+          "type": "format_specifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "table_constructor",
     "named": true,
     "fields": {},
@@ -3273,6 +3292,10 @@
     }
   },
   {
+    "type": "\"",
+    "named": false
+  },
+  {
     "type": "#",
     "named": false
   },
@@ -3282,6 +3305,10 @@
   },
   {
     "type": "&",
+    "named": false
+  },
+  {
+    "type": "'",
     "named": false
   },
   {
@@ -3425,12 +3452,20 @@
     "named": false
   },
   {
+    "type": "escape_sequence",
+    "named": true
+  },
+  {
     "type": "false",
     "named": false
   },
   {
     "type": "for",
     "named": false
+  },
+  {
+    "type": "format_specifier",
+    "named": true
   },
   {
     "type": "function",
@@ -3502,10 +3537,6 @@
   },
   {
     "type": "shebang_comment",
-    "named": true
-  },
-  {
-    "type": "string",
     "named": true
   },
   {

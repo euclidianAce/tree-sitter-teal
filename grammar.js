@@ -1,5 +1,6 @@
 
 const list = (item, sep = ",") => seq(item, repeat(seq(sep, item)))
+
 const prec_op = {
   or: 1,
   and: 2,
@@ -35,7 +36,7 @@ module.exports = grammar({
 
   externals: $ => [
     $.comment,
-    $.string,
+    $._long_string,
   ],
 
   inline: $ => [
@@ -46,7 +47,8 @@ module.exports = grammar({
   ],
 
   conflicts : $ => [
-    [$._var, $.table_entry],
+    [$._var, $.table_entry], // conflict lies in table entries with type annotations vs array entry of a method call
+                             // ex: { foo: bar = nil } vs { foo:bar() }
     [$.return_type],
   ],
 
@@ -518,8 +520,58 @@ module.exports = grammar({
       /0x[0-9a-fA-F]+(\.[0-9a-fA-F]+)?(p\d+)?/,
     ),
     boolean: $ => choice("true", "false"),
-    nil: $ => "nil"
 
+    string: $ => choice(
+      $._long_string,
+      seq(
+        '"',
+        repeat(choice(
+          $.format_specifier,
+          $.escape_sequence,
+          token.immediate(/[^"\\\n%]+|%/),
+        )),
+        '"'
+      ),
+      seq(
+        "'",
+        repeat(choice(
+          $.format_specifier,
+          $.escape_sequence,
+          token.immediate(/[^'\\\n%]+|%/),
+        )),
+        "'"
+      )
+    ),
+
+    format_specifier: $ => token.immediate(choice(
+      seq(
+        '%',
+        optional(/[\+\-]/),
+        optional(' '),
+        optional('#'),
+        optional(choice(
+          '.',
+          /\d+\.?/,
+          /\.\d+/,
+          /\d+\.\d+/,
+        )),
+        /[AaEefGgcdiouXxpqs]/
+      ),
+      "%%",
+    )),
+
+    escape_sequence: $ => token.immediate(seq(
+      '\\',
+      choice(
+        'a', 'b', 'f', 'n', 'r',
+        't', 'v', '\\', '"', "'", 'z',
+        /x[a-fA-F0-9]{2}/,
+        /d[0-7]{3}/,
+        /u\{[a-fA-F0-9]{1,8}\}/,
+      ),
+    )),
+
+    nil: $ => "nil",
   }
 })
 
