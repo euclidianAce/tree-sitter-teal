@@ -1,6 +1,6 @@
 {
   "name": "tree-sitter-teal",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Tree sitter parser for Teal, a typed dialect of Lua.",
   "main": "index.js",
   "scripts": {
