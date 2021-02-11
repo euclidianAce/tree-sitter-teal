@@ -1,5 +1,7 @@
 # tree-sitter-teal
 
+[![Node.js CI](https://img.shields.io/github/workflow/status/euclidianAce/tree-sitter-teal/Node.js%20CI.svg?logo=github)](https://github.com/euclidianAce/tree-sitter-teal/actions?query=workflow%3A%22Node.js+CI%22)
+
 It's a tree-sitter parser for Teal™
 
 Teal is a typed dialect of Lua, [get it here](https://github.com/teal-language/tl)
