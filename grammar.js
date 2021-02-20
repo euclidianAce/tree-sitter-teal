@@ -580,8 +580,8 @@ module.exports = grammar({
     comment: $ => prec(1, seq(
       "--",
       choice(
+        token.immediate(/[^\n\r]*/),
         $._long_comment_content,
-        /.*/,
       )
     ))
   }

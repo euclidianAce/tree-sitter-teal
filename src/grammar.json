@@ -4108,12 +4108,15 @@
             "type": "CHOICE",
             "members": [
               {
-                "type": "SYMBOL",
-                "name": "_long_comment_content"
+                "type": "IMMEDIATE_TOKEN",
+                "content": {
+                  "type": "PATTERN",
+                  "value": "[^\\n\\r]*"
+                }
               },
               {
-                "type": "PATTERN",
-                "value": ".*"
+                "type": "SYMBOL",
+                "name": "_long_comment_content"
               }
             ]
           }

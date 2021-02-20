@@ -1,5 +1,6 @@
 #include <tree_sitter/parser.h>
 #include <stdbool.h>
+#include <stdio.h>
 
 void *tree_sitter_teal_external_scanner_create() { return NULL; }
 void tree_sitter_teal_external_scanner_destroy(void *payload) {}
@@ -25,14 +26,18 @@ static bool scan_long_comment_content(TSLexer *lexer) {
     EXPECT('[');
 
     while (lexer->lookahead > 0) {
-        while (lexer->lookahead != ']') consume(lexer);
-        EXPECT(']');
+        while (lexer->lookahead > 0 && lexer->lookahead != ']')
+            consume(lexer);
 
+        EXPECT(']');
         uint8_t test_eq = 0;
         CONSUME_EQS(test_eq);
         if (lexer->lookahead == ']') {
             consume(lexer);
-            if (test_eq == eqs) return true;
+            if (test_eq == eqs) {
+                lexer->result_symbol = LONG_COMMENT_CONTENT;
+                return true;
+            }
         } else if (lexer->lookahead != 0) {
             consume(lexer);
         }
@@ -103,8 +108,8 @@ static inline bool is_whitespace(char c) {
 bool tree_sitter_teal_external_scanner_scan(void *payload, TSLexer *lexer, const bool *valid_symbols) {
     if (lexer->lookahead == 0) return false;
 
-    IF_VALID_TRY_SCAN(LONG_STRING_END, scan_long_string_end);
     if (in_long_string) {
+        IF_VALID_TRY_SCAN(LONG_STRING_END, scan_long_string_end);
         if (lexer->lookahead == '%') {
             return false;
         }
