@@ -26,6 +26,7 @@ static bool scan_long_comment_content(TSLexer *lexer) {
     EXPECT('[');
 
     while (lexer->lookahead > 0) {
+        lexer->result_symbol = LONG_COMMENT_CONTENT;
         while (lexer->lookahead > 0 && lexer->lookahead != ']')
             consume(lexer);
 
@@ -35,7 +36,6 @@ static bool scan_long_comment_content(TSLexer *lexer) {
         if (lexer->lookahead == ']') {
             consume(lexer);
             if (test_eq == eqs) {
-                lexer->result_symbol = LONG_COMMENT_CONTENT;
                 return true;
             }
         } else if (lexer->lookahead != 0) {
