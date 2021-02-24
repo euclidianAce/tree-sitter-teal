@@ -172,3 +172,14 @@ local x = [[ abcd %s ]]
 
 (program
   (var_declaration (var (identifier)) (string (format_specifier))))
+
+==============================
+Empty long string
+==============================
+
+local x = [[]]
+
+---
+
+(program
+  (var_declaration (var (identifier)) (string)))

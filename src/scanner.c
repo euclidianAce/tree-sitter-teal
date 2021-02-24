@@ -47,25 +47,20 @@ static bool scan_long_comment_content(TSLexer *lexer) {
 }
 
 // state
-static bool in_long_string = false;
 static uint8_t opening_eqs = 0;
 
 static inline void reset_state() {
-    in_long_string = false;
     opening_eqs = 0;
 }
 
 unsigned tree_sitter_teal_external_scanner_serialize(void *payload, char *buffer) {
-    buffer[0] = in_long_string;
-    buffer[1] = opening_eqs;
-    return 2;
+    buffer[0] = opening_eqs;
+    return 1;
 }
 
 void tree_sitter_teal_external_scanner_deserialize(void *payload, const char *buffer, unsigned length) {
-    if (length < 2) return;
-
-    in_long_string = buffer[0];
-    opening_eqs = buffer[1];
+    if (length == 0) return;
+    opening_eqs = buffer[0];
 }
 
 static bool scan_long_string_start(TSLexer *lexer) {
@@ -75,7 +70,6 @@ static bool scan_long_string_start(TSLexer *lexer) {
     EXPECT('[');
     reset_state();
     lexer->result_symbol = LONG_STRING_START;
-    in_long_string = true;
     opening_eqs = eqs;
     return true;
 }
@@ -94,8 +88,14 @@ static bool scan_long_string_end(TSLexer *lexer) {
     return false;
 }
 
-#define IF_VALID_TRY_SCAN(symbol, func) \
-    if (valid_symbols[ symbol ] && func (lexer)) return true
+bool scan_long_string_char(TSLexer *lexer) {
+    if (lexer->lookahead == '%') {
+        return false;
+    }
+    consume(lexer);
+    lexer->result_symbol = LONG_STRING_CHAR;
+    return true;
+}
 
 static inline bool is_whitespace(char c) {
     switch (c) {
@@ -108,16 +108,11 @@ static inline bool is_whitespace(char c) {
 bool tree_sitter_teal_external_scanner_scan(void *payload, TSLexer *lexer, const bool *valid_symbols) {
     if (lexer->lookahead == 0) return false;
 
-    if (in_long_string) {
-        IF_VALID_TRY_SCAN(LONG_STRING_END, scan_long_string_end);
-        if (lexer->lookahead == '%') {
-            return false;
-        }
-        consume(lexer);
-        lexer->result_symbol = LONG_STRING_CHAR;
-        return true;
-    }
+#define IF_VALID_TRY_SCAN(symbol, func) \
+    if (valid_symbols[ symbol ] && func (lexer)) return true
 
+    IF_VALID_TRY_SCAN(LONG_STRING_END, scan_long_string_end);
+    IF_VALID_TRY_SCAN(LONG_STRING_CHAR, scan_long_string_char);
     IF_VALID_TRY_SCAN(LONG_COMMENT_CONTENT, scan_long_comment_content);
 
     while (is_whitespace(lexer->lookahead)) skip(lexer);

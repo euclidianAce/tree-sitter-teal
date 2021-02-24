@@ -69,6 +69,18 @@ local x = 5
   (var_declaration (var (identifier)) (number)))
 
 ==============================
+line comment with whitespace -- [[
+==============================
+
+-- [[ hi
+local x = 5
+
+---------------------
+
+(program (comment)
+  (var_declaration (var (identifier)) (number)))
+
+==============================
 Shebang comment
 ==============================
 #!/usr/bin/env tl run
