@@ -1,216 +1,218 @@
-// adapted from https://github.com/Azganoth/tree-sitter-lua
-
-#include <stdbool.h>
 #include <tree_sitter/parser.h>
+#include <stdbool.h>
+#include <stdio.h>
+
+void *tree_sitter_teal_external_scanner_create() { return NULL; }
+void tree_sitter_teal_external_scanner_destroy(void *payload) {}
+
+static inline void consume(TSLexer *lexer) { lexer->advance(lexer, false); }
+static inline void skip(TSLexer *lexer) { lexer->advance(lexer, true); }
 
 enum TokenType {
-  COMMENT,
-  STRING,
+    COMMENT,
+
+    LONG_STRING_START,
+    LONG_STRING_CHAR,
+    LONG_STRING_END,
+
+    SHORT_STRING_START,
+    SHORT_STRING_CHAR,
+    SHORT_STRING_END,
 };
 
-static inline void skip(TSLexer *lexer) { lexer->advance(lexer, true); }
-static inline void advance(TSLexer *lexer) { lexer->advance(lexer, false); }
-static bool scan_sequence(TSLexer *lexer, const char *sequence) {
-  // Try to match all characters in the given 'sequence'
-  for (const char *c = sequence; *c; c++) {
-    if (lexer->lookahead == *c) {
-      // Consume the character in 'c'
-      advance(lexer);
-    } else {
-      return false;
-    }
-  }
+#define EXPECT(char) do { if (lexer->lookahead != char) { return false; } consume(lexer); } while (0)
+#define CONSUME_EQS(n) do { while (lexer->lookahead == '=') { consume(lexer); ++ n ; } } while (0)
+/* #define LOG() do { printf("%s '%c'\n", __FUNCTION__, lexer->lookahead == '\n' ? '~' : lexer->lookahead); } while (0) */
+#define LOG()
 
-  return true;
+static void consume_rest_of_line(TSLexer *lexer) {
+    while (lexer->lookahead > 0) {
+        switch (lexer->lookahead) {
+            case '\n': case '\r': return;
+            default: consume(lexer);
+        }
+    }
 }
 
-static bool scan_multiline_content(TSLexer *lexer) {
-  // Initialize teal multiline content level count
-  int start_level = 0;
-  int end_level = 0;
+static bool scan_comment(TSLexer *lexer) {
+    LOG();
+    EXPECT('-'); EXPECT('-');
+    lexer->result_symbol = COMMENT;
 
-  if (lexer->lookahead == '[') {
-    // Consume first appearance of '['
-    advance(lexer);
-
-    if (lexer->lookahead == '[' || lexer->lookahead == '=') {
-      while (lexer->lookahead == '=') {
-        // Increment level count
-        ++start_level;
-
-        // Consume all '=' characters
-        advance(lexer);
-      }
-
-      if (lexer->lookahead == '[') {
-        // Consume last appearance of '['
-        advance(lexer);
-
-        // Loop while not end of file (eof)
-        while (lexer->lookahead != 0) {
-          // Gives the end level count the same as start level count
-          end_level = start_level;
-
-          if (lexer->lookahead == ']') {
-            // Consume first appearance of ']'
-            advance(lexer);
-
-            if (lexer->lookahead == ']' || lexer->lookahead == '=') {
-              while (lexer->lookahead == '=' && end_level > 0) {
-                // Decrement level count
-                --end_level;
-
-                // Consume all '=' characters
-                advance(lexer);
-              }
-
-              if (lexer->lookahead == ']' && end_level == 0) {
-                // Consume last appearance of ']'
-                advance(lexer);
-
-                return true;
-              }
-            }
-          }
-
-          if (lexer->lookahead != 0) {
-            // Consume all but end of file (eof)
-            advance(lexer);
-          }
-        }
-      }
+    if (lexer->lookahead != '[') {
+        consume_rest_of_line(lexer);
+        return true;
     }
-  }
 
-  return false;
+    consume(lexer);
+    uint8_t eqs = 0;
+    CONSUME_EQS(eqs);
+
+    if (lexer->lookahead != '[') {
+        consume_rest_of_line(lexer);
+        return true;
+    }
+
+    while (lexer->lookahead > 0) {
+        while (lexer->lookahead > 0 && lexer->lookahead != ']')
+            consume(lexer);
+
+        EXPECT(']');
+        uint8_t test_eq = 0;
+        CONSUME_EQS(test_eq);
+        if (lexer->lookahead == ']') {
+            consume(lexer);
+            if (test_eq == eqs) {
+                return true;
+            }
+        } else if (lexer->lookahead != 0) {
+            consume(lexer);
+        }
+    }
+
+    return true;
+}
+
+// state
+static uint8_t opening_eqs = 0;
+static bool in_str = false;
+static char opening_quote = 0;
+
+static inline void reset_state() {
+    opening_eqs = 0;
+    in_str = false;
+    opening_quote = 0;
+}
+
+unsigned tree_sitter_teal_external_scanner_serialize(void *payload, char *buffer) {
+    buffer[0] = opening_eqs;
+    buffer[1] = in_str;
+    buffer[2] = opening_quote;
+    return 3;
+}
+
+void tree_sitter_teal_external_scanner_deserialize(void *payload, const char *buffer, unsigned length) {
+    if (length == 0) return;
+    opening_eqs = buffer[0];
+    if (length == 1) return;
+    in_str = buffer[1];
+    if (length == 2) return;
+    opening_quote = buffer[2];
+}
+
+static bool scan_short_string_start(TSLexer *lexer) {
+    LOG();
+    if ((lexer->lookahead == '"') || (lexer->lookahead == '\'')) {
+        opening_quote = lexer->lookahead;
+        in_str = true;
+        consume(lexer);
+        lexer->result_symbol = SHORT_STRING_START;
+        return true;
+    }
+    return false;
+}
+
+static bool scan_short_string_end(TSLexer *lexer) {
+    LOG();
+    if (in_str && lexer->lookahead == opening_quote) {
+        consume(lexer);
+        lexer->result_symbol = SHORT_STRING_END;
+        reset_state();
+        return true;
+    }
+    return false;
+}
+
+static bool scan_short_string_char(TSLexer *lexer) {
+    LOG();
+    if (
+        in_str
+        && opening_quote > 0
+        && lexer->lookahead != opening_quote
+        && lexer->lookahead != '\n'
+        && lexer->lookahead != '\r'
+        && lexer->lookahead != '\\'
+        && lexer->lookahead != '%'
+    ) {
+        consume(lexer);
+        lexer->result_symbol = SHORT_STRING_CHAR;
+        return true;
+    }
+    return false;
+}
+
+static bool scan_long_string_start(TSLexer *lexer) {
+    LOG();
+    EXPECT('[');
+    reset_state();
+    uint8_t eqs = 0;
+    CONSUME_EQS(eqs);
+    EXPECT('[');
+    in_str = true;
+    lexer->result_symbol = LONG_STRING_START;
+    opening_eqs = eqs;
+    return true;
+}
+
+static bool scan_long_string_end(TSLexer *lexer) {
+    LOG();
+    EXPECT(']');
+
+    uint8_t eqs = 0;
+    CONSUME_EQS(eqs);
+    if (opening_eqs == eqs && lexer->lookahead == ']') {
+        consume(lexer);
+        lexer->result_symbol = LONG_STRING_END;
+        reset_state();
+        return true;
+    }
+    return false;
+}
+
+bool scan_long_string_char(TSLexer *lexer) {
+    if (lexer->lookahead == '%') {
+        return false;
+    }
+    consume(lexer);
+    lexer->result_symbol = LONG_STRING_CHAR;
+    return true;
 }
 
 static inline bool is_whitespace(char c) {
-  switch (c) {
-    default: break;
-    case ' ': case '\n': case '\r': case '\t':
-      return true;
-  }
-  return false;
-}
-
-static bool scan(TSLexer *lexer, const bool *valid_symbols) {
-  if (valid_symbols[COMMENT] || valid_symbols[STRING]) {
-    while (is_whitespace(lexer->lookahead)) {
-      skip(lexer);
-    }
-
-    // Try to make a short literal string with single quote
-    if (lexer->lookahead == '\'') {
-      lexer->result_symbol = STRING;
-
-      // Consume first appearance of '\''
-      advance(lexer);
-
-      // Loop when isn't new line neither end of file (eof)
-      while (lexer->lookahead != '\n' && lexer->lookahead != 0) {
-        if (lexer->lookahead == '\\') {
-          // Consume '\\'
-          advance(lexer);
-
-          if (lexer->lookahead != '\n' && lexer->lookahead != 0) {
-            // Consume any character that isn't new line neither end of file (eof)
-            advance(lexer);
-          } else {
-            break;
-          }
-        } else {
-          if (lexer->lookahead == '\'') {
-            // Consume last appearance of '\''
-            advance(lexer);
-
+    switch (c) {
+        default: return false;
+        case '\n': case '\r': case ' ': case '\t':
             return true;
-          } else {
-            if (lexer->lookahead != '\n' && lexer->lookahead != 0) {
-              // Consume any character that isn't new line neither end of file (eof)
-              advance(lexer);
-            } else {
-              break;
-            }
-          }
-        }
-      }
     }
-
-    // Try to make a short literal string with double quote
-    else if (lexer->lookahead == '"') {
-      lexer->result_symbol = STRING;
-
-      // Consume first appearance of '"'
-      advance(lexer);
-
-      // Loop when next character isn't new line neither end of file (eof)
-      while (lexer->lookahead != '\n' && lexer->lookahead != 0) {
-        if (lexer->lookahead == '\\') {
-          // Consume '\\'
-          advance(lexer);
-
-          if (lexer->lookahead != '\n' && lexer->lookahead != 0) {
-            // Consume any character that isn't new line neither end of file (eof)
-            advance(lexer);
-          } else {
-            break;
-          }
-        } else {
-          if (lexer->lookahead == '"') {
-            // Consume last appearance of '"'
-            advance(lexer);
-
-            return true;
-          } else {
-            if (lexer->lookahead != '\n' && lexer->lookahead != 0) {
-              // Consume any character that isn't new line neither end of file (eof)
-              advance(lexer);
-            } else {
-              break;
-            }
-          }
-        }
-      }
-    }
-
-    // Try to make a comment
-    else if (scan_sequence(lexer, "--")) {
-      while (is_whitespace(lexer->lookahead) && lexer->lookahead != '\n' && lexer->lookahead != 0) {
-        advance(lexer);
-      }
-
-      lexer->result_symbol = COMMENT;
-
-      if (!scan_multiline_content(lexer)) {
-        while (lexer->lookahead != '\n' && lexer->lookahead != 0) {
-          // Consume any character that isn't new line neither end of file (eof)
-          advance(lexer);
-        }
-      }
-
-      return true;
-    }
-
-    // Try to make a long literal string with double bracket
-    else if (scan_multiline_content(lexer)) {
-      lexer->result_symbol = STRING;
-
-      return true;
-    }
-
-    return false;
-  }
-
-  return false;
 }
-
-void *tree_sitter_teal_external_scanner_create() { return NULL; }
-void tree_sitter_teal_external_scanner_destroy(void *payload) { }
 
 bool tree_sitter_teal_external_scanner_scan(void *payload, TSLexer *lexer, const bool *valid_symbols) {
-  return scan(lexer, valid_symbols);
+    LOG();
+    if (lexer->lookahead == 0)
+        return false;
+
+    if (in_str) {
+        if (opening_quote > 0) {
+            return (valid_symbols[SHORT_STRING_END] && scan_short_string_end(lexer))
+                || (valid_symbols[SHORT_STRING_CHAR] && scan_short_string_char(lexer));
+        } else {
+            return scan_long_string_end(lexer)
+                || scan_long_string_char(lexer);
+        }
+    } else {
+        while (is_whitespace(lexer->lookahead))
+            skip(lexer);
+
+        if (valid_symbols[SHORT_STRING_START] && scan_short_string_start(lexer))
+            return true;
+
+        if (valid_symbols[LONG_STRING_START] && scan_long_string_start(lexer))
+            return true;
+    }
+
+    while (is_whitespace(lexer->lookahead))
+        skip(lexer);
+
+    return valid_symbols[COMMENT] && scan_comment(lexer);
 }
 
-unsigned tree_sitter_teal_external_scanner_serialize(void *payload, char *buffer) { return 0; }
-void tree_sitter_teal_external_scanner_deserialize(void *payload, const char *buffer, unsigned length) {}

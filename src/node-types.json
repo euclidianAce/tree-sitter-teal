@@ -170,92 +170,8 @@
         "required": true,
         "types": [
           {
-            "type": "%",
-            "named": false
-          },
-          {
-            "type": "&",
-            "named": false
-          },
-          {
-            "type": "*",
-            "named": false
-          },
-          {
-            "type": "+",
-            "named": false
-          },
-          {
-            "type": "-",
-            "named": false
-          },
-          {
-            "type": "..",
-            "named": false
-          },
-          {
-            "type": "/",
-            "named": false
-          },
-          {
-            "type": "//",
-            "named": false
-          },
-          {
-            "type": "<",
-            "named": false
-          },
-          {
-            "type": "<<",
-            "named": false
-          },
-          {
-            "type": "<=",
-            "named": false
-          },
-          {
-            "type": "==",
-            "named": false
-          },
-          {
-            "type": ">",
-            "named": false
-          },
-          {
-            "type": ">=",
-            "named": false
-          },
-          {
-            "type": ">>",
-            "named": false
-          },
-          {
-            "type": "^",
-            "named": false
-          },
-          {
-            "type": "and",
-            "named": false
-          },
-          {
-            "type": "is",
-            "named": false
-          },
-          {
-            "type": "or",
-            "named": false
-          },
-          {
-            "type": "|",
-            "named": false
-          },
-          {
-            "type": "~",
-            "named": false
-          },
-          {
-            "type": "~=",
-            "named": false
+            "type": "op",
+            "named": true
           }
         ]
       }
@@ -2159,6 +2075,25 @@
     }
   },
   {
+    "type": "string",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "escape_sequence",
+          "named": true
+        },
+        {
+          "type": "format_specifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "table_constructor",
     "named": true,
     "fields": {},
@@ -2501,18 +2436,7 @@
   {
     "type": "type_cast",
     "named": true,
-    "fields": {
-      "op": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "as",
-            "named": false
-          }
-        ]
-      }
-    },
+    "fields": {},
     "children": {
       "multiple": true,
       "required": true,
@@ -2785,7 +2709,18 @@
   {
     "type": "unary_op",
     "named": true,
-    "fields": {},
+    "fields": {
+      "op": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "op",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": false,
       "required": true,
@@ -3273,15 +3208,7 @@
     }
   },
   {
-    "type": "#",
-    "named": false
-  },
-  {
     "type": "%",
-    "named": false
-  },
-  {
-    "type": "&",
     "named": false
   },
   {
@@ -3293,19 +3220,7 @@
     "named": false
   },
   {
-    "type": "*",
-    "named": false
-  },
-  {
-    "type": "+",
-    "named": false
-  },
-  {
     "type": ",",
-    "named": false
-  },
-  {
-    "type": "-",
     "named": false
   },
   {
@@ -3313,19 +3228,7 @@
     "named": false
   },
   {
-    "type": "..",
-    "named": false
-  },
-  {
     "type": "...",
-    "named": false
-  },
-  {
-    "type": "/",
-    "named": false
-  },
-  {
-    "type": "//",
     "named": false
   },
   {
@@ -3345,31 +3248,11 @@
     "named": false
   },
   {
-    "type": "<<",
-    "named": false
-  },
-  {
-    "type": "<=",
-    "named": false
-  },
-  {
     "type": "=",
     "named": false
   },
   {
-    "type": "==",
-    "named": false
-  },
-  {
     "type": ">",
-    "named": false
-  },
-  {
-    "type": ">=",
-    "named": false
-  },
-  {
-    "type": ">>",
     "named": false
   },
   {
@@ -3378,14 +3261,6 @@
   },
   {
     "type": "]",
-    "named": false
-  },
-  {
-    "type": "^",
-    "named": false
-  },
-  {
-    "type": "and",
     "named": false
   },
   {
@@ -3425,12 +3300,20 @@
     "named": false
   },
   {
+    "type": "escape_sequence",
+    "named": true
+  },
+  {
     "type": "false",
     "named": false
   },
   {
     "type": "for",
     "named": false
+  },
+  {
+    "type": "format_specifier",
+    "named": true
   },
   {
     "type": "function",
@@ -3457,10 +3340,6 @@
     "named": false
   },
   {
-    "type": "is",
-    "named": false
-  },
-  {
     "type": "label",
     "named": true
   },
@@ -3481,12 +3360,8 @@
     "named": true
   },
   {
-    "type": "not",
-    "named": false
-  },
-  {
-    "type": "or",
-    "named": false
+    "type": "op",
+    "named": true
   },
   {
     "type": "record",
@@ -3502,10 +3377,6 @@
   },
   {
     "type": "shebang_comment",
-    "named": true
-  },
-  {
-    "type": "string",
     "named": true
   },
   {
@@ -3546,14 +3417,6 @@
   },
   {
     "type": "}",
-    "named": false
-  },
-  {
-    "type": "~",
-    "named": false
-  },
-  {
-    "type": "~=",
     "named": false
   }
 ]

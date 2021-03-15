@@ -21,6 +21,32 @@ This is a comment
 (program (comment))
 
 ==============================
+Multi line comment with multiple equal signs
+==============================
+
+--[==[
+This is a comment
+]==]
+
+---------------------
+
+(program (comment))
+
+==============================
+Nested comments
+==============================
+
+--[===[
+This is a comment
+[=[ with some ]=]
+[==[ nesting ]==]
+]===]
+
+---------------------
+
+(program (comment))
+
+==============================
 Inline comment
 ==============================
 
@@ -29,6 +55,30 @@ local x --[[ This is a comment ]] = 5
 ---------------------
 
 (program (var_declaration (var (identifier)) (comment) (number)))
+
+==============================
+line comment that starts with --[
+==============================
+
+--[ stuff
+local x = 5
+
+---------------------
+
+(program (comment)
+  (var_declaration (var (identifier)) (number)))
+
+==============================
+line comment with whitespace -- [[
+==============================
+
+-- [[ hi
+local x = 5
+
+---------------------
+
+(program (comment)
+  (var_declaration (var (identifier)) (number)))
 
 ==============================
 Shebang comment

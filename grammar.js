@@ -1,5 +1,5 @@
-
 const list = (item, sep = ",") => seq(item, repeat(seq(sep, item)))
+
 const prec_op = {
   or: 1,
   and: 2,
@@ -35,7 +35,14 @@ module.exports = grammar({
 
   externals: $ => [
     $.comment,
-    $.string,
+
+    $._long_string_start,
+    $._long_string_char,
+    $._long_string_end,
+
+    $._short_string_start,
+    $._short_string_char,
+    $._short_string_end,
   ],
 
   inline: $ => [
@@ -46,7 +53,8 @@ module.exports = grammar({
   ],
 
   conflicts : $ => [
-    [$._var, $.table_entry],
+    [$._var, $.table_entry], // conflict lies in table entries with type annotations vs array entry of a method call
+                             // ex: { foo: bar = nil } vs { foo:bar() }
     [$.return_type],
   ],
 
@@ -140,7 +148,7 @@ module.exports = grammar({
     ),
 
     unary_op: $ => prec.left(prec_op.unary, seq(
-      choice('not', '#', '-', '~'),
+      field("op", alias(choice('not', '#', '-', '~'), $.op)),
       $._expression
     )),
 
@@ -167,7 +175,7 @@ module.exports = grammar({
         ['%', prec_op.mult],
       ].map(([operator, precedence]) => prec.left(precedence, seq(
         $._expression,
-        field('op', operator),
+        field("op", alias(operator, $.op)),
         $._expression
       ))),
       ...[
@@ -175,19 +183,19 @@ module.exports = grammar({
         ['^', prec_op.power],
       ].map(([operator, precedence]) => prec.right(precedence, seq(
         $._expression,
-        field('op', operator),
+        field("op", alias(operator, $.op)),
         $._expression
       ))),
       prec.right(prec_op.is, seq(
         $._expression,
-        field('op', "is"),
+        field("op", alias("is", $.op)),
         $._type
       )),
     ),
 
     type_cast: $ => prec.right(prec_op.as, seq(
       $._expression,
-      field('op', "as"),
+      "as",
       choice($._type, $.type_tuple)
     )),
 
@@ -514,12 +522,63 @@ module.exports = grammar({
     identifier: $ => /[a-zA-Z_][a-zA-Z_0-9]*/,
     number: $ => choice(
       /\d+(\.\d+)?(e\d+)?/i,
-      // TODO: case insensitive regex doesn't work here?
+      /\.\d+(e\d+)?/i,
       /0x[0-9a-fA-F]+(\.[0-9a-fA-F]+)?(p\d+)?/,
     ),
     boolean: $ => choice("true", "false"),
-    nil: $ => "nil"
 
+    string: $ => prec(2, choice(
+      seq(
+        $._short_string_start,
+        repeat(choice(
+          $.format_specifier,
+          $.escape_sequence,
+          token.immediate(prec(1, '%')),
+          prec(0, $._short_string_char),
+        )),
+        $._short_string_end,
+      ),
+
+      seq(
+        $._long_string_start,
+        repeat(choice(
+          $.format_specifier,
+          $._long_string_char,
+          token.immediate(prec(1, '%')),
+        )),
+        $._long_string_end,
+      ),
+    )),
+
+    format_specifier: $ => token.immediate(prec(3, seq(
+      '%',
+      choice(
+        '%',
+        seq(
+          optional(choice(
+            '+', '-'
+          )),
+          optional(' '),
+          optional('#'),
+          optional(/[0-9]+/),
+          optional('.'),
+          optional(/[0-9]+/),
+          /[AaEefGgcdiouXxpqs]/,
+        ),
+      )
+    ))),
+
+    escape_sequence: $ => token.immediate(prec(3, seq(
+      '\\',
+      choice(
+        /[abfnrtvz"'\\]/,
+        seq('x', /[0-9a-fA-F]{2}/),
+        seq('d', /[0-7]{3}/),
+        seq("u{", /[0-9a-fA-F]{1,8}/, '}'),
+      ),
+    ))),
+
+    nil: $ => "nil",
   }
 })
 

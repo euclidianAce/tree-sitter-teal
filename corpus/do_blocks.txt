@@ -51,7 +51,7 @@ end
 ---
 
 (program
-  (for_statement (identifier) (number) (number) (unary_op (number))
+  (for_statement (identifier) (number) (number) (unary_op op: (op) (number))
     (for_body)))
 
 ==============================
@@ -111,8 +111,8 @@ end
     (identifier) (number) (number)
     (for_body
       (while_statement
-        condition: (bin_op (identifier) (number))
+        condition: (bin_op (identifier) op: (op) (number))
         (while_body
           (repeat_statement
             (do_statement)
-            condition: (bin_op (identifier) (number))))))))
+            condition: (bin_op (identifier) op: (op) (number))))))))
