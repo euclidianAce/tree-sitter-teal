@@ -4068,6 +4068,7 @@
       "return_type"
     ]
   ],
+  "precedences": [],
   "externals": [
     {
       "type": "SYMBOL",
