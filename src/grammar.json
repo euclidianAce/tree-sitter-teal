@@ -3382,13 +3382,12 @@
         "type": "SEQ",
         "members": [
           {
-            "type": "ALIAS",
+            "type": "FIELD",
+            "name": "name",
             "content": {
               "type": "SYMBOL",
               "name": "identifier"
-            },
-            "named": false,
-            "value": "name"
+            }
           },
           {
             "type": "CHOICE",

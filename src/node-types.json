@@ -2062,7 +2062,18 @@
   {
     "type": "simple_type",
     "named": true,
-    "fields": {},
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": false,
       "required": false,
@@ -3349,10 +3360,6 @@
   },
   {
     "type": "metamethod",
-    "named": false
-  },
-  {
-    "type": "name",
     "named": false
   },
   {
