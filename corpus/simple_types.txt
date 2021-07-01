@@ -11,7 +11,8 @@ local x: number
     (var
       name: (identifier))
     type_annotation: (type_annotation
-      (simple_type))))
+      (simple_type
+        name: (identifier)))))
 
 ================================================================================
 Local declaration with initialization
@@ -26,7 +27,8 @@ local x: number = 5
     (var
       name: (identifier))
     type_annotation: (type_annotation
-      (simple_type))
+      (simple_type
+        name: (identifier)))
     (number)))
 
 ================================================================================
@@ -44,8 +46,10 @@ local x, y: number, string
     (var
       name: (identifier))
     type_annotation: (type_annotation
-      (simple_type)
-      (simple_type))))
+      (simple_type
+        name: (identifier))
+      (simple_type
+        name: (identifier)))))
 
 ================================================================================
 Local declaration of multiple variables with initialization
@@ -62,8 +66,10 @@ local x, y: number, string = 23, "hi"
     (var
       name: (identifier))
     type_annotation: (type_annotation
-      (simple_type)
-      (simple_type))
+      (simple_type
+        name: (identifier))
+      (simple_type
+        name: (identifier)))
     (number)
     (string
       content: (string_content))))
@@ -82,8 +88,10 @@ local x: string | number
       name: (identifier))
     type_annotation: (type_annotation
       (type_union
-        (simple_type)
-        (simple_type)))))
+        (simple_type
+          name: (identifier))
+        (simple_type
+          name: (identifier))))))
 
 ================================================================================
 Union of simple type and non-array type
@@ -99,10 +107,13 @@ local x: thread | {string:number} = {}
       name: (identifier))
     type_annotation: (type_annotation
       (type_union
-        (simple_type)
+        (simple_type
+          name: (identifier))
         (table_type
-          key_type: (simple_type)
-          value_type: (simple_type))))
+          key_type: (simple_type
+            name: (identifier))
+          value_type: (simple_type
+            name: (identifier)))))
     (table_constructor)))
 
 ================================================================================

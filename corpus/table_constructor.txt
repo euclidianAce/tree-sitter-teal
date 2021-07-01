@@ -133,17 +133,23 @@ local tl = {
         type: (function_type
           arguments: (arguments
             (arg
-              type: (simple_type))
+              type: (simple_type
+                name: (identifier)))
             (arg
-              type: (simple_type))
+              type: (simple_type
+                name: (identifier)))
             (arg
-              type: (simple_type))
+              type: (simple_type
+                name: (identifier)))
             (arg
               type: (table_type
-                value_type: (simple_type))))
+                value_type: (simple_type
+                  name: (identifier)))))
           return_type: (return_type
-            (simple_type)
-            (simple_type)))
+            (simple_type
+              name: (identifier))
+            (simple_type
+              name: (identifier))))
         value: (nil)))))
 
 ================================================================================

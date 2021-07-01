@@ -458,7 +458,7 @@ module.exports = grammar({
     )),
 
     simple_type: $ => prec.right(1000, seq(
-      alias($.identifier, "name"),
+      field("name", $.identifier),
       optional(alias($.typearg_params, $.typeargs))
     )),
 

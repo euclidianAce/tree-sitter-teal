@@ -46,10 +46,12 @@ end
         (record_entry
           key: (identifier)
           type: (table_type
-            value_type: (simple_type)))
+            value_type: (simple_type
+              name: (identifier))))
         (record_entry
           key: (identifier)
-          type: (simple_type))))))
+          type: (simple_type
+            name: (identifier)))))))
 
 ================================================================================
 Arrayrecord with stuff
@@ -69,14 +71,17 @@ end
     (anon_record
       (record_body
         (record_array_type
-          (simple_type))
+          (simple_type
+            name: (identifier)))
         (record_entry
           key: (identifier)
           type: (table_type
-            value_type: (simple_type)))
+            value_type: (simple_type
+              name: (identifier))))
         (record_entry
           key: (identifier)
-          type: (simple_type))))))
+          type: (simple_type
+            name: (identifier)))))))
 
 ================================================================================
 Nested records
@@ -102,10 +107,12 @@ end
             (record_body
               (record_entry
                 key: (identifier)
-                type: (simple_type)))))
+                type: (simple_type
+                  name: (identifier))))))
         (record_entry
           key: (identifier)
-          type: (simple_type))))))
+          type: (simple_type
+            name: (identifier)))))))
 
 ================================================================================
 Generic record
@@ -126,7 +133,8 @@ end
       (record_body
         (record_entry
           key: (identifier)
-          type: (simple_type))))))
+          type: (simple_type
+            name: (identifier)))))))
 
 ================================================================================
 Record with a 'type' entry
@@ -145,7 +153,8 @@ end
       (record_body
         (record_entry
           key: (identifier)
-          type: (simple_type))))))
+          type: (simple_type
+            name: (identifier)))))))
 
 ================================================================================
 Record with a 'type' entry and types
@@ -169,7 +178,8 @@ end
       (record_body
         (record_entry
           key: (identifier)
-          type: (simple_type))
+          type: (simple_type
+            name: (identifier)))
         (record_entry
           key: (identifier)
           value: (anon_record
@@ -241,7 +251,8 @@ end
     (record_body
       (record_entry
         key: (identifier)
-        type: (simple_type)))))
+        type: (simple_type
+          name: (identifier))))))
 
 ================================================================================
 Record with a 'enum' entry
@@ -259,7 +270,8 @@ end
     (record_body
       (record_entry
         key: (identifier)
-        type: (simple_type)))))
+        type: (simple_type
+          name: (identifier))))))
 
 ================================================================================
 Record with ['entry']
@@ -278,7 +290,8 @@ end
       (record_entry
         string_key: (string
           content: (string_content))
-        type: (simple_type)))))
+        type: (simple_type
+          name: (identifier))))))
 
 ================================================================================
 Nested generic record shorthand
@@ -333,4 +346,5 @@ end
     (record_body
       (metamethod
         name: (identifier)
-        type: (simple_type)))))
+        type: (simple_type
+          name: (identifier))))))

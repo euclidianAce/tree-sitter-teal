@@ -146,10 +146,12 @@ end
       arguments: (arguments
         (arg
           name: (identifier)
-          type: (simple_type))
+          type: (simple_type
+            name: (identifier)))
         (arg
           name: (identifier)
-          type: (simple_type))))
+          type: (simple_type
+            name: (identifier)))))
     body: (function_body
       (return_statement
         (identifier)
@@ -170,8 +172,10 @@ end
     signature: (function_signature
       arguments: (arguments)
       return_type: (return_type
-        (simple_type)
-        (simple_type)))
+        (simple_type
+          name: (identifier))
+        (simple_type
+          name: (identifier))))
     body: (function_body)))
 
 ================================================================================
@@ -228,31 +232,42 @@ end
       arguments: (arguments
         (arg
           name: (identifier)
-          type: (simple_type))
-        (arg
-          name: (identifier)
-          type: (simple_type))
-        (arg
-          name: (identifier)
-          type: (table_type
-            value_type: (simple_type)))
-        (arg
-          name: (identifier)
-          type: (table_type
-            key_type: (simple_type)
-            value_type: (simple_type)))
-        (arg
-          name: (identifier)
-          type: (simple_type))
+
+          type: (simple_type
+            name: (identifier)))
         (arg
           name: (identifier)
           type: (simple_type
+            name: (identifier)))
+        (arg
+          name: (identifier)
+          type: (table_type
+            value_type: (simple_type
+              name: (identifier))))
+        (arg
+          name: (identifier)
+          type: (table_type
+            key_type: (simple_type
+              name: (identifier))
+            value_type: (simple_type
+              name: (identifier))))
+        (arg
+          name: (identifier)
+          type: (simple_type
+            name: (identifier)))
+        (arg
+          name: (identifier)
+          type: (simple_type
+            name: (identifier)
             (typeargs
-              (simple_type)))))
+              (simple_type
+                name: (identifier))))))
       return_type: (return_type
-        (simple_type)
+        (simple_type
+          name: (identifier))
         (table_type
-          value_type: (simple_type))))
+          value_type: (simple_type
+            name: (identifier)))))
     body: (function_body)))
 
 ================================================================================
@@ -270,7 +285,8 @@ end
     signature: (function_signature
       arguments: (arguments
         (varargs
-          type: (simple_type))))
+          type: (simple_type
+            name: (identifier)))))
     body: (function_body)))
 
 ================================================================================
@@ -289,14 +305,18 @@ end
       arguments: (arguments
         (arg
           name: (identifier)
-          type: (simple_type))
+          type: (simple_type
+            name: (identifier)))
         (arg
           name: (identifier)
-          type: (simple_type))
+          type: (simple_type
+            name: (identifier)))
         (varargs
-          type: (simple_type)))
+          type: (simple_type
+            name: (identifier))))
       return_type: (return_type
-        (simple_type)))
+        (simple_type
+          name: (identifier))))
     body: (function_body)))
 
 ================================================================================
@@ -315,7 +335,8 @@ end
       arguments: (arguments)
       return_type: (return_type
         (variadic_type
-          (simple_type))))
+          (simple_type
+            name: (identifier)))))
     body: (function_body)))
 
 ================================================================================
@@ -338,10 +359,12 @@ end
           type: (function_type
             arguments: (arguments)
             return_type: (return_type
-              (simple_type))))
+              (simple_type
+                name: (identifier)))))
         (arg
           name: (identifier)
-          type: (simple_type))))
+          type: (simple_type
+            name: (identifier)))))
     body: (function_body
       (return_statement
         (identifier)

@@ -11,7 +11,8 @@ return "thing" as number
     (type_cast
       (string
         (string_content))
-      (simple_type))))
+      (simple_type
+        (identifier)))))
 
 ================================================================================
 Tuple cast
@@ -28,5 +29,7 @@ return thing() as (string, string)
         (identifier)
         (arguments))
       (type_tuple
-        (simple_type)
-        (simple_type)))))
+        (simple_type
+          (identifier))
+        (simple_type
+          (identifier))))))
