@@ -1,22 +1,32 @@
-
-==============================
+================================================================================
 Simple cast
-==============================
+================================================================================
 
 return "thing" as number
 
----
+--------------------------------------------------------------------------------
 
 (program
-  (return_statement (type_cast (string) (simple_type))))
+  (return_statement
+    (type_cast
+      (string
+        (string_content))
+      (simple_type))))
 
-==============================
+================================================================================
 Tuple cast
-==============================
+================================================================================
 
 return thing() as (string, string)
 
----
+--------------------------------------------------------------------------------
 
 (program
-  (return_statement (type_cast (function_call (identifier) (arguments)) (type_tuple (simple_type) (simple_type)))))
+  (return_statement
+    (type_cast
+      (function_call
+        (identifier)
+        (arguments))
+      (type_tuple
+        (simple_type)
+        (simple_type)))))
