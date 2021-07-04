@@ -1,99 +1,156 @@
-
-==============================
+================================================================================
 Indexing with identifier
-==============================
+================================================================================
 
 local a = b[c]
 
----
+--------------------------------------------------------------------------------
 
-(program (var_declaration (var (identifier)) (index (identifier) (identifier))))
+(program
+  (var_declaration
+    (scope)
+    (var
+      (identifier))
+    (index
+      (identifier)
+      (identifier))))
 
-==============================
+================================================================================
 Assigning to table entry
-==============================
+================================================================================
 
 a[b] = c
 
----
+--------------------------------------------------------------------------------
 
 (program
-  (var_assignment (var (index (identifier) (identifier))) (identifier)))
+  (var_assignment
+    (var
+      (index
+        (identifier)
+        (identifier)))
+    (identifier)))
 
-==============================
+================================================================================
 Indexing with string
-==============================
+================================================================================
 
 local a = b["hi"]
 
----
+--------------------------------------------------------------------------------
 
-(program (var_declaration (var (identifier)) (index (identifier) (string))))
+(program
+  (var_declaration
+    (scope)
+    (var
+      (identifier))
+    (index
+      (identifier)
+      (string))))
 
-==============================
+================================================================================
 Multiple indexing
-==============================
+================================================================================
 
 local a = b["hi"][5]
 
----
+--------------------------------------------------------------------------------
 
-(program (var_declaration (var (identifier))
-  (index (index (identifier) (string)) (number))))
+(program
+  (var_declaration
+    (scope)
+    (var
+      (identifier))
+    (index
+      (index
+        (identifier)
+        (string))
+      (number))))
 
-==============================
+================================================================================
 Dot indexing
-==============================
+================================================================================
 
 local a = b.c
 
----
+--------------------------------------------------------------------------------
 
-(program (var_declaration (var (identifier))
-  (index (identifier) (identifier))))
+(program
+  (var_declaration
+    (scope)
+    (var
+      (identifier))
+    (index
+      (identifier)
+      (identifier))))
 
-==============================
+================================================================================
 Bracket and dot indexing
-==============================
+================================================================================
 
 local a = b.c[d].e.f[g]
 
----
+--------------------------------------------------------------------------------
 
-(program (var_declaration (var (identifier))
-  (index (index (index (index (index
-  (identifier) (identifier)) (identifier)) (identifier)) (identifier)) (identifier))))
+(program
+  (var_declaration
+    (scope)
+    (var
+      (identifier))
+    (index
+      (index
+        (index
+          (index
+            (index
+              (identifier)
+              (identifier))
+            (identifier))
+          (identifier))
+        (identifier))
+      (identifier))))
 
-==============================
+================================================================================
 Colon indexing
-==============================
+================================================================================
 
 local a = b:c()
 
----
+--------------------------------------------------------------------------------
 
-(program (var_declaration (var name: (identifier))
-  (function_call
-    called_object: (method_index (identifier) key: (identifier)) arguments: (arguments))))
+(program
+  (var_declaration
+    scope: (scope)
+    (var
+      name: (identifier))
+    (function_call
+      called_object: (method_index
+        (identifier)
+        key: (identifier))
+      arguments: (arguments))))
 
-==============================
+================================================================================
 The whole dang thing
-==============================
+================================================================================
 
 local a = b[c].d.e[f]:g()
 
----
+--------------------------------------------------------------------------------
 
-(program (var_declaration
-           (var name: (identifier))
-           (function_call
-            called_object: (method_index
+(program
+  (var_declaration
+    scope: (scope)
+    (var
+      name: (identifier))
+    (function_call
+      called_object: (method_index
+        (index
+          (index
+            (index
               (index
-               (index
-                (index
-                 (index (identifier) expr_key: (identifier))
-                 key: (identifier))
-                key: (identifier))
-               expr_key: (identifier))
+                (identifier)
+                expr_key: (identifier))
               key: (identifier))
-            arguments: (arguments))))
+            key: (identifier))
+          expr_key: (identifier))
+        key: (identifier))
+      arguments: (arguments))))

@@ -23,11 +23,11 @@
 (label) @label
 
 ;; Global isn't a real keyword, but it gets special treatment in these places
-(var_declaration "global" @keyword)
-(type_declaration "global" @keyword)
-(function_statement "global" @keyword)
-(record_declaration "global" @keyword)
-(enum_declaration "global" @keyword)
+(var_declaration (scope "global") @keyword)
+(type_declaration (scope "global") @keyword)
+(function_statement (scope "global") @keyword)
+(record_declaration (scope "global") @keyword)
+(enum_declaration (scope "global") @keyword)
 
 ;; Ops
 (bin_op (op) @operator)
