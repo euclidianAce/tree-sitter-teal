@@ -46,7 +46,6 @@ module.exports = grammar({
   ],
 
   inline: $ => [
-    $.scope,
     $._partypelist,
     $._parnamelist,
     $._type_list_maybe_vararg,
@@ -208,7 +207,7 @@ module.exports = grammar({
     ),
 
     var_declaration: $ => seq(
-      $.scope,
+      field("scope", $.scope),
       list(alias($.var_declarator, $.var)),
       optional(field("type_annotation", $.type_annotation)),
       optional(seq("=", list($._expression)))
@@ -216,7 +215,7 @@ module.exports = grammar({
 
     type_declaration: $ => choice(
       seq(
-        $.scope,
+        field("scope", $.scope),
         "type",
         alias($.identifier, $.type_name),
         "=",
@@ -276,27 +275,19 @@ module.exports = grammar({
           repeat(seq(".", field("entry", $.identifier))),
           seq(":", field("method", $.identifier))
         ),
-        repeat1(seq(".", field("entry", $.identifier)))
+        repeat(seq(".", field("entry", $.identifier)))
       )
     ),
 
     scope: $ => field("scope", choice("local", "global")),
 
-    function_statement: $ => choice(
-      seq(
-        $.scope,
-        "function",
-        field("name", $.identifier),
-        field("signature", $.function_signature),
-        field("body", $.function_body)
-      ),
-      seq(
+    function_statement: $ => seq(
+        field("scope", optional($.scope)),
         "function",
         field("name", $.function_name),
         field("signature", $.function_signature),
         field("body", $.function_body)
-      )
-    ),
+      ),
 
     variadic_type: $ => prec(prec_type_op.index - 1, seq($._type, "...")),
     _type_list_maybe_vararg: $ => seq(list($._type), optional(seq(",", $.variadic_type))),
@@ -397,7 +388,7 @@ module.exports = grammar({
     ),
 
     record_declaration: $ => seq(
-      $.scope,
+      field("scope", $.scope),
       $._record_def,
     ),
 
@@ -413,7 +404,7 @@ module.exports = grammar({
     ),
 
     enum_declaration: $ => seq(
-      $.scope,
+      field("scope", $.scope),
       $._enum_def
     ),
 

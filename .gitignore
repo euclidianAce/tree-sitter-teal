@@ -1,3 +1,6 @@
 node_modules
 build
 parser.so
+Cargo.lock
+src/
+!src/scanner.c

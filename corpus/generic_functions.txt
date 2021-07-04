@@ -1,47 +1,58 @@
-
-==============================
+================================================================================
 Generic anonymous function
-==============================
+================================================================================
 
 return function<T>()
 
 end
 
----
+--------------------------------------------------------------------------------
 
-(program (return_statement
-  (anon_function (function_signature (typeargs (identifier)) (arguments)) (function_body))))
+(program
+  (return_statement
+    (anon_function
+      (function_signature
+        (typeargs
+          (identifier))
+        (arguments))
+      (function_body))))
 
-==============================
+================================================================================
 Generic named function
-==============================
+================================================================================
 
 local function foo<T>()
 
 end
 
----
+--------------------------------------------------------------------------------
 
-(program (function_statement
-  name: (identifier)
-  signature: (function_signature
-    typeargs: (typeargs (identifier))
-    arguments: (arguments))
+(program
+  (function_statement
+    scope: (scope)
+    name: (function_name
+      base: (identifier))
+    signature: (function_signature
+      typeargs: (typeargs
+        (identifier))
+      arguments: (arguments))
     body: (function_body)))
 
-==============================
+================================================================================
 Many typeargs
-==============================
+================================================================================
 
 local function foo<A, B, C, D, E, F>()
 
 end
 
----
+--------------------------------------------------------------------------------
 
 (program
   (function_statement
-    name: (identifier)
+    scope: (scope)
+    name: (function_name
+      base: (identifier))
     signature: (function_signature
       typeargs: (typeargs
         (identifier)

@@ -1,31 +1,43 @@
-==============================
+================================================================================
 Anonymous
-==============================
+================================================================================
 
 local foo = function()
 end
 
----
+--------------------------------------------------------------------------------
 
 (program
-  (var_declaration (var (identifier))
-  (anon_function (function_signature (arguments)) (function_body))))
+  (var_declaration
+    (scope)
+    (var
+      (identifier))
+    (anon_function
+      (function_signature
+        (arguments))
+      (function_body))))
 
-==============================
+================================================================================
 Named
-==============================
+================================================================================
 
 local function foo()
 end
 
----
+--------------------------------------------------------------------------------
 
 (program
-  (function_statement name: (identifier) signature: (function_signature arguments: (arguments)) body: (function_body)))
+  (function_statement
+    scope: (scope)
+    name: (function_name
+      base: (identifier))
+    signature: (function_signature
+      arguments: (arguments))
+    body: (function_body)))
 
-==============================
+================================================================================
 A function that actually does something
-==============================
+================================================================================
 
 local function bar()
    local x = 3
@@ -38,110 +50,154 @@ local function bar()
    }
 end
 
----
+--------------------------------------------------------------------------------
 
 (program
   (function_statement
-    name: (identifier)
-    signature: (function_signature arguments: (arguments))
+    scope: (scope)
+    name: (function_name
+      base: (identifier))
+    signature: (function_signature
+      arguments: (arguments))
     body: (function_body
       (var_declaration
-        (var name: (identifier)) (number))
+        scope: (scope)
+        (var
+          name: (identifier))
+        (number))
       (var_declaration
-        (var name: (identifier))
+        scope: (scope)
+        (var
+          name: (identifier))
         (table_constructor
           (table_entry
             key: (identifier)
             value: (anon_function
-                     signature: (function_signature arguments: (arguments))
-                     body: (function_body
-                       (var_declaration (var name: (identifier)) (number)))))
+              signature: (function_signature
+                arguments: (arguments))
+              body: (function_body
+                (var_declaration
+                  scope: (scope)
+                  (var
+                    name: (identifier))
+                  (number)))))
           (table_entry
             key: (identifier)
             value: (anon_function
-                     signature: (function_signature arguments: (arguments))
-                     body: (function_body))))))))
+              signature: (function_signature
+                arguments: (arguments))
+              body: (function_body))))))))
 
-
-==============================
+================================================================================
 A function that returns
-==============================
+================================================================================
 
 local function bar()
    local x = "hello"
    return x
 end
 
----
+--------------------------------------------------------------------------------
 
 (program
   (function_statement
-    name: (identifier)
+    scope: (scope)
+    name: (function_name
+      base: (identifier))
     signature: (function_signature
       arguments: (arguments))
     body: (function_body
-      (var_declaration (var name: (identifier)) (string))
-      (return_statement (identifier)))))
+      (var_declaration
+        scope: (scope)
+        (var
+          name: (identifier))
+        (string))
+      (return_statement
+        (identifier)))))
 
-
-==============================
+================================================================================
 A function with args
-==============================
+================================================================================
 
 local function foo(bar, baz)
    return bar, baz
 end
 
----
+--------------------------------------------------------------------------------
 
 (program
-  (function_statement name: (identifier)
+  (function_statement
+    scope: (scope)
+    name: (function_name
+      base: (identifier))
     signature: (function_signature
-      arguments: (arguments (arg name: (identifier)) (arg name: (identifier))))
+      arguments: (arguments
+        (arg
+          name: (identifier))
+        (arg
+          name: (identifier))))
     body: (function_body
-      (return_statement (identifier) (identifier)))))
+      (return_statement
+        (identifier)
+        (identifier)))))
 
-==============================
+================================================================================
 A function with typed args
-==============================
+================================================================================
 
 local function foo(bar: string, baz: number)
    return bar, baz
 end
 
----
+--------------------------------------------------------------------------------
 
 (program
   (function_statement
-    name: (identifier)
+    scope: (scope)
+    name: (function_name
+      base: (identifier))
     signature: (function_signature
       arguments: (arguments
-        (arg name: (identifier) type: (simple_type))
-        (arg name: (identifier) type: (simple_type))))
+        (arg
+          name: (identifier)
+          type: (simple_type))
+        (arg
+          name: (identifier)
+          type: (simple_type))))
     body: (function_body
-      (return_statement (identifier) (identifier)))))
+      (return_statement
+        (identifier)
+        (identifier)))))
 
-==============================
+================================================================================
 A function with typed returns
-==============================
+================================================================================
 
 local function foo(): string, number
 end
 
----
+--------------------------------------------------------------------------------
 
 (program
-  (function_statement name: (identifier) signature: (function_signature arguments: (arguments)
-  return_type: (return_type (simple_type) (simple_type))) body: (function_body)))
+  (function_statement
+    scope: (scope)
+    name: (function_name
+      base: (identifier))
+    signature: (function_signature
+      arguments: (arguments)
+      return_type: (return_type
+        (simple_type)
+        (simple_type)))
+    body: (function_body)))
 
-==============================
+================================================================================
 A function in a table/record
-==============================
+================================================================================
 
 function foo.bar()
 end
 
----
+--------------------------------------------------------------------------------
 
 (program
   (function_statement
@@ -152,124 +208,167 @@ end
       arguments: (arguments))
     body: (function_body)))
 
-==============================
+================================================================================
 A method in a table/record
-==============================
+================================================================================
 
 function foo:bar()
 end
 
----
+--------------------------------------------------------------------------------
 
 (program
   (function_statement
-    name: (function_name base: (identifier) method: (identifier))
+    name: (function_name
+      base: (identifier)
+      method: (identifier))
     signature: (function_signature
       arguments: (arguments))
-      body: (function_body)))
+    body: (function_body)))
 
-==============================
+================================================================================
 Argument with typearg
-==============================
+================================================================================
 
 local function parse_list<T>(ps: ParseState, i: number, list: {T}, close: {string:boolean}, sep: SeparatorMode, parse_item: ParseItem<T>): number, {T}
 end
 
----
+--------------------------------------------------------------------------------
 
-(program (function_statement name: (identifier)
-  signature: (function_signature
-    typeargs: (typeargs (identifier))
-    arguments: (arguments
-      (arg name: (identifier) type: (simple_type))
-      (arg name: (identifier) type: (simple_type))
-      (arg name: (identifier) type: (table_type
-        value_type: (simple_type)))
-      (arg name: (identifier) type: (table_type
-        key_type: (simple_type)
-        value_type: (simple_type)))
-      (arg name: (identifier) type: (simple_type))
-      (arg name: (identifier) type: (simple_type (typeargs (simple_type)))))
-    return_type: (return_type (simple_type) (table_type value_type: (simple_type))))
-  body: (function_body)))
+(program
+  (function_statement
+    scope: (scope)
+    name: (function_name
+      base: (identifier))
+    signature: (function_signature
+      typeargs: (typeargs
+        (identifier))
+      arguments: (arguments
+        (arg
+          name: (identifier)
+          type: (simple_type))
+        (arg
+          name: (identifier)
+          type: (simple_type))
+        (arg
+          name: (identifier)
+          type: (table_type
+            value_type: (simple_type)))
+        (arg
+          name: (identifier)
+          type: (table_type
+            key_type: (simple_type)
+            value_type: (simple_type)))
+        (arg
+          name: (identifier)
+          type: (simple_type))
+        (arg
+          name: (identifier)
+          type: (simple_type
+            (typeargs
+              (simple_type)))))
+      return_type: (return_type
+        (simple_type)
+        (table_type
+          value_type: (simple_type))))
+    body: (function_body)))
 
-==============================
+================================================================================
 Variadic argument
-==============================
+================================================================================
 
 local function thing(...: number)
 end
 
----
+--------------------------------------------------------------------------------
 
 (program
   (function_statement
-    name: (identifier)
+    scope: (scope)
+    name: (function_name
+      base: (identifier))
     signature: (function_signature
       arguments: (arguments
-        (varargs type: (simple_type))))
+        (varargs
+          type: (simple_type))))
     body: (function_body)))
 
-==============================
+================================================================================
 Multiple args with variadic last argument
-==============================
+================================================================================
 
 local function error_in_type(where: Type, msg: string, ...: Type): Error
 end
 
----
+--------------------------------------------------------------------------------
 
 (program
   (function_statement
-    name: (identifier)
+    scope: (scope)
+    name: (function_name
+      base: (identifier))
     signature: (function_signature
       arguments: (arguments
-        (arg name: (identifier) type: (simple_type))
-        (arg name: (identifier) type: (simple_type))
-        (varargs type: (simple_type)))
-      return_type: (return_type (simple_type)))
+        (arg
+          name: (identifier)
+          type: (simple_type))
+        (arg
+          name: (identifier)
+          type: (simple_type))
+        (varargs
+          type: (simple_type)))
+      return_type: (return_type
+        (simple_type)))
     body: (function_body)))
 
-==============================
+================================================================================
 Variadic return
-==============================
+================================================================================
 
 local function thing(): string...
 end
 
----
+--------------------------------------------------------------------------------
 
 (program
   (function_statement
-    name: (identifier)
+    scope: (scope)
+    name: (function_name
+      base: (identifier))
     signature: (function_signature
       arguments: (arguments)
-      return_type: (return_type (variadic_type (simple_type))))
+      return_type: (return_type
+        (variadic_type
+          (simple_type))))
     body: (function_body)))
 
-==============================
+================================================================================
 Function type arguments
-==============================
+================================================================================
 
 local function foo(bar: function(): (number), baz: number)
    return bar, baz
 end
 
----
+--------------------------------------------------------------------------------
 
 (program
   (function_statement
-    name: (identifier)
+    scope: (scope)
+    name: (function_name
+      base: (identifier))
     signature: (function_signature
       arguments: (arguments
         (arg
           name: (identifier)
           type: (function_type
             arguments: (arguments)
-            return_type: (return_type (simple_type))))
+            return_type: (return_type
+              (simple_type))))
         (arg
           name: (identifier)
           type: (simple_type))))
     body: (function_body
-      (return_statement (identifier) (identifier)))))
-
+      (return_statement
+        (identifier)
+        (identifier)))))
