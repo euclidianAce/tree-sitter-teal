@@ -4,7 +4,8 @@
   "description": "Tree sitter parser for Teal, a typed dialect of Lua.",
   "main": "bindings/node",
   "scripts": {
-    "test": "tree-sitter test"
+    "test": "tree-sitter test",
+    "generate": "tree-sitter generate"
   },
   "keywords": [
     "tree-sitter",
