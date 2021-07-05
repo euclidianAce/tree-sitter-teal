@@ -1,12 +1,11 @@
-
-==============================
+================================================================================
 Empty record
-==============================
+================================================================================
 
 local type foo = record
 end
 
----
+--------------------------------------------------------------------------------
 
 (program
   (type_declaration
@@ -14,30 +13,30 @@ end
     (anon_record
       (record_body))))
 
-==============================
+================================================================================
 Empty record (shorthand)
-==============================
+================================================================================
 
 local record foo
 end
 
----
+--------------------------------------------------------------------------------
 
 (program
   (record_declaration
     name: (identifier)
     (record_body)))
 
-==============================
+================================================================================
 Record with stuff
-==============================
+================================================================================
 
 local type foo = record
    bar: {number}
    baz: string
 end
 
----
+--------------------------------------------------------------------------------
 
 (program
   (type_declaration
@@ -47,14 +46,16 @@ end
         (record_entry
           key: (identifier)
           type: (table_type
-                  value_type: (simple_type)))
+            value_type: (simple_type
+              name: (identifier))))
         (record_entry
           key: (identifier)
-          type: (simple_type))))))
+          type: (simple_type
+            name: (identifier)))))))
 
-==============================
+================================================================================
 Arrayrecord with stuff
-==============================
+================================================================================
 
 local type foo = record
    {thread}
@@ -62,25 +63,29 @@ local type foo = record
    baz: string
 end
 
----
+--------------------------------------------------------------------------------
 
 (program
   (type_declaration
     (type_name)
     (anon_record
       (record_body
-        (record_array_type (simple_type))
+        (record_array_type
+          (simple_type
+            name: (identifier)))
         (record_entry
           key: (identifier)
           type: (table_type
-                  value_type: (simple_type)))
+            value_type: (simple_type
+              name: (identifier))))
         (record_entry
           key: (identifier)
-          type: (simple_type))))))
+          type: (simple_type
+            name: (identifier)))))))
 
-==============================
+================================================================================
 Nested records
-==============================
+================================================================================
 
 local type foo = record
    type bar = record
@@ -89,53 +94,57 @@ local type foo = record
    baz: bar
 end
 
----
+--------------------------------------------------------------------------------
 
 (program
   (type_declaration
     (type_name)
-      (anon_record
-        (record_body
-          (record_entry
-            key: (identifier)
-            value: (anon_record
-                     (record_body
-                       (record_entry
-                         key: (identifier)
-                         type: (simple_type)))))
-          (record_entry
-            key: (identifier)
-            type: (simple_type))))))
+    (anon_record
+      (record_body
+        (record_entry
+          key: (identifier)
+          value: (anon_record
+            (record_body
+              (record_entry
+                key: (identifier)
+                type: (simple_type
+                  name: (identifier))))))
+        (record_entry
+          key: (identifier)
+          type: (simple_type
+            name: (identifier)))))))
 
-==============================
+================================================================================
 Generic record
-==============================
+================================================================================
 
 local type foo = record<T>
    foo: T
 end
 
----
+--------------------------------------------------------------------------------
 
 (program
   (type_declaration
     (type_name)
     (anon_record
-      (typeargs (identifier))
+      (typeargs
+        (identifier))
       (record_body
         (record_entry
           key: (identifier)
-          type: (simple_type))))))
+          type: (simple_type
+            name: (identifier)))))))
 
-==============================
+================================================================================
 Record with a 'type' entry
-==============================
+================================================================================
 
 local type foo = record
    type: number
 end
 
----
+--------------------------------------------------------------------------------
 
 (program
   (type_declaration
@@ -144,11 +153,12 @@ end
       (record_body
         (record_entry
           key: (identifier)
-          type: (simple_type))))))
+          type: (simple_type
+            name: (identifier)))))))
 
-==============================
+================================================================================
 Record with a 'type' entry and types
-==============================
+================================================================================
 
 local type foo = record
    type: number
@@ -159,7 +169,7 @@ local type foo = record
    end
 end
 
----
+--------------------------------------------------------------------------------
 
 (program
   (type_declaration
@@ -168,25 +178,28 @@ end
       (record_body
         (record_entry
           key: (identifier)
-          type: (simple_type))
+          type: (simple_type
+            name: (identifier)))
         (record_entry
           key: (identifier)
-          value: (anon_record (record_body)))
+          value: (anon_record
+            (record_body)))
         (record_entry
           key: (identifier)
           value: (enum_body
-                   (string) (string)))))))
+            (string)
+            (string)))))))
 
-==============================
+================================================================================
 Nested record shorthand syntax
-==============================
+================================================================================
 
 local record Foo
    record Bar
    end
 end
 
----
+--------------------------------------------------------------------------------
 
 (program
   (record_declaration
@@ -196,9 +209,9 @@ end
         key: (identifier)
         value: (record_body)))))
 
-==============================
+================================================================================
 Nested enum shorthand syntax
-==============================
+================================================================================
 
 local record Foo
    enum Bar
@@ -206,7 +219,7 @@ local record Foo
    end
 end
 
----
+--------------------------------------------------------------------------------
 
 (program
   (record_declaration
@@ -215,17 +228,18 @@ end
       (record_entry
         key: (identifier)
         value: (enum_body
-                 (string) (string))))))
+          (string)
+          (string))))))
 
-==============================
+================================================================================
 Record with a 'record' entry
-==============================
+================================================================================
 
 local record Foo
    record: number
 end
 
----
+--------------------------------------------------------------------------------
 
 (program
   (record_declaration
@@ -233,17 +247,18 @@ end
     (record_body
       (record_entry
         key: (identifier)
-        type: (simple_type)))))
+        type: (simple_type
+          name: (identifier))))))
 
-==============================
+================================================================================
 Record with a 'enum' entry
-==============================
+================================================================================
 
 local record Foo
    enum: number
 end
 
----
+--------------------------------------------------------------------------------
 
 (program
   (record_declaration
@@ -251,17 +266,18 @@ end
     (record_body
       (record_entry
         key: (identifier)
-        type: (simple_type)))))
+        type: (simple_type
+          name: (identifier))))))
 
-==============================
+================================================================================
 Record with ['entry']
-==============================
+================================================================================
 
 local record Foo
    ["things"]: number
 end
 
----
+--------------------------------------------------------------------------------
 
 (program
   (record_declaration
@@ -269,18 +285,19 @@ end
     (record_body
       (record_entry
         string_key: (string)
-        type: (simple_type)))))
+        type: (simple_type
+          name: (identifier))))))
 
-==============================
+================================================================================
 Nested generic record shorthand
-==============================
+================================================================================
 
 local record Foo
    record Bar<T>
    end
 end
 
----
+--------------------------------------------------------------------------------
 
 (program
   (record_declaration
@@ -288,33 +305,35 @@ end
     (record_body
       (record_entry
         key: (identifier)
-        typeargs: (typeargs (identifier))
+        typeargs: (typeargs
+          (identifier))
         value: (record_body)))))
 
-==============================
+================================================================================
 Userdata record
-==============================
+================================================================================
 
 local record Foo
    userdata
 end
 
----
+--------------------------------------------------------------------------------
 
 (program
   (record_declaration
     name: (identifier)
-    (record_body (userdata))))
+    (record_body
+      (userdata))))
 
-==============================
+================================================================================
 Record with metamethod
-==============================
+================================================================================
 
 local record Foo
    metamethod __call: number
 end
 
----
+--------------------------------------------------------------------------------
 
 (program
   (record_declaration
@@ -322,4 +341,5 @@ end
     (record_body
       (metamethod
         name: (identifier)
-        type: (simple_type)))))
+        type: (simple_type
+          name: (identifier))))))
