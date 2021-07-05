@@ -1,6 +1,6 @@
 
 parser.so: src/parser.c src/scanner.c
-	$(CC) -fPIC -shared src/parser.c src/scanner.c -o parser.so
+	$(CC) $(CFLAGS) -fPIC -shared src/parser.c src/scanner.c -o parser.so
 
 all: test parser.so
 

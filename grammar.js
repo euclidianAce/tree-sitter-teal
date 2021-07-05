@@ -384,7 +384,7 @@ module.exports = grammar({
       repeat(choice(
         $.record_entry,
         alias("userdata", $.userdata),
-        alias($.metamethod_annotation, $.metamethod),
+        field("metamethod", alias($.metamethod_annotation, $.metamethod)),
       )),
       "end"
     ),
@@ -392,8 +392,8 @@ module.exports = grammar({
     _record_def: $ => seq(
       "record",
       field("name", $.identifier),
-      optional($.typeargs),
-      $.record_body
+      field("typeargs", optional($.typeargs)),
+      field("record_body", $.record_body)
     ),
 
     record_declaration: $ => seq(
@@ -421,7 +421,7 @@ module.exports = grammar({
     anon_record: $ => seq(
       "record",
       optional($.typeargs),
-      $.record_body
+      field("record_body", $.record_body)
     ),
 
     _anon_enum: $ => seq(

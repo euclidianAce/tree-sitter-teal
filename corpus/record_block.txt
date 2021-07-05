@@ -11,7 +11,7 @@ end
   (type_declaration
     (type_name)
     (anon_record
-      (record_body))))
+      record_body: (record_body))))
 
 ================================================================================
 Empty record (shorthand)
@@ -25,7 +25,7 @@ end
 (program
   (record_declaration
     name: (identifier)
-    (record_body)))
+    record_body: (record_body)))
 
 ================================================================================
 Record with stuff
@@ -42,7 +42,7 @@ end
   (type_declaration
     (type_name)
     (anon_record
-      (record_body
+      record_body: (record_body
         (record_entry
           key: (identifier)
           type: (table_type
@@ -69,7 +69,7 @@ end
   (type_declaration
     (type_name)
     (anon_record
-      (record_body
+      record_body: (record_body
         (record_array_type
           (simple_type
             name: (identifier)))
@@ -100,11 +100,11 @@ end
   (type_declaration
     (type_name)
     (anon_record
-      (record_body
+      record_body: (record_body
         (record_entry
           key: (identifier)
           value: (anon_record
-            (record_body
+            record_body: (record_body
               (record_entry
                 key: (identifier)
                 type: (simple_type
@@ -130,7 +130,7 @@ end
     (anon_record
       (typeargs
         (identifier))
-      (record_body
+      record_body: (record_body
         (record_entry
           key: (identifier)
           type: (simple_type
@@ -150,7 +150,7 @@ end
   (type_declaration
     (type_name)
     (anon_record
-      (record_body
+      record_body: (record_body
         (record_entry
           key: (identifier)
           type: (simple_type
@@ -175,7 +175,7 @@ end
   (type_declaration
     (type_name)
     (anon_record
-      (record_body
+      record_body: (record_body
         (record_entry
           key: (identifier)
           type: (simple_type
@@ -183,7 +183,7 @@ end
         (record_entry
           key: (identifier)
           value: (anon_record
-            (record_body)))
+            record_body: (record_body)))
         (record_entry
           key: (identifier)
           value: (enum_body
@@ -206,7 +206,7 @@ end
 (program
   (record_declaration
     name: (identifier)
-    (record_body
+    record_body: (record_body
       (record_entry
         key: (identifier)
         value: (record_body)))))
@@ -226,7 +226,7 @@ end
 (program
   (record_declaration
     name: (identifier)
-    (record_body
+    record_body: (record_body
       (record_entry
         key: (identifier)
         value: (enum_body
@@ -248,7 +248,7 @@ end
 (program
   (record_declaration
     name: (identifier)
-    (record_body
+    record_body: (record_body
       (record_entry
         key: (identifier)
         type: (simple_type
@@ -267,7 +267,7 @@ end
 (program
   (record_declaration
     name: (identifier)
-    (record_body
+    record_body: (record_body
       (record_entry
         key: (identifier)
         type: (simple_type
@@ -286,7 +286,7 @@ end
 (program
   (record_declaration
     name: (identifier)
-    (record_body
+    record_body: (record_body
       (record_entry
         string_key: (string
           content: (string_content))
@@ -307,7 +307,7 @@ end
 (program
   (record_declaration
     name: (identifier)
-    (record_body
+    record_body: (record_body
       (record_entry
         key: (identifier)
         typeargs: (typeargs
@@ -327,7 +327,7 @@ end
 (program
   (record_declaration
     name: (identifier)
-    (record_body
+    record_body: (record_body
       (userdata))))
 
 ================================================================================
@@ -343,8 +343,8 @@ end
 (program
   (record_declaration
     name: (identifier)
-    (record_body
-      (metamethod
+    record_body: (record_body
+      metamethod: (metamethod
         name: (identifier)
         type: (simple_type
           name: (identifier))))))
