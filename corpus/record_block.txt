@@ -187,8 +187,10 @@ end
         (record_entry
           key: (identifier)
           value: (enum_body
-            (string)
-            (string)))))))
+            (string
+              content: (string_content))
+            (string
+              content: (string_content))))))))
 
 ================================================================================
 Nested record shorthand syntax
@@ -228,8 +230,10 @@ end
       (record_entry
         key: (identifier)
         value: (enum_body
-          (string)
-          (string))))))
+          (string
+            content: (string_content))
+          (string
+            content: (string_content)))))))
 
 ================================================================================
 Record with a 'record' entry
@@ -284,7 +288,8 @@ end
     name: (identifier)
     (record_body
       (record_entry
-        string_key: (string)
+        string_key: (string
+          content: (string_content))
         type: (simple_type
           name: (identifier))))))
 

@@ -527,26 +527,30 @@ module.exports = grammar({
     ),
     boolean: $ => choice("true", "false"),
 
-    string: $ => prec(2, choice(
-      seq(
-        $._short_string_start,
-        repeat(choice(
+    _short_string_content: $ => alias(repeat1(choice(
           $.format_specifier,
           $.escape_sequence,
           token.immediate(prec(1, '%')),
           prec(0, $._short_string_char),
-        )),
-        $._short_string_end,
-      ),
+        )), $.string_content),
 
-      seq(
-        $._long_string_start,
-        repeat(choice(
+    _long_string_content: $ => alias(repeat1(choice(
           $.format_specifier,
           $._long_string_char,
           token.immediate(prec(1, '%')),
-        )),
-        $._long_string_end,
+        )), $.string_content),
+
+    string: $ => prec(2, choice(
+      seq(
+        field("start", alias($._short_string_start, "short_string_start")),
+        field("content", optional($._short_string_content)),
+        field("end", alias($._short_string_end, "short_string_end")),
+      ),
+
+      seq(
+        field("start", alias($._long_string_start, "long_string_start")),
+        field("content", optional($._long_string_content)),
+        field("end", alias($._long_string_end, "long_string_end")),
       ),
     )),
 

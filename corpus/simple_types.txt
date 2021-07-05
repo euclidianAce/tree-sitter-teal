@@ -71,7 +71,8 @@ local x, y: number, string = 23, "hi"
       (simple_type
         name: (identifier)))
     (number)
-    (string)))
+    (string
+      content: (string_content))))
 
 ================================================================================
 Union

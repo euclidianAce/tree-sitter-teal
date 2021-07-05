@@ -9,7 +9,8 @@ return "thing" as number
 (program
   (return_statement
     (type_cast
-      (string)
+      (string
+        (string_content))
       (simple_type
         (identifier)))))
 

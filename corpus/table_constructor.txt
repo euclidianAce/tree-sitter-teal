@@ -72,7 +72,8 @@ local map = {
       name: (identifier))
     (table_constructor
       (table_entry
-        expr_key: (string)
+        expr_key: (string
+          content: (string_content))
         value: (number))
       (table_entry
         expr_key: (identifier)
@@ -102,10 +103,12 @@ local tab = {
         value: (table_constructor
           (table_entry
             key: (identifier)
-            value: (string))
+            value: (string
+              content: (string_content)))
           (table_entry
             key: (identifier)
-            value: (string))))
+            value: (string
+              content: (string_content)))))
       (table_entry
         expr_key: (table_constructor)
         value: (table_constructor)))))

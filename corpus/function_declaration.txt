@@ -100,7 +100,8 @@ end
       (var_declaration
         (var
           name: (identifier))
-        (string))
+        (string
+          content: (string_content)))
       (return_statement
         (identifier)))))
 

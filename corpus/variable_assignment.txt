@@ -1,73 +1,106 @@
-==============================
+================================================================================
 Local Variable Declaration
-==============================
+================================================================================
 
 local x = 5
 
----
+--------------------------------------------------------------------------------
 
 (program
-  (var_declaration (var name: (identifier)) (number)))
+  (var_declaration
+    (var
+      name: (identifier))
+    (number)))
 
-==============================
+================================================================================
 Global Variable Declaration
-==============================
+================================================================================
 
 global x = 5
 
----
+--------------------------------------------------------------------------------
 
 (program
-  (var_declaration (var name: (identifier)) (number)))
+  (var_declaration
+    (var
+      name: (identifier))
+    (number)))
 
-
-==============================
+================================================================================
 Local Variable List Declaration
-==============================
+================================================================================
 
 local x, y, z = 1, 2, 3
 
----
+--------------------------------------------------------------------------------
 
 (program
   (var_declaration
-    (var name: (identifier)) (var name: (identifier)) (var name: (identifier))
-    (number) (number) (number)))
+    (var
+      name: (identifier))
+    (var
+      name: (identifier))
+    (var
+      name: (identifier))
+    (number)
+    (number)
+    (number)))
 
-==============================
+================================================================================
 Global Variable List Declaration
-==============================
+================================================================================
 
 global x, y, z = 1, 2, "hey"
 
----
+--------------------------------------------------------------------------------
 
 (program
   (var_declaration
-    (var name: (identifier)) (var name: (identifier)) (var name: (identifier))
-    (number) (number) (string)))
+    (var
+      name: (identifier))
+    (var
+      name: (identifier))
+    (var
+      name: (identifier))
+    (number)
+    (number)
+    (string
+      content: (string_content))))
 
-
-==============================
+================================================================================
 Variable reassignment
-==============================
+================================================================================
 
 local x = "hey"
 x = "hi"
 
----
+--------------------------------------------------------------------------------
 
 (program
-  (var_declaration (var name: (identifier)) (string))
-  (var_assignment (var (identifier)) (string)))
+  (var_declaration
+    (var
+      name: (identifier))
+    (string
+      content: (string_content)))
+  (var_assignment
+    (var
+      (identifier))
+    (string
+      content: (string_content))))
 
-==============================
+================================================================================
 Table entry reassignment
-==============================
+================================================================================
 
 foo.bar = "hi"
 
----
+--------------------------------------------------------------------------------
 
 (program
-  (var_assignment (var (index (identifier) (identifier))) (string)))
+  (var_assignment
+    (var
+      (index
+        (identifier)
+        (identifier)))
+    (string
+      (string_content))))

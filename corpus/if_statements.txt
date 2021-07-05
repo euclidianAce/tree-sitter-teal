@@ -1,21 +1,20 @@
-
-==============================
+================================================================================
 Basic if
-==============================
+================================================================================
 
 if thing then
 
 end
 
----
+--------------------------------------------------------------------------------
 
 (program
   (if_statement
     condition: (identifier)))
 
-==============================
+================================================================================
 Basic if+else
-==============================
+================================================================================
 
 if thing then
 
@@ -23,16 +22,16 @@ else
 
 end
 
----
+--------------------------------------------------------------------------------
 
 (program
   (if_statement
     condition: (identifier)
     (else_block)))
 
-==============================
+================================================================================
 Basic if+elseif
-==============================
+================================================================================
 
 if thing then
 
@@ -40,7 +39,7 @@ elseif other_thing then
 
 end
 
----
+--------------------------------------------------------------------------------
 
 (program
   (if_statement
@@ -48,9 +47,9 @@ end
     (elseif_block
       condition: (identifier))))
 
-==============================
+================================================================================
 Basic if+multiple elseif
-==============================
+================================================================================
 
 if thing then
 elseif other_thing1 then
@@ -58,33 +57,39 @@ elseif other_thing2 then
 elseif other_thing3 then
 end
 
----
+--------------------------------------------------------------------------------
 
 (program
-  (if_statement condition: (identifier)
-    (elseif_block condition: (identifier))
-    (elseif_block condition: (identifier))
-    (elseif_block condition: (identifier))))
+  (if_statement
+    condition: (identifier)
+    (elseif_block
+      condition: (identifier))
+    (elseif_block
+      condition: (identifier))
+    (elseif_block
+      condition: (identifier))))
 
-==============================
+================================================================================
 Basic if+elseif+else
-==============================
+================================================================================
 
 if thing then
 elseif other_thing then
 else
 end
 
----
+--------------------------------------------------------------------------------
 
 (program
-  (if_statement condition: (identifier)
-    (elseif_block condition: (identifier))
+  (if_statement
+    condition: (identifier)
+    (elseif_block
+      condition: (identifier))
     (else_block)))
 
-==============================
+================================================================================
 Basic if+elseif+else with statements
-==============================
+================================================================================
 
 if thing then
    local x = 2
@@ -94,12 +99,24 @@ else
    local z = {}
 end
 
----
+--------------------------------------------------------------------------------
 
 (program
-  (if_statement condition: (identifier)
-    (var_declaration (var name: (identifier)) (number))
-    (elseif_block condition: (identifier)
-      (var_declaration (var name: (identifier)) (string)))
+  (if_statement
+    condition: (identifier)
+    (var_declaration
+      (var
+        name: (identifier))
+      (number))
+    (elseif_block
+      condition: (identifier)
+      (var_declaration
+        (var
+          name: (identifier))
+        (string
+          content: (string_content))))
     (else_block
-      (var_declaration (var name: (identifier)) (table_constructor)))))
+      (var_declaration
+        (var
+          name: (identifier))
+        (table_constructor)))))
