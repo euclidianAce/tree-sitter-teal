@@ -214,15 +214,19 @@ module.exports = grammar({
       optional(seq("=", list($._expression)))
     ),
 
+    _type_def: $ => seq(
+        "type",
+        field("name", $.identifier),
+        "=",
+        field("value", choice(
+          $._type, $._newtype
+        ))
+    ),
+
     type_declaration: $ => choice(
       seq(
-        $.scope,
-        "type",
-        alias($.identifier, $.type_name),
-        "=",
-        choice(
-          $._type, $._newtype
-        )
+        field("scope", $.scope),
+        $._type_def,
       ),
       $.record_declaration,
       $.enum_declaration,
@@ -346,7 +350,7 @@ module.exports = grammar({
       "end"
     ),
 
-    record_entry: $ => choice(
+    record_field: $ => choice(
       seq(
         field("key", $.identifier),
         ":", field("type", $._type)
@@ -360,19 +364,13 @@ module.exports = grammar({
         field("key", alias(reserved_id, $.identifier)),
         ":", field("type", $._type)
       )),
-      seq(
-        "type", field("key", $.identifier), "=", field("value", choice($._type, $._newtype))
-      ),
-      seq(
-        "record",
-        field("key", $.identifier),
-        field("typeargs", optional($.typeargs)),
-        field("value", $.record_body),
-      ),
-      seq(
-        "enum", field("key", $.identifier),
-        field("value", $.enum_body),
-      ),
+    ),
+
+    _record_entry: $ => choice(
+        alias($.record_field, $.field),
+        alias($._type_def, $.typedef),
+        alias($._record_def, $.record_declaration),
+        alias($._enum_def, $.enum_declaration),
     ),
 
     metamethod_annotation: $ => seq(
@@ -382,7 +380,7 @@ module.exports = grammar({
     record_body: $ => seq(
       optional(seq("{", alias($._type, $.record_array_type), "}")),
       repeat(choice(
-        $.record_entry,
+        $._record_entry,
         alias("userdata", $.userdata),
         field("metamethod", alias($.metamethod_annotation, $.metamethod)),
       )),

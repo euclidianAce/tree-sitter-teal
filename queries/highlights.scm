@@ -68,13 +68,17 @@
   name: (identifier) @type)
 (anon_record . "record" @keyword)
 (record_body
-  (record_entry
-    . [ "record" "enum" ] @keyword
-    . key: (identifier) @type))
+  (record_declaration
+    . [ "record" ] @keyword
+    . name: (identifier) @type))
 (record_body
-  (record_entry
+  (enum_declaration
+    . [ "enum" ] @keyword
+    . name: (identifier) @type))
+(record_body
+  (typedef
     . "type" @keyword
-    . key: (identifier) @type . "="))
+    . name: (identifier) @type . "="))
 (record_body
   (metamethod "metamethod" @keyword))
 (record_body
@@ -85,7 +89,7 @@
   name: (identifier) @type)
 
 (type_declaration "type" @keyword)
-(type_declaration (type_name) @type)
+(type_declaration (identifier) @type)
 (simple_type) @type
 (type_index) @type
 (type_union "|" @operator)
