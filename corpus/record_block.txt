@@ -9,8 +9,8 @@ end
 
 (program
   (type_declaration
-    (type_name)
-    (anon_record
+    name: (identifier)
+    value: (anon_record
       record_body: (record_body))))
 
 ================================================================================
@@ -40,15 +40,15 @@ end
 
 (program
   (type_declaration
-    (type_name)
-    (anon_record
+    name: (identifier)
+    value: (anon_record
       record_body: (record_body
-        (record_entry
+        (field
           key: (identifier)
           type: (table_type
             value_type: (simple_type
               name: (identifier))))
-        (record_entry
+        (field
           key: (identifier)
           type: (simple_type
             name: (identifier)))))))
@@ -67,18 +67,18 @@ end
 
 (program
   (type_declaration
-    (type_name)
-    (anon_record
+    name: (identifier)
+    value: (anon_record
       record_body: (record_body
         (record_array_type
           (simple_type
             name: (identifier)))
-        (record_entry
+        (field
           key: (identifier)
           type: (table_type
             value_type: (simple_type
               name: (identifier))))
-        (record_entry
+        (field
           key: (identifier)
           type: (simple_type
             name: (identifier)))))))
@@ -98,18 +98,18 @@ end
 
 (program
   (type_declaration
-    (type_name)
-    (anon_record
+    name: (identifier)
+    value: (anon_record
       record_body: (record_body
-        (record_entry
-          key: (identifier)
+        (typedef
+          name: (identifier)
           value: (anon_record
             record_body: (record_body
-              (record_entry
+              (field
                 key: (identifier)
                 type: (simple_type
                   name: (identifier))))))
-        (record_entry
+        (field
           key: (identifier)
           type: (simple_type
             name: (identifier)))))))
@@ -126,12 +126,12 @@ end
 
 (program
   (type_declaration
-    (type_name)
-    (anon_record
+    name: (identifier)
+    value: (anon_record
       (typeargs
         (identifier))
       record_body: (record_body
-        (record_entry
+        (field
           key: (identifier)
           type: (simple_type
             name: (identifier)))))))
@@ -148,10 +148,10 @@ end
 
 (program
   (type_declaration
-    (type_name)
-    (anon_record
+    name: (identifier)
+    value: (anon_record
       record_body: (record_body
-        (record_entry
+        (field
           key: (identifier)
           type: (simple_type
             name: (identifier)))))))
@@ -173,19 +173,19 @@ end
 
 (program
   (type_declaration
-    (type_name)
-    (anon_record
+    name: (identifier)
+    value: (anon_record
       record_body: (record_body
-        (record_entry
+        (field
           key: (identifier)
           type: (simple_type
             name: (identifier)))
-        (record_entry
-          key: (identifier)
+        (typedef
+          name: (identifier)
           value: (anon_record
             record_body: (record_body)))
-        (record_entry
-          key: (identifier)
+        (typedef
+          name: (identifier)
           value: (enum_body
             (string
               content: (string_content))
@@ -207,9 +207,9 @@ end
   (record_declaration
     name: (identifier)
     record_body: (record_body
-      (record_entry
-        key: (identifier)
-        value: (record_body)))))
+      (record_declaration
+        name: (identifier)
+        record_body: (record_body)))))
 
 ================================================================================
 Nested enum shorthand syntax
@@ -227,9 +227,9 @@ end
   (record_declaration
     name: (identifier)
     record_body: (record_body
-      (record_entry
-        key: (identifier)
-        value: (enum_body
+      (enum_declaration
+        name: (identifier)
+        (enum_body
           (string
             content: (string_content))
           (string
@@ -249,7 +249,7 @@ end
   (record_declaration
     name: (identifier)
     record_body: (record_body
-      (record_entry
+      (field
         key: (identifier)
         type: (simple_type
           name: (identifier))))))
@@ -268,7 +268,7 @@ end
   (record_declaration
     name: (identifier)
     record_body: (record_body
-      (record_entry
+      (field
         key: (identifier)
         type: (simple_type
           name: (identifier))))))
@@ -287,7 +287,7 @@ end
   (record_declaration
     name: (identifier)
     record_body: (record_body
-      (record_entry
+      (field
         string_key: (string
           content: (string_content))
         type: (simple_type
@@ -308,11 +308,11 @@ end
   (record_declaration
     name: (identifier)
     record_body: (record_body
-      (record_entry
-        key: (identifier)
+      (record_declaration
+        name: (identifier)
         typeargs: (typeargs
           (identifier))
-        value: (record_body)))))
+        record_body: (record_body)))))
 
 ================================================================================
 Userdata record
