@@ -97,12 +97,14 @@
 
 ;; The rest of it
 (var_declaration
-  (var name: (identifier) @variable))
+  declarators: (var_declarators
+      (var name: (identifier) @variable)))
 (var_declaration
-  (var
-    "<" @punctuation.bracket
-    . attribute: (attribute) @attribute
-    . ">" @punctuation.bracket))
+  declarators: (var_declarators
+    (var
+      "<" @punctuation.bracket
+      . attribute: (attribute) @attribute
+      . ">" @punctuation.bracket)))
 [ "(" ")" "[" "]" "{" "}" ] @punctuation.bracket
 
 ;; Only highlight format specifiers in calls to string.format
