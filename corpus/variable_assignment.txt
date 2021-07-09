@@ -8,9 +8,11 @@ local x = 5
 
 (program
   (var_declaration
-    (var
-      name: (identifier))
-    (number)))
+    declarators: (var_declarators
+      (var
+        name: (identifier)))
+    initializers: (expressions
+      (number))))
 
 ================================================================================
 Global Variable Declaration
@@ -22,9 +24,11 @@ global x = 5
 
 (program
   (var_declaration
-    (var
-      name: (identifier))
-    (number)))
+    declarators: (var_declarators
+      (var
+        name: (identifier)))
+    initializers: (expressions
+      (number))))
 
 ================================================================================
 Local Variable List Declaration
@@ -36,15 +40,17 @@ local x, y, z = 1, 2, 3
 
 (program
   (var_declaration
-    (var
-      name: (identifier))
-    (var
-      name: (identifier))
-    (var
-      name: (identifier))
-    (number)
-    (number)
-    (number)))
+    declarators: (var_declarators
+      (var
+        name: (identifier))
+      (var
+        name: (identifier))
+      (var
+        name: (identifier)))
+    initializers: (expressions
+      (number)
+      (number)
+      (number))))
 
 ================================================================================
 Global Variable List Declaration
@@ -56,16 +62,18 @@ global x, y, z = 1, 2, "hey"
 
 (program
   (var_declaration
-    (var
-      name: (identifier))
-    (var
-      name: (identifier))
-    (var
-      name: (identifier))
-    (number)
-    (number)
-    (string
-      content: (string_content))))
+    declarators: (var_declarators
+      (var
+        name: (identifier))
+      (var
+        name: (identifier))
+      (var
+        name: (identifier)))
+    initializers: (expressions
+      (number)
+      (number)
+      (string
+        content: (string_content)))))
 
 ================================================================================
 Variable reassignment
@@ -78,15 +86,19 @@ x = "hi"
 
 (program
   (var_declaration
-    (var
-      name: (identifier))
-    (string
-      content: (string_content)))
+    declarators: (var_declarators
+      (var
+        name: (identifier)))
+    initializers: (expressions
+      (string
+        content: (string_content))))
   (var_assignment
-    (var
-      (identifier))
-    (string
-      content: (string_content))))
+    variables: (assignment_variables
+      (var
+        (identifier)))
+    expressions: (expressions
+      (string
+        content: (string_content)))))
 
 ================================================================================
 Table entry reassignment
@@ -98,9 +110,11 @@ foo.bar = "hi"
 
 (program
   (var_assignment
-    (var
-      (index
-        (identifier)
-        (identifier)))
-    (string
-      (string_content))))
+    (assignment_variables
+      (var
+        (index
+          (identifier)
+          (identifier))))
+    (expressions
+      (string
+        (string_content)))))

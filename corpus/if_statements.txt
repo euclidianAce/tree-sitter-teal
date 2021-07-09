@@ -105,18 +105,24 @@ end
   (if_statement
     condition: (identifier)
     (var_declaration
-      (var
-        name: (identifier))
-      (number))
+      declarators: (var_declarators
+        (var
+          name: (identifier)))
+      initializers: (expressions
+        (number)))
     (elseif_block
       condition: (identifier)
       (var_declaration
-        (var
-          name: (identifier))
-        (string
-          content: (string_content))))
+        declarators: (var_declarators
+          (var
+            name: (identifier)))
+        initializers: (expressions
+          (string
+            content: (string_content)))))
     (else_block
       (var_declaration
-        (var
-          name: (identifier))
-        (table_constructor)))))
+        declarators: (var_declarators
+          (var
+            name: (identifier)))
+        initializers: (expressions
+          (table_constructor))))))

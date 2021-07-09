@@ -9,12 +9,14 @@ end
 
 (program
   (var_declaration
-    (var
-      (identifier))
-    (anon_function
-      (function_signature
-        (arguments))
-      (function_body))))
+    (var_declarators
+      (var
+        (identifier)))
+    (expressions
+      (anon_function
+        (function_signature
+          (arguments))
+        (function_body)))))
 
 ================================================================================
 Named
@@ -56,29 +58,35 @@ end
       arguments: (arguments))
     body: (function_body
       (var_declaration
-        (var
-          name: (identifier))
-        (number))
+        declarators: (var_declarators
+          (var
+            name: (identifier)))
+        initializers: (expressions
+          (number)))
       (var_declaration
-        (var
-          name: (identifier))
-        (table_constructor
-          (table_entry
-            key: (identifier)
-            value: (anon_function
-              signature: (function_signature
-                arguments: (arguments))
-              body: (function_body
-                (var_declaration
-                  (var
-                    name: (identifier))
-                  (number)))))
-          (table_entry
-            key: (identifier)
-            value: (anon_function
-              signature: (function_signature
-                arguments: (arguments))
-              body: (function_body))))))))
+        declarators: (var_declarators
+          (var
+            name: (identifier)))
+        initializers: (expressions
+          (table_constructor
+            (table_entry
+              key: (identifier)
+              value: (anon_function
+                signature: (function_signature
+                  arguments: (arguments))
+                body: (function_body
+                  (var_declaration
+                    declarators: (var_declarators
+                      (var
+                        name: (identifier)))
+                    initializers: (expressions
+                      (number))))))
+            (table_entry
+              key: (identifier)
+              value: (anon_function
+                signature: (function_signature
+                  arguments: (arguments))
+                body: (function_body)))))))))
 
 ================================================================================
 A function that returns
@@ -98,10 +106,12 @@ end
       arguments: (arguments))
     body: (function_body
       (var_declaration
-        (var
-          name: (identifier))
-        (string
-          content: (string_content)))
+        declarators: (var_declarators
+          (var
+            name: (identifier)))
+        initializers: (expressions
+          (string
+            content: (string_content))))
       (return_statement
         (identifier)))))
 

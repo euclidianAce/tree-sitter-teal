@@ -8,10 +8,12 @@ local x = "hello"
 
 (program
   (var_declaration
-    (var
-      (identifier))
-    (string
-      (string_content))))
+    (var_declarators
+      (var
+        (identifier)))
+    (expressions
+      (string
+        (string_content)))))
 
 ================================================================================
 Simple 'string'
@@ -23,10 +25,12 @@ local x = 'hello'
 
 (program
   (var_declaration
-    (var
-      (identifier))
-    (string
-      (string_content))))
+    (var_declarators
+      (var
+        (identifier)))
+    (expressions
+      (string
+        (string_content)))))
 
 ================================================================================
 Simple "string" with \"
@@ -38,11 +42,13 @@ local x = "he\"llo"
 
 (program
   (var_declaration
-    (var
-      (identifier))
-    (string
-      (string_content
-        (escape_sequence)))))
+    (var_declarators
+      (var
+        (identifier)))
+    (expressions
+      (string
+        (string_content
+          (escape_sequence))))))
 
 ================================================================================
 Simple 'string' with \'
@@ -54,11 +60,13 @@ local x = 'he\'llo'
 
 (program
   (var_declaration
-    (var
-      (identifier))
-    (string
-      (string_content
-        (escape_sequence)))))
+    (var_declarators
+      (var
+        (identifier)))
+    (expressions
+      (string
+        (string_content
+          (escape_sequence))))))
 
 ================================================================================
 Simple "string" with format specifier
@@ -70,11 +78,13 @@ local x = "a %A"
 
 (program
   (var_declaration
-    (var
-      (identifier))
-    (string
-      (string_content
-        (format_specifier)))))
+    (var_declarators
+      (var
+        (identifier)))
+    (expressions
+      (string
+        (string_content
+          (format_specifier))))))
 
 ================================================================================
 Simple "string" with % but not a format specifier
@@ -86,10 +96,12 @@ local x = "%"
 
 (program
   (var_declaration
-    (var
-      (identifier))
-    (string
-      (string_content))))
+    (var_declarators
+      (var
+        (identifier)))
+    (expressions
+      (string
+        (string_content)))))
 
 ================================================================================
 Long [[string]]
@@ -101,10 +113,12 @@ local x = [[hello]]
 
 (program
   (var_declaration
-    (var
-      (identifier))
-    (string
-      (string_content))))
+    (var_declarators
+      (var
+        (identifier)))
+    (expressions
+      (string
+        (string_content)))))
 
 ================================================================================
 Long [  [string]  ]
@@ -116,10 +130,12 @@ local x = [==[hello]==]
 
 (program
   (var_declaration
-    (var
-      (identifier))
-    (string
-      (string_content))))
+    (var_declarators
+      (var
+        (identifier)))
+    (expressions
+      (string
+        (string_content)))))
 
 ================================================================================
 Longer [    [string]    ]
@@ -131,10 +147,12 @@ local x = [====[hello]====]
 
 (program
   (var_declaration
-    (var
-      (identifier))
-    (string
-      (string_content))))
+    (var_declarators
+      (var
+        (identifier)))
+    (expressions
+      (string
+        (string_content)))))
 
 ================================================================================
 Long string with eq + almost terminating sequence
@@ -146,10 +164,12 @@ local x = [==[ ]== ]==]
 
 (program
   (var_declaration
-    (var
-      (identifier))
-    (string
-      (string_content))))
+    (var_declarators
+      (var
+        (identifier)))
+    (expressions
+      (string
+        (string_content)))))
 
 ================================================================================
 "String" with -- in it
@@ -161,10 +181,12 @@ local x = "-- stuff"
 
 (program
   (var_declaration
-    (var
-      (identifier))
-    (string
-      (string_content))))
+    (var_declarators
+      (var
+        (identifier)))
+    (expressions
+      (string
+        (string_content)))))
 
 ================================================================================
 'String' with -- in it
@@ -176,10 +198,12 @@ local x = '-- stuff'
 
 (program
   (var_declaration
-    (var
-      (identifier))
-    (string
-      (string_content))))
+    (var_declarators
+      (var
+        (identifier)))
+    (expressions
+      (string
+        (string_content)))))
 
 ================================================================================
 String in return statement
@@ -204,11 +228,13 @@ local x = "a \u{123} b"
 
 (program
   (var_declaration
-    (var
-      (identifier))
-    (string
-      (string_content
-        (escape_sequence)))))
+    (var_declarators
+      (var
+        (identifier)))
+    (expressions
+      (string
+        (string_content
+          (escape_sequence))))))
 
 ================================================================================
 % at end of long string
@@ -220,10 +246,12 @@ local x = [[ abcd %]]
 
 (program
   (var_declaration
-    (var
-      (identifier))
-    (string
-      (string_content))))
+    (var_declarators
+      (var
+        (identifier)))
+    (expressions
+      (string
+        (string_content)))))
 
 ================================================================================
 Long string with format specifier
@@ -235,11 +263,13 @@ local x = [[ abcd %s ]]
 
 (program
   (var_declaration
-    (var
-      (identifier))
-    (string
-      (string_content
-        (format_specifier)))))
+    (var_declarators
+      (var
+        (identifier)))
+    (expressions
+      (string
+        (string_content
+          (format_specifier))))))
 
 ================================================================================
 Empty long string
@@ -251,6 +281,8 @@ local x = [[]]
 
 (program
   (var_declaration
-    (var
-      (identifier))
-    (string)))
+    (var_declarators
+      (var
+        (identifier)))
+    (expressions
+      (string))))

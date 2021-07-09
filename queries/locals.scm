@@ -1,9 +1,11 @@
 
 (var_declaration
-   (var (identifier)) @definition.var)
+  declarators: (var_declarators
+  (var (identifier)) @definition.var))
 
 (var_assignment
-   (var (identifier) @definition.var) @definition.associated)
+  variables: (assignment_variables
+    (var (identifier) @definition.var) @definition.associated))
 
 (arg name: (identifier) @definition.parameter)
 
