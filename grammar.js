@@ -149,7 +149,7 @@ module.exports = grammar({
 
     unary_op: $ => prec.left(prec_op.unary, seq(
       field("op", alias(choice('not', '#', '-', '~'), $.op)),
-      $._expression
+      field("right", $._expression)
     )),
 
     bin_op: $ => choice(
@@ -174,22 +174,22 @@ module.exports = grammar({
         ['//', prec_op.mult],
         ['%', prec_op.mult],
       ].map(([operator, precedence]) => prec.left(precedence, seq(
-        $._expression,
+        field("left", $._expression),
         field("op", alias(operator, $.op)),
-        $._expression
+        field("right", $._expression)
       ))),
       ...[
         ['..', prec_op.concat],
         ['^', prec_op.power],
       ].map(([operator, precedence]) => prec.right(precedence, seq(
-        $._expression,
+        field("left", $._expression),
         field("op", alias(operator, $.op)),
-        $._expression
+        field("right", $._expression)
       ))),
       prec.right(prec_op.is, seq(
-        $._expression,
+        field("left", $._expression),
         field("op", alias("is", $.op)),
-        $._type
+        field("right", $._type)
       )),
     ),
 
