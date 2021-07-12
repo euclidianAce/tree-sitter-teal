@@ -74,7 +74,7 @@ module.exports = grammar({
       $.enum_declaration,
       $.return_statement,
       $.break,
-      $.for_statement,
+      $._for_statement,
       $.do_statement,
       $.while_statement,
       $.repeat_statement,
@@ -106,13 +106,19 @@ module.exports = grammar({
     elseif_block: $ => seq("elseif", field("condition", $._expression), "then", repeat($._statement)),
     else_block: $ => seq("else", repeat($._statement)),
 
-    for_statement: $ => choice(
-      seq(
-        "for", $.identifier, "=", $._expression, ",", $._expression, optional(seq(",", $._expression)), alias($.do_statement, $.for_body)
-      ),
-      seq(
-        "for", list($.identifier), "in", list($._expression), alias($.do_statement, $.for_body)
-      )
+    numeric_for_statement: $ => seq(
+      "for", field("variable", $.identifier), "=", field("initializer", $._expression),
+      ",", field("target", $._expression),
+      optional(seq(",", field("step", $._expression))), field("body", alias($.do_statement, $.for_body))
+    ),
+
+    generic_for_statement: $ => seq(
+        "for", field("variable", list($.identifier)), "in", field("iterator", list($._expression)), field("body", alias($.do_statement, $.for_body))
+    ),
+
+    _for_statement: $ => choice(
+        $.numeric_for_statement,
+        $.generic_for_statement,
     ),
 
     while_statement: $ => seq(
