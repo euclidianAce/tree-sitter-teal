@@ -16,7 +16,8 @@
 
 (program) @scope
 (if_statement) @scope
-(for_statement (for_body) @scope)
+(generic_for_statement (for_body) @scope)
+(numeric_for_statement (for_body) @scope)
 (repeat_statement) @scope
 (while_statement (while_body) @scope)
 (do_statement) @scope

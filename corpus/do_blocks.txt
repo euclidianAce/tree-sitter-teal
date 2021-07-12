@@ -38,7 +38,7 @@ end
 --------------------------------------------------------------------------------
 
 (program
-  (for_statement
+  (numeric_for_statement
     (identifier)
     (number)
     (number)
@@ -54,14 +54,14 @@ end
 --------------------------------------------------------------------------------
 
 (program
-  (for_statement
-    (identifier)
-    (number)
-    (number)
-    (unary_op
+  (numeric_for_statement
+    variable: (identifier)
+    initializer: (number)
+    target: (number)
+    step: (unary_op
       op: (op)
       right: (number))
-    (for_body)))
+    body: (for_body)))
 
 ================================================================================
 Generic for loop
@@ -74,7 +74,7 @@ end
 --------------------------------------------------------------------------------
 
 (program
-  (for_statement
+  (generic_for_statement
     (identifier)
     (identifier)
     (identifier)
@@ -123,11 +123,11 @@ end
 --------------------------------------------------------------------------------
 
 (program
-  (for_statement
-    (identifier)
-    (number)
-    (number)
-    (for_body
+  (numeric_for_statement
+    variable: (identifier)
+    initializer: (number)
+    target: (number)
+    body: (for_body
       (while_statement
         condition: (bin_op
           left: (identifier)
