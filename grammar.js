@@ -207,11 +207,15 @@ module.exports = grammar({
       optional(seq("<", field("attribute", alias($.identifier, $.attribute)), ">")),
     ),
 
+    var_declarators: $ => list(alias($.var_declarator, $.var)),
+
+    expressions: $ => list($._expression),
+
     var_declaration: $ => seq(
       $.scope,
-      list(alias($.var_declarator, $.var)),
+      field("declarators", $.var_declarators),
       optional(field("type_annotation", $.type_annotation)),
-      optional(seq("=", list($._expression)))
+      optional(seq("=", field("initializers", $.expressions)))
     ),
 
     _type_def: $ => seq(
@@ -232,8 +236,10 @@ module.exports = grammar({
       $.enum_declaration,
     ),
 
+    assignment_variables: $ => list(alias($._var, $.var)),
+
     var_assignment: $ => seq(
-      list(alias($._var, $.var)), "=", list($._expression)
+      field("variables", $.assignment_variables), "=", field("expressions", $.expressions)
     ),
 
     _prefix_expression: $ => prec(10, choice(
