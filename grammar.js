@@ -419,7 +419,7 @@ module.exports = grammar({
     _enum_def: $ => seq(
       "enum",
       field("name", $.identifier),
-      $.enum_body
+      field("enum_body", $.enum_body)
     ),
 
     enum_declaration: $ => seq(

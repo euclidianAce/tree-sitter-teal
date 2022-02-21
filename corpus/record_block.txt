@@ -229,7 +229,7 @@ end
     record_body: (record_body
       (enum_declaration
         name: (identifier)
-        (enum_body
+        enum_body: (enum_body
           (string
             content: (string_content))
           (string
