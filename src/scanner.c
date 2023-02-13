@@ -4,7 +4,7 @@
 #include <string.h>
 
 typedef struct {
-    uint8_t opening_eqs;
+    uint32_t opening_eqs;
     bool in_str;
     char opening_quote;
 } State;
@@ -28,12 +28,17 @@ enum TokenType {
 };
 
 #define EXPECT(char) do { if (lexer->lookahead != char) { return false; } consume(lexer); } while (0)
-#define CONSUME_EQS(n) do { while (lexer->lookahead == '=') { consume(lexer); ++ n ; } } while (0)
-/* #define LOG() do { printf("%s '%c'\n", __FUNCTION__, lexer->lookahead == '\n' ? '~' : lexer->lookahead); } while (0) */
-#define LOG()
+static inline uint32_t consume_eqs(TSLexer *lexer) {
+    uint32_t result = 0;
+    while (!lexer->eof(lexer) && lexer->lookahead == '=') {
+        consume(lexer);
+        result += 1;
+    }
+    return result;
+}
 
 static void consume_rest_of_line(TSLexer *lexer) {
-    while (lexer->lookahead > 0) {
+    while (!lexer->eof(lexer)) {
         switch (lexer->lookahead) {
             case '\n': case '\r': return;
             default: consume(lexer);
@@ -42,7 +47,6 @@ static void consume_rest_of_line(TSLexer *lexer) {
 }
 
 static bool scan_comment(TSLexer *lexer) {
-    LOG();
     EXPECT('-'); EXPECT('-');
     lexer->result_symbol = COMMENT;
 
@@ -52,27 +56,25 @@ static bool scan_comment(TSLexer *lexer) {
     }
 
     consume(lexer);
-    uint8_t eqs = 0;
-    CONSUME_EQS(eqs);
+    uint32_t eqs = consume_eqs(lexer);
 
     if (lexer->lookahead != '[') {
         consume_rest_of_line(lexer);
         return true;
     }
 
-    while (lexer->lookahead > 0) {
-        while (lexer->lookahead > 0 && lexer->lookahead != ']')
+    while (!lexer->eof(lexer)) {
+        while (!lexer->eof(lexer) && lexer->lookahead != ']')
             consume(lexer);
 
         EXPECT(']');
-        uint8_t test_eq = 0;
-        CONSUME_EQS(test_eq);
+        uint32_t test_eq = consume_eqs(lexer);
         if (lexer->lookahead == ']') {
             consume(lexer);
             if (test_eq == eqs) {
                 return true;
             }
-        } else if (lexer->lookahead != 0) {
+        } else if (!lexer->eof(lexer)) {
             consume(lexer);
         }
     }
@@ -81,9 +83,11 @@ static bool scan_comment(TSLexer *lexer) {
 }
 
 static inline void reset_state(State *state) {
-    state->opening_eqs = 0;
-    state->in_str = false;
-    state->opening_quote = 0;
+    *state = (State) {
+        .opening_eqs = 0,
+        .in_str = false,
+        .opening_quote = 0,
+    };
 }
 
 unsigned tree_sitter_teal_external_scanner_serialize(void *payload, char *buffer) {
@@ -98,7 +102,6 @@ void tree_sitter_teal_external_scanner_deserialize(void *payload, const char *bu
 }
 
 static bool scan_short_string_start(State *state, TSLexer *lexer) {
-    LOG();
     if ((lexer->lookahead == '"') || (lexer->lookahead == '\'')) {
         state->opening_quote = lexer->lookahead;
         state->in_str = true;
@@ -110,7 +113,6 @@ static bool scan_short_string_start(State *state, TSLexer *lexer) {
 }
 
 static bool scan_short_string_end(State *state, TSLexer *lexer) {
-    LOG();
     if (state->in_str && lexer->lookahead == state->opening_quote) {
         consume(lexer);
         lexer->result_symbol = SHORT_STRING_END;
@@ -121,7 +123,6 @@ static bool scan_short_string_end(State *state, TSLexer *lexer) {
 }
 
 static bool scan_short_string_char(State *state, TSLexer *lexer) {
-    LOG();
     if (
         state->in_str
         && state->opening_quote > 0
@@ -139,11 +140,9 @@ static bool scan_short_string_char(State *state, TSLexer *lexer) {
 }
 
 static bool scan_long_string_start(State *state, TSLexer *lexer) {
-    LOG();
     EXPECT('[');
     reset_state(state);
-    uint8_t eqs = 0;
-    CONSUME_EQS(eqs);
+    uint32_t eqs = consume_eqs(lexer);
     EXPECT('[');
     state->in_str = true;
     lexer->result_symbol = LONG_STRING_START;
@@ -152,11 +151,9 @@ static bool scan_long_string_start(State *state, TSLexer *lexer) {
 }
 
 static bool scan_long_string_end(State *state, TSLexer *lexer) {
-    LOG();
     EXPECT(']');
 
-    uint8_t eqs = 0;
-    CONSUME_EQS(eqs);
+    uint32_t eqs = consume_eqs(lexer);
     if (state->opening_eqs == eqs && lexer->lookahead == ']') {
         consume(lexer);
         lexer->result_symbol = LONG_STRING_END;
@@ -184,9 +181,8 @@ static inline bool is_whitespace(char c) {
 }
 
 bool tree_sitter_teal_external_scanner_scan(void *payload, TSLexer *lexer, const bool *valid_symbols) {
-    LOG();
     State *state = payload;
-    if (lexer->lookahead == 0)
+    if (lexer->eof(lexer))
         return false;
 
     if (state->in_str) {
