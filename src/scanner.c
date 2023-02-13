@@ -1,9 +1,16 @@
 #include <tree_sitter/parser.h>
 #include <stdbool.h>
 #include <stdio.h>
+#include <string.h>
 
-void *tree_sitter_teal_external_scanner_create() { return NULL; }
-void tree_sitter_teal_external_scanner_destroy(void *payload) {}
+typedef struct {
+    uint8_t opening_eqs;
+    bool in_str;
+    char opening_quote;
+} State;
+
+void *tree_sitter_teal_external_scanner_create() { return calloc(1, sizeof(State)); }
+void tree_sitter_teal_external_scanner_destroy(void *payload) { free(payload); }
 
 static inline void consume(TSLexer *lexer) { lexer->advance(lexer, false); }
 static inline void skip(TSLexer *lexer) { lexer->advance(lexer, true); }
@@ -73,38 +80,28 @@ static bool scan_comment(TSLexer *lexer) {
     return true;
 }
 
-// state
-static uint8_t opening_eqs = 0;
-static bool in_str = false;
-static char opening_quote = 0;
-
-static inline void reset_state() {
-    opening_eqs = 0;
-    in_str = false;
-    opening_quote = 0;
+static inline void reset_state(State *state) {
+    state->opening_eqs = 0;
+    state->in_str = false;
+    state->opening_quote = 0;
 }
 
 unsigned tree_sitter_teal_external_scanner_serialize(void *payload, char *buffer) {
-    buffer[0] = opening_eqs;
-    buffer[1] = in_str;
-    buffer[2] = opening_quote;
-    return 3;
+    memcpy(buffer, payload, sizeof(State));
+    return sizeof(State);
 }
 
 void tree_sitter_teal_external_scanner_deserialize(void *payload, const char *buffer, unsigned length) {
-    if (length == 0) return;
-    opening_eqs = buffer[0];
-    if (length == 1) return;
-    in_str = buffer[1];
-    if (length == 2) return;
-    opening_quote = buffer[2];
+    if (length < sizeof(State))
+        return;
+    memcpy(payload, buffer, sizeof(State));
 }
 
-static bool scan_short_string_start(TSLexer *lexer) {
+static bool scan_short_string_start(State *state, TSLexer *lexer) {
     LOG();
     if ((lexer->lookahead == '"') || (lexer->lookahead == '\'')) {
-        opening_quote = lexer->lookahead;
-        in_str = true;
+        state->opening_quote = lexer->lookahead;
+        state->in_str = true;
         consume(lexer);
         lexer->result_symbol = SHORT_STRING_START;
         return true;
@@ -112,23 +109,23 @@ static bool scan_short_string_start(TSLexer *lexer) {
     return false;
 }
 
-static bool scan_short_string_end(TSLexer *lexer) {
+static bool scan_short_string_end(State *state, TSLexer *lexer) {
     LOG();
-    if (in_str && lexer->lookahead == opening_quote) {
+    if (state->in_str && lexer->lookahead == state->opening_quote) {
         consume(lexer);
         lexer->result_symbol = SHORT_STRING_END;
-        reset_state();
+        reset_state(state);
         return true;
     }
     return false;
 }
 
-static bool scan_short_string_char(TSLexer *lexer) {
+static bool scan_short_string_char(State *state, TSLexer *lexer) {
     LOG();
     if (
-        in_str
-        && opening_quote > 0
-        && lexer->lookahead != opening_quote
+        state->in_str
+        && state->opening_quote > 0
+        && lexer->lookahead != state->opening_quote
         && lexer->lookahead != '\n'
         && lexer->lookahead != '\r'
         && lexer->lookahead != '\\'
@@ -141,29 +138,29 @@ static bool scan_short_string_char(TSLexer *lexer) {
     return false;
 }
 
-static bool scan_long_string_start(TSLexer *lexer) {
+static bool scan_long_string_start(State *state, TSLexer *lexer) {
     LOG();
     EXPECT('[');
-    reset_state();
+    reset_state(state);
     uint8_t eqs = 0;
     CONSUME_EQS(eqs);
     EXPECT('[');
-    in_str = true;
+    state->in_str = true;
     lexer->result_symbol = LONG_STRING_START;
-    opening_eqs = eqs;
+    state->opening_eqs = eqs;
     return true;
 }
 
-static bool scan_long_string_end(TSLexer *lexer) {
+static bool scan_long_string_end(State *state, TSLexer *lexer) {
     LOG();
     EXPECT(']');
 
     uint8_t eqs = 0;
     CONSUME_EQS(eqs);
-    if (opening_eqs == eqs && lexer->lookahead == ']') {
+    if (state->opening_eqs == eqs && lexer->lookahead == ']') {
         consume(lexer);
         lexer->result_symbol = LONG_STRING_END;
-        reset_state();
+        reset_state(state);
         return true;
     }
     return false;
@@ -188,25 +185,26 @@ static inline bool is_whitespace(char c) {
 
 bool tree_sitter_teal_external_scanner_scan(void *payload, TSLexer *lexer, const bool *valid_symbols) {
     LOG();
+    State *state = payload;
     if (lexer->lookahead == 0)
         return false;
 
-    if (in_str) {
-        if (opening_quote > 0) {
-            return (valid_symbols[SHORT_STRING_END] && scan_short_string_end(lexer))
-                || (valid_symbols[SHORT_STRING_CHAR] && scan_short_string_char(lexer));
+    if (state->in_str) {
+        if (state->opening_quote > 0) {
+            return (valid_symbols[SHORT_STRING_END] && scan_short_string_end(state, lexer))
+                || (valid_symbols[SHORT_STRING_CHAR] && scan_short_string_char(state, lexer));
         } else {
-            return scan_long_string_end(lexer)
+            return scan_long_string_end(state, lexer)
                 || scan_long_string_char(lexer);
         }
     } else {
         while (is_whitespace(lexer->lookahead))
             skip(lexer);
 
-        if (valid_symbols[SHORT_STRING_START] && scan_short_string_start(lexer))
+        if (valid_symbols[SHORT_STRING_START] && scan_short_string_start(state, lexer))
             return true;
 
-        if (valid_symbols[LONG_STRING_START] && scan_long_string_start(lexer))
+        if (valid_symbols[LONG_STRING_START] && scan_long_string_start(state, lexer))
             return true;
     }
 
