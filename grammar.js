@@ -368,7 +368,7 @@ module.exports = grammar({
         ":", field("type", $._type)
       ),
       seq(
-        "[", field("string_key", $.string), "]",
+        "[", field("key", $.string), "]",
         ":", field("type", $._type)
       ),
       // TODO: there has to be a way around doing this, but I can't figure it out

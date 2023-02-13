@@ -288,7 +288,7 @@ end
     name: (identifier)
     record_body: (record_body
       (field
-        string_key: (string
+        key: (string
           content: (string_content))
         type: (simple_type
           name: (identifier))))))
