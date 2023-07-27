@@ -1,4 +1,4 @@
-#include <tree_sitter/parser.h>
+#include "tree_sitter/parser.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
@@ -103,7 +103,7 @@ void tree_sitter_teal_external_scanner_deserialize(void *payload, const char *bu
 
 static bool scan_short_string_start(State *state, TSLexer *lexer) {
     if ((lexer->lookahead == '"') || (lexer->lookahead == '\'')) {
-        state->opening_quote = lexer->lookahead;
+        state->opening_quote = (char)lexer->lookahead;
         state->in_str = true;
         consume(lexer);
         lexer->result_symbol = SHORT_STRING_START;
@@ -163,7 +163,7 @@ static bool scan_long_string_end(State *state, TSLexer *lexer) {
     return false;
 }
 
-bool scan_long_string_char(TSLexer *lexer) {
+static bool scan_long_string_char(TSLexer *lexer) {
     if (lexer->lookahead == '%') {
         return false;
     }
@@ -172,8 +172,8 @@ bool scan_long_string_char(TSLexer *lexer) {
     return true;
 }
 
-static inline bool is_whitespace(char c) {
-    switch (c) {
+static inline bool is_whitespace(uint32_t chr) {
+    switch (chr) {
         default: return false;
         case '\n': case '\r': case ' ': case '\t':
             return true;
@@ -189,20 +189,17 @@ bool tree_sitter_teal_external_scanner_scan(void *payload, TSLexer *lexer, const
         if (state->opening_quote > 0) {
             return (valid_symbols[SHORT_STRING_END] && scan_short_string_end(state, lexer))
                 || (valid_symbols[SHORT_STRING_CHAR] && scan_short_string_char(state, lexer));
-        } else {
-            return scan_long_string_end(state, lexer)
-                || scan_long_string_char(lexer);
         }
-    } else {
-        while (is_whitespace(lexer->lookahead))
-            skip(lexer);
-
-        if (valid_symbols[SHORT_STRING_START] && scan_short_string_start(state, lexer))
-            return true;
-
-        if (valid_symbols[LONG_STRING_START] && scan_long_string_start(state, lexer))
-            return true;
+        return scan_long_string_end(state, lexer) || scan_long_string_char(lexer);
     }
+    while (is_whitespace(lexer->lookahead))
+        skip(lexer);
+
+    if (valid_symbols[SHORT_STRING_START] && scan_short_string_start(state, lexer))
+        return true;
+
+    if (valid_symbols[LONG_STRING_START] && scan_long_string_start(state, lexer))
+        return true;
 
     while (is_whitespace(lexer->lookahead))
         skip(lexer);
