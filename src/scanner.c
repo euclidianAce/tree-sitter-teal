@@ -1,6 +1,6 @@
 #include "tree_sitter/parser.h"
+#include "tree_sitter/alloc.h"
 #include <stdbool.h>
-#include <stdio.h>
 #include <string.h>
 
 typedef struct {
@@ -9,8 +9,8 @@ typedef struct {
     char opening_quote;
 } State;
 
-void *tree_sitter_teal_external_scanner_create() { return calloc(1, sizeof(State)); }
-void tree_sitter_teal_external_scanner_destroy(void *payload) { free(payload); }
+void *tree_sitter_teal_external_scanner_create() { return ts_calloc(1, sizeof(State)); }
+void tree_sitter_teal_external_scanner_destroy(void *payload) { ts_free(payload); }
 
 static inline void consume(TSLexer *lexer) { lexer->advance(lexer, false); }
 static inline void skip(TSLexer *lexer) { lexer->advance(lexer, true); }
