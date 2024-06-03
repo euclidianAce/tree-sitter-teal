@@ -151,7 +151,10 @@ module.exports = grammar({
       $.unary_op,
       $.varargs,
       $.type_cast,
+      $.parenthesized_expression,
     ),
+
+    parenthesized_expression: $ => seq("(", $._expression, ")"),
 
     unary_op: $ => prec.left(prec_op.unary, seq(
       field("op", alias(choice('not', '#', '-', '~'), $.op)),
@@ -251,7 +254,7 @@ module.exports = grammar({
     _prefix_expression: $ => prec(10, choice(
       $._var,
       $.function_call,
-      seq("(", $._expression, ")")
+      $.parenthesized_expression
     )),
     method_index: $ => seq($._prefix_expression, ":", field("key", $.identifier)),
     arguments: $ => choice(
