@@ -3,6 +3,4 @@ build
 parser.so
 Cargo.toml
 Cargo.lock
-bindings
-src/*
-!src/scanner.c
+src/parser.c
