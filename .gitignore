@@ -3,7 +3,6 @@ build
 parser.so
 Cargo.toml
 Cargo.lock
-src/parser.c
 *.a
 *.so
 *.pc
