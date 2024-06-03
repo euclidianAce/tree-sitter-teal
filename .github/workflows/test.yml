@@ -7,11 +7,13 @@ on:
       - grammar.js
       - src/**
       - test/**
+      - .github/workflows/test.yml
   pull_request:
     paths:
       - grammar.js
       - src/**
       - test/**
+      - .github/workflows/test.yml
 
 jobs:
   test:
