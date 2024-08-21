@@ -65,6 +65,16 @@
           }
         ]
       },
+      "optional_marker": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "optional_marker",
+            "named": true
+          }
+        ]
+      },
       "type": {
         "multiple": true,
         "required": false,
@@ -3776,6 +3786,10 @@
   },
   {
     "type": "op",
+    "named": true
+  },
+  {
+    "type": "optional_marker",
     "named": true
   },
   {

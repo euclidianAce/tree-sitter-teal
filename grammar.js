@@ -330,6 +330,7 @@ module.exports = grammar({
     _parnamelist: $ => list(alias($._parname, $.arg)),
     _parname: $ => seq(
       field("name", $.identifier),
+      optional(field("optional_marker", $.optional_marker)),
       optional(seq(":", field("type", $._type)))
     ),
     typeargs: $ => seq("<", list($.identifier), ">"),
@@ -339,6 +340,8 @@ module.exports = grammar({
       field("signature", $.function_signature),
       field("body", $.function_body)
     ),
+
+    optional_marker: $ => "?",
 
     _annotated_var_arg: $ => seq("...", ":", field("type", $._type)),
     signature_arguments: $ => seq("(",

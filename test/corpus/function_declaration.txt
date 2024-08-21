@@ -378,3 +378,26 @@ end
       (return_statement
         (identifier)
         (identifier)))))
+
+================================================================================
+Function with optional arguments
+================================================================================
+
+local function foo(_bar: integer, _baz?: number)
+end
+
+--------------------------------------------------------------------------------
+
+(program
+  (function_statement
+    name: (identifier)
+    signature: (function_signature
+      arguments: (arguments
+        (arg
+          name: (identifier)
+          type: (simple_type name: (identifier)))
+        (arg
+          name: (identifier)
+          optional_marker: (optional_marker)
+          type: (simple_type name: (identifier)))))
+    body: (function_body)))
