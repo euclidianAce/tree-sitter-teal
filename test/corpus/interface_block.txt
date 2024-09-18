@@ -1,8 +1,8 @@
 ================================================================================
-Empty record
+Empty interface
 ================================================================================
 
-local type foo = record
+local type foo = interface
 end
 
 --------------------------------------------------------------------------------
@@ -10,28 +10,28 @@ end
 (program
   (type_declaration
     name: (identifier)
-    value: (anon_record
-      record_body: (record_body))))
+    value: (anon_interface
+      interface_body: (interface_body))))
 
 ================================================================================
-Empty record (shorthand)
+Empty interface (shorthand)
 ================================================================================
 
-local record foo
+local interface foo
 end
 
 --------------------------------------------------------------------------------
 
 (program
-  (record_declaration
+  (interface_declaration
     name: (identifier)
-    record_body: (record_body)))
+    interface_body: (interface_body)))
 
 ================================================================================
-Record with stuff
+Interface with stuff
 ================================================================================
 
-local type foo = record
+local type foo = interface
    bar: {number}
    baz: string
 end
@@ -41,8 +41,8 @@ end
 (program
   (type_declaration
     name: (identifier)
-    value: (anon_record
-      record_body: (record_body
+    value: (anon_interface
+      interface_body: (interface_body
         (field
           key: (identifier)
           type: (table_type
@@ -54,10 +54,10 @@ end
             name: (identifier)))))))
 
 ================================================================================
-Arrayrecord with stuff
+Arrayinterface with stuff
 ================================================================================
 
-local type foo = record
+local type foo = interface
    {thread}
    bar: {number}
    baz: string
@@ -68,8 +68,8 @@ end
 (program
   (type_declaration
     name: (identifier)
-    value: (anon_record
-      record_body: (record_body
+    value: (anon_interface
+      interface_body: (interface_body
         (record_array_type
           (simple_type
             name: (identifier)))
@@ -84,11 +84,11 @@ end
             name: (identifier)))))))
 
 ================================================================================
-Nested records
+Nested interfaces
 ================================================================================
 
-local type foo = record
-   type bar = record
+local type foo = interface
+   type bar = interface
       x: number
    end
    baz: bar
@@ -99,12 +99,12 @@ end
 (program
   (type_declaration
     name: (identifier)
-    value: (anon_record
-      record_body: (record_body
+    value: (anon_interface
+      interface_body: (interface_body
         (typedef
           name: (identifier)
-          value: (anon_record
-            record_body: (record_body
+          value: (anon_interface
+            interface_body: (interface_body
               (field
                 key: (identifier)
                 type: (simple_type
@@ -115,10 +115,10 @@ end
             name: (identifier)))))))
 
 ================================================================================
-Generic record
+Generic interface
 ================================================================================
 
-local type foo = record<T>
+local type foo = interface<T>
    foo: T
 end
 
@@ -127,20 +127,20 @@ end
 (program
   (type_declaration
     name: (identifier)
-    value: (anon_record
+    value: (anon_interface
       (typeargs
         (identifier))
-      record_body: (record_body
+      interface_body: (interface_body
         (field
           key: (identifier)
           type: (simple_type
             name: (identifier)))))))
 
 ================================================================================
-Record with a 'type' entry
+Interface with a 'type' entry
 ================================================================================
 
-local type foo = record
+local type foo = interface
    type: number
 end
 
@@ -149,20 +149,20 @@ end
 (program
   (type_declaration
     name: (identifier)
-    value: (anon_record
-      record_body: (record_body
+    value: (anon_interface
+      interface_body: (interface_body
         (field
           key: (identifier)
           type: (simple_type
             name: (identifier)))))))
 
 ================================================================================
-Record with a 'type' entry and types
+Interface with a 'type' entry and types
 ================================================================================
 
-local type foo = record
+local type foo = interface
    type: number
-   type bar = record
+   type bar = interface
    end
    type baz = enum
       "foo" "bar"
@@ -174,16 +174,16 @@ end
 (program
   (type_declaration
     name: (identifier)
-    value: (anon_record
-      record_body: (record_body
+    value: (anon_interface
+      interface_body: (interface_body
         (field
           key: (identifier)
           type: (simple_type
             name: (identifier)))
         (typedef
           name: (identifier)
-          value: (anon_record
-            record_body: (record_body)))
+          value: (anon_interface
+            interface_body: (interface_body)))
         (typedef
           name: (identifier)
           value: (enum_body
@@ -193,29 +193,29 @@ end
               content: (string_content))))))))
 
 ================================================================================
-Nested record shorthand syntax
+Nested interface shorthand syntax
 ================================================================================
 
-local record Foo
-   record Bar
+local interface Foo
+   interface Bar
    end
 end
 
 --------------------------------------------------------------------------------
 
 (program
-  (record_declaration
+  (interface_declaration
     name: (identifier)
-    record_body: (record_body
-      (record_declaration
+    interface_body: (interface_body
+      (interface_declaration
         name: (identifier)
-        record_body: (record_body)))))
+        interface_body: (interface_body)))))
 
 ================================================================================
 Nested enum shorthand syntax
 ================================================================================
 
-local record Foo
+local interface Foo
    enum Bar
     "foo" "bar"
    end
@@ -224,9 +224,9 @@ end
 --------------------------------------------------------------------------------
 
 (program
-  (record_declaration
+  (interface_declaration
     name: (identifier)
-    record_body: (record_body
+    interface_body: (interface_body
       (enum_declaration
         name: (identifier)
         enum_body: (enum_body
@@ -236,57 +236,57 @@ end
             content: (string_content)))))))
 
 ================================================================================
-Record with a 'record' entry
+Interface with a 'interface' entry
 ================================================================================
 
-local record Foo
-   record: number
+local interface Foo
+   interface: number
 end
 
 --------------------------------------------------------------------------------
 
 (program
-  (record_declaration
+  (interface_declaration
     name: (identifier)
-    record_body: (record_body
+    interface_body: (interface_body
       (field
         key: (identifier)
         type: (simple_type
           name: (identifier))))))
 
 ================================================================================
-Record with a 'enum' entry
+Interface with a 'enum' entry
 ================================================================================
 
-local record Foo
+local interface Foo
    enum: number
 end
 
 --------------------------------------------------------------------------------
 
 (program
-  (record_declaration
+  (interface_declaration
     name: (identifier)
-    record_body: (record_body
+    interface_body: (interface_body
       (field
         key: (identifier)
         type: (simple_type
           name: (identifier))))))
 
 ================================================================================
-Record with ['entry']
+Interface with ['entry']
 ================================================================================
 
-local record Foo
+local interface Foo
    ["things"]: number
 end
 
 --------------------------------------------------------------------------------
 
 (program
-  (record_declaration
+  (interface_declaration
     name: (identifier)
-    record_body: (record_body
+    interface_body: (interface_body
       (field
         key: (string
           content: (string_content))
@@ -294,92 +294,93 @@ end
           name: (identifier))))))
 
 ================================================================================
-Nested generic record shorthand
+Nested generic interface shorthand
 ================================================================================
 
-local record Foo
-   record Bar<T>
+local interface Foo
+   interface Bar<T>
    end
 end
 
 --------------------------------------------------------------------------------
 
 (program
-  (record_declaration
+  (interface_declaration
     name: (identifier)
-    record_body: (record_body
-      (record_declaration
+    interface_body: (interface_body
+      (interface_declaration
         name: (identifier)
         typeargs: (typeargs
           (identifier))
-        record_body: (record_body)))))
+        interface_body: (interface_body)))))
 
 ================================================================================
-Userdata record
+Userdata interface
 ================================================================================
 
-local record Foo
+local interface Foo
    userdata
 end
 
 --------------------------------------------------------------------------------
 
 (program
-  (record_declaration
+  (interface_declaration
     name: (identifier)
-    record_body: (record_body
+    interface_body: (interface_body
       (userdata))))
 
 ================================================================================
-Record with metamethod
+Interface with metamethod
 ================================================================================
 
-local record Foo
+local interface Foo
    metamethod __call: number
 end
 
 --------------------------------------------------------------------------------
 
 (program
-  (record_declaration
+  (interface_declaration
     name: (identifier)
-    record_body: (record_body
+    interface_body: (interface_body
       metamethod: (metamethod
         name: (identifier)
         type: (simple_type
           name: (identifier))))))
 
 ================================================================================
-Record with is clause
+Interface with is clause
 ================================================================================
 
-local record Foo is Bar
+local interface Foo is Bar
 end
 
 --------------------------------------------------------------------------------
 
 (program
-  (record_declaration
+  (interface_declaration
     name: (identifier)
-    record_body: (record_body
+    interface_body: (interface_body
       is_types: (simple_type
         name: (identifier)))))
 
 ================================================================================
-Record with is and where clause
+Interface with is and where clause
 ================================================================================
 
-local record Foo is Bar where self.blah
+local interface Foo is Bar where self.blah
 end
 
 --------------------------------------------------------------------------------
 
 (program
-  (record_declaration
+  (interface_declaration
     name: (identifier)
-    record_body: (record_body
+    interface_body: (interface_body
       is_types: (simple_type
         name: (identifier))
       where: (index
         (identifier)
         key: (identifier)))))
+

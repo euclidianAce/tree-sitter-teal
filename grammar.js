@@ -18,6 +18,8 @@ const prec_op = {
   as: 100,
 
   index: 1000,
+
+  expr_for_statement: 10000,
 }
 
 const prec_type_op = {
@@ -71,6 +73,7 @@ module.exports = grammar({
       $.var_assignment,
       $.type_declaration,
       $.record_declaration,
+      $.interface_declaration,
       $.enum_declaration,
       $.return_statement,
       $.break,
@@ -242,6 +245,7 @@ module.exports = grammar({
         $._type_def,
       ),
       $.record_declaration,
+      $.interface_declaration,
       $.enum_declaration,
     ),
 
@@ -378,7 +382,7 @@ module.exports = grammar({
         ":", field("type", $._type)
       ),
       // TODO: there has to be a way around doing this, but I can't figure it out
-      ...[ "type", "record", "enum", "userdata", "metamethod" ].map((reserved_id) => seq(
+      ...[ "type", "record", "interface", "enum", "userdata", "metamethod" ].map((reserved_id) => seq(
         field("key", alias(reserved_id, $.identifier)),
         ":", field("type", $._type)
       )),
@@ -387,8 +391,10 @@ module.exports = grammar({
     _record_entry: $ => choice(
         alias($.record_field, $.field),
         alias($._type_def, $.typedef),
+        alias($._interface_def, $.interface_declaration),
         alias($._record_def, $.record_declaration),
         alias($._enum_def, $.enum_declaration),
+        alias($._interface_def, $.interface_declaration),
     ),
 
     metamethod_annotation: $ => seq(
@@ -396,6 +402,10 @@ module.exports = grammar({
     ),
 
     record_body: $ => seq(
+      optional(seq(
+        field("is_types", seq("is", list($._type))),
+        optional(field("where", seq("where", $._expression)))
+      )),
       optional(seq("{", alias($._type, $.record_array_type), "}")),
       repeat(choice(
         $._record_entry,
@@ -410,6 +420,18 @@ module.exports = grammar({
       field("name", $.identifier),
       field("typeargs", optional($.typeargs)),
       field("record_body", $.record_body)
+    ),
+
+    _interface_def: $ => seq(
+      "interface",
+      field("name", $.identifier),
+      field("typeargs", optional($.typeargs)),
+      field("interface_body", alias($.record_body, $.interface_body))
+    ),
+
+    interface_declaration: $ => seq(
+      $.scope,
+      $._interface_def,
     ),
 
     record_declaration: $ => seq(
@@ -433,7 +455,12 @@ module.exports = grammar({
       $._enum_def
     ),
 
-    // TODO: this node is kinda useless
+    anon_interface: $ => seq(
+      "interface",
+      optional($.typeargs),
+      field("interface_body", alias($.record_body, $.interface_body))
+    ),
+
     anon_record: $ => seq(
       "record",
       optional($.typeargs),
@@ -448,6 +475,7 @@ module.exports = grammar({
     _newtype: $ => choice(
       $._anon_enum,
       $.anon_record,
+      $.anon_interface,
     ),
 
     type_annotation: $ => seq(
@@ -521,13 +549,13 @@ module.exports = grammar({
 
     goto: $ => seq("goto", $.identifier),
 
-    index: $ => seq(
+    index: $ => prec(1, seq(
       $._prefix_expression,
       choice(
         field("key", seq(".", $.identifier)),
         field("expr_key", seq("[", $._expression, "]"))
       )
-    ),
+    )),
 
     _var: $ => prec(1, choice(
       $.identifier,

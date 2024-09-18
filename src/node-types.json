@@ -26,6 +26,32 @@
     }
   },
   {
+    "type": "anon_interface",
+    "named": true,
+    "fields": {
+      "interface_body": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "interface_body",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "typeargs",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "anon_record",
     "named": true,
     "fields": {
@@ -411,6 +437,10 @@
           "named": true
         },
         {
+          "type": "interface_declaration",
+          "named": true
+        },
+        {
           "type": "label",
           "named": true
         },
@@ -487,6 +517,10 @@
         },
         {
           "type": "if_statement",
+          "named": true
+        },
+        {
+          "type": "interface_declaration",
           "named": true
         },
         {
@@ -629,6 +663,10 @@
         },
         {
           "type": "if_statement",
+          "named": true
+        },
+        {
+          "type": "interface_declaration",
           "named": true
         },
         {
@@ -887,6 +925,10 @@
           "named": true
         },
         {
+          "type": "interface_declaration",
+          "named": true
+        },
+        {
           "type": "label",
           "named": true
         },
@@ -963,6 +1005,10 @@
         },
         {
           "type": "if_statement",
+          "named": true
+        },
+        {
+          "type": "interface_declaration",
           "named": true
         },
         {
@@ -1431,6 +1477,10 @@
           "named": true
         },
         {
+          "type": "interface_declaration",
+          "named": true
+        },
+        {
           "type": "label",
           "named": true
         },
@@ -1579,6 +1629,214 @@
           "named": true
         }
       ]
+    }
+  },
+  {
+    "type": "interface_body",
+    "named": true,
+    "fields": {
+      "is_types": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": ",",
+            "named": false
+          },
+          {
+            "type": "function_type",
+            "named": true
+          },
+          {
+            "type": "is",
+            "named": false
+          },
+          {
+            "type": "simple_type",
+            "named": true
+          },
+          {
+            "type": "table_type",
+            "named": true
+          },
+          {
+            "type": "type_index",
+            "named": true
+          },
+          {
+            "type": "type_union",
+            "named": true
+          }
+        ]
+      },
+      "metamethod": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "metamethod",
+            "named": true
+          }
+        ]
+      },
+      "where": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "anon_function",
+            "named": true
+          },
+          {
+            "type": "bin_op",
+            "named": true
+          },
+          {
+            "type": "boolean",
+            "named": true
+          },
+          {
+            "type": "function_call",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "index",
+            "named": true
+          },
+          {
+            "type": "nil",
+            "named": true
+          },
+          {
+            "type": "number",
+            "named": true
+          },
+          {
+            "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "string",
+            "named": true
+          },
+          {
+            "type": "table_constructor",
+            "named": true
+          },
+          {
+            "type": "type_cast",
+            "named": true
+          },
+          {
+            "type": "unary_op",
+            "named": true
+          },
+          {
+            "type": "varargs",
+            "named": true
+          },
+          {
+            "type": "where",
+            "named": false
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "enum_declaration",
+          "named": true
+        },
+        {
+          "type": "field",
+          "named": true
+        },
+        {
+          "type": "interface_declaration",
+          "named": true
+        },
+        {
+          "type": "record_array_type",
+          "named": true
+        },
+        {
+          "type": "record_declaration",
+          "named": true
+        },
+        {
+          "type": "typedef",
+          "named": true
+        },
+        {
+          "type": "userdata",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "interface_declaration",
+    "named": true,
+    "fields": {
+      "interface_body": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "interface_body",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "scope": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "global",
+            "named": false
+          },
+          {
+            "type": "local",
+            "named": false
+          }
+        ]
+      },
+      "typeargs": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "typeargs",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -1994,6 +2252,10 @@
           "named": true
         },
         {
+          "type": "interface_declaration",
+          "named": true
+        },
+        {
           "type": "label",
           "named": true
         },
@@ -2071,6 +2333,48 @@
     "type": "record_body",
     "named": true,
     "fields": {
+      "is_types": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": ",",
+            "named": false
+          },
+          {
+            "type": "function_type",
+            "named": true
+          },
+          {
+            "type": "is",
+            "named": false
+          },
+          {
+            "type": "simple_type",
+            "named": true
+          },
+          {
+            "type": "table_type",
+            "named": true
+          },
+          {
+            "type": "type_index",
+            "named": true
+          },
+          {
+            "type": "type_union",
+            "named": true
+          }
+        ]
+      },
       "metamethod": {
         "multiple": true,
         "required": false,
@@ -2078,6 +2382,72 @@
           {
             "type": "metamethod",
             "named": true
+          }
+        ]
+      },
+      "where": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "anon_function",
+            "named": true
+          },
+          {
+            "type": "bin_op",
+            "named": true
+          },
+          {
+            "type": "boolean",
+            "named": true
+          },
+          {
+            "type": "function_call",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "index",
+            "named": true
+          },
+          {
+            "type": "nil",
+            "named": true
+          },
+          {
+            "type": "number",
+            "named": true
+          },
+          {
+            "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "string",
+            "named": true
+          },
+          {
+            "type": "table_constructor",
+            "named": true
+          },
+          {
+            "type": "type_cast",
+            "named": true
+          },
+          {
+            "type": "unary_op",
+            "named": true
+          },
+          {
+            "type": "varargs",
+            "named": true
+          },
+          {
+            "type": "where",
+            "named": false
           }
         ]
       }
@@ -2092,6 +2462,10 @@
         },
         {
           "type": "field",
+          "named": true
+        },
+        {
+          "type": "interface_declaration",
           "named": true
         },
         {
@@ -2264,6 +2638,10 @@
         },
         {
           "type": "if_statement",
+          "named": true
+        },
+        {
+          "type": "interface_declaration",
           "named": true
         },
         {
@@ -2960,6 +3338,10 @@
             "named": false
           },
           {
+            "type": "anon_interface",
+            "named": true
+          },
+          {
             "type": "anon_record",
             "named": true
           },
@@ -3000,6 +3382,10 @@
       "types": [
         {
           "type": "enum_declaration",
+          "named": true
+        },
+        {
+          "type": "interface_declaration",
           "named": true
         },
         {
@@ -3154,6 +3540,10 @@
           {
             "type": ")",
             "named": false
+          },
+          {
+            "type": "anon_interface",
+            "named": true
           },
           {
             "type": "anon_record",
@@ -3512,6 +3902,10 @@
           "named": true
         },
         {
+          "type": "interface_declaration",
+          "named": true
+        },
+        {
           "type": "label",
           "named": true
         },
@@ -3761,6 +4155,14 @@
     "named": false
   },
   {
+    "type": "interface",
+    "named": false
+  },
+  {
+    "type": "is",
+    "named": false
+  },
+  {
     "type": "label",
     "named": true
   },
@@ -3835,6 +4237,10 @@
   {
     "type": "userdata",
     "named": true
+  },
+  {
+    "type": "where",
+    "named": false
   },
   {
     "type": "while",
