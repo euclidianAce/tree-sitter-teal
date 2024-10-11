@@ -101,6 +101,10 @@
               },
               {
                 "type": "SYMBOL",
+                "name": "macroexp_statement"
+              },
+              {
+                "type": "SYMBOL",
                 "name": "if_statement"
               },
               {
@@ -2431,6 +2435,70 @@
         }
       ]
     },
+    "macroexp_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "local"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_macroexp_def"
+        }
+      ]
+    },
+    "_macroexp_def": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "macroexp"
+        },
+        {
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "signature",
+          "content": {
+            "type": "ALIAS",
+            "content": {
+              "type": "SYMBOL",
+              "name": "function_signature"
+            },
+            "named": true,
+            "value": "macroexp_signature"
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "body",
+          "content": {
+            "type": "SYMBOL",
+            "name": "macroexp_body"
+          }
+        }
+      ]
+    },
+    "macroexp_body": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "return_statement"
+        },
+        {
+          "type": "STRING",
+          "value": "end"
+        }
+      ]
+    },
     "variadic_type": {
       "type": "PREC",
       "value": 999,
@@ -3222,6 +3290,15 @@
           },
           "named": true,
           "value": "interface_declaration"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_macroexp_def"
+          },
+          "named": true,
+          "value": "macroexp_declaration"
         }
       ]
     },

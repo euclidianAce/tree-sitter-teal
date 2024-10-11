@@ -30,6 +30,8 @@
 (interface_declaration "global" @keyword)
 (enum_declaration "global" @keyword)
 
+(macroexp_statement "macroexp" @keyword)
+
 ;; Ops
 (bin_op (op) @operator)
 (unary_op (op) @operator)
@@ -86,6 +88,9 @@
   (typedef
     . "type" @keyword
     . name: (identifier) @type . "="))
+(record_body
+  (macroexp_declaration
+    . [ "macroexp" ] @keyword))
 (record_body (metamethod "metamethod" @keyword))
 (record_body (userdata) @keyword)
 
@@ -110,6 +115,9 @@
   (typedef
     . "type" @keyword
     . name: (identifier) @type . "="))
+(interface_body
+  (macroexp_declaration
+    . [ "macroexp" ] @keyword))
 (interface_body (metamethod "metamethod" @keyword))
 (interface_body (userdata) @keyword)
 

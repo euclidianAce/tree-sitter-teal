@@ -83,6 +83,7 @@ module.exports = grammar({
       $.repeat_statement,
       $.function_call,
       $.function_statement,
+      $.macroexp_statement,
       $.if_statement,
       seq("::", alias($.identifier, $.label), "::"),
       $.goto
@@ -321,6 +322,23 @@ module.exports = grammar({
       )
     ),
 
+    macroexp_statement: $ => seq(
+      "local",
+      $._macroexp_def
+    ),
+
+    _macroexp_def: $ => seq(
+      "macroexp",
+      field("name", $.identifier),
+      field("signature", alias($.function_signature, $.macroexp_signature)),
+      field("body", $.macroexp_body)
+    ),
+
+    macroexp_body: $ => seq(
+      $.return_statement,
+      "end"
+    ),
+
     variadic_type: $ => prec(prec_type_op.index - 1, seq($._type, "...")),
     _type_list_maybe_vararg: $ => seq(list($._type), optional(seq(",", $.variadic_type))),
     return_type: $ => choice(
@@ -395,6 +413,7 @@ module.exports = grammar({
         alias($._record_def, $.record_declaration),
         alias($._enum_def, $.enum_declaration),
         alias($._interface_def, $.interface_declaration),
+        alias($._macroexp_def, $.macroexp_declaration),
     ),
 
     metamethod_annotation: $ => seq(

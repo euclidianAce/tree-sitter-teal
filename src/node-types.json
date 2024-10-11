@@ -445,6 +445,10 @@
           "named": true
         },
         {
+          "type": "macroexp_statement",
+          "named": true
+        },
+        {
           "type": "numeric_for_statement",
           "named": true
         },
@@ -525,6 +529,10 @@
         },
         {
           "type": "label",
+          "named": true
+        },
+        {
+          "type": "macroexp_statement",
           "named": true
         },
         {
@@ -671,6 +679,10 @@
         },
         {
           "type": "label",
+          "named": true
+        },
+        {
+          "type": "macroexp_statement",
           "named": true
         },
         {
@@ -933,6 +945,10 @@
           "named": true
         },
         {
+          "type": "macroexp_statement",
+          "named": true
+        },
+        {
           "type": "numeric_for_statement",
           "named": true
         },
@@ -1013,6 +1029,10 @@
         },
         {
           "type": "label",
+          "named": true
+        },
+        {
+          "type": "macroexp_statement",
           "named": true
         },
         {
@@ -1485,6 +1505,10 @@
           "named": true
         },
         {
+          "type": "macroexp_statement",
+          "named": true
+        },
+        {
           "type": "numeric_for_statement",
           "named": true
         },
@@ -1771,6 +1795,10 @@
           "named": true
         },
         {
+          "type": "macroexp_declaration",
+          "named": true
+        },
+        {
           "type": "record_array_type",
           "named": true
         },
@@ -1833,6 +1861,129 @@
         "types": [
           {
             "type": "typeargs",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "macroexp_body",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "return_statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "macroexp_declaration",
+    "named": true,
+    "fields": {
+      "body": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "macroexp_body",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "signature": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "macroexp_signature",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "macroexp_signature",
+    "named": true,
+    "fields": {
+      "arguments": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "arguments",
+            "named": true
+          }
+        ]
+      },
+      "return_type": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "return_type",
+            "named": true
+          }
+        ]
+      },
+      "typeargs": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "typeargs",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "macroexp_statement",
+    "named": true,
+    "fields": {
+      "body": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "macroexp_body",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "signature": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "macroexp_signature",
             "named": true
           }
         ]
@@ -2260,6 +2411,10 @@
           "named": true
         },
         {
+          "type": "macroexp_statement",
+          "named": true
+        },
+        {
           "type": "numeric_for_statement",
           "named": true
         },
@@ -2469,6 +2624,10 @@
           "named": true
         },
         {
+          "type": "macroexp_declaration",
+          "named": true
+        },
+        {
           "type": "record_array_type",
           "named": true
         },
@@ -2646,6 +2805,10 @@
         },
         {
           "type": "label",
+          "named": true
+        },
+        {
+          "type": "macroexp_statement",
           "named": true
         },
         {
@@ -3910,6 +4073,10 @@
           "named": true
         },
         {
+          "type": "macroexp_statement",
+          "named": true
+        },
+        {
           "type": "numeric_for_statement",
           "named": true
         },
@@ -4176,6 +4343,10 @@
   },
   {
     "type": "long_string_start",
+    "named": false
+  },
+  {
+    "type": "macroexp",
     "named": false
   },
   {
