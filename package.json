@@ -40,13 +40,5 @@
   "devDependencies": {
     "tree-sitter-cli": "^0.19.1",
     "prebuildify": "^6.0.0"
-  },
-  "tree-sitter": [
-    {
-      "scope": "source.teal",
-      "file-types": [
-        "tl"
-      ]
-    }
-  ]
+  }
 }
