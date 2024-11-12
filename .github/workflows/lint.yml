@@ -3,8 +3,8 @@ name: Lint
 on:
   push:
     branches: [main]
-    paths:
-      - grammar.js
+    # paths:
+    #   - grammar.js
   pull_request:
     paths:
       - grammar.js
