@@ -2,13 +2,13 @@ name: CI
 
 on:
   push:
-    branches: [main, master]
-    paths:
-      - grammar.js
-      - src/**
-      - test/**
-      - bindings/**
-      - binding.gyp
+    branches: [main]
+    # paths:
+    #   - grammar.js
+    #   - src/**
+    #   - test/**
+    #   - bindings/**
+    #   - binding.gyp
   pull_request:
     paths:
       - grammar.js
