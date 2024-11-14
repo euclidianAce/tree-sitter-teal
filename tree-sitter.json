@@ -1,0 +1,34 @@
+{
+  "grammars": [
+    {
+      "name": "teal",
+      "camelcase": "Teal",
+      "scope": "source.teal",
+      "path": ".",
+      "file-types": [
+        "tl"
+      ]
+    }
+  ],
+  "metadata": {
+    "version": "0.0.4",
+    "license": "MIT",
+    "description": "Tree sitter parser for Teal, a typed dialect of Lua.",
+    "authors": [
+      {
+        "name": "euclidianAce"
+      }
+    ],
+    "links": {
+      "repository": "https://github.com/tree-sitter/tree-sitter-teal"
+    }
+  },
+  "bindings": {
+    "c": true,
+    "go": true,
+    "node": true,
+    "python": true,
+    "rust": true,
+    "swift": true
+  }
+}
