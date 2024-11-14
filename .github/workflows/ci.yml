@@ -11,12 +11,13 @@ on:
       - binding.gyp
       - examples/**
   pull_request:
-  #   paths:
-  #     - grammar.js
-  #     - src/**
-  #     - test/**
-  #     - bindings/**
-  #     - binding.gyp
+    paths:
+      - grammar.js
+      - src/**
+      - test/**
+      - bindings/**
+      - binding.gyp
+      - examples/**
 
 concurrency:
   group: ${{github.workflow}}-${{github.ref}}
