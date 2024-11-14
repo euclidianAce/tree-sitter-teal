@@ -9,13 +9,14 @@ on:
       - test/**
       - bindings/**
       - binding.gyp
+      - examples/**
   pull_request:
-    paths:
-      - grammar.js
-      - src/**
-      - test/**
-      - bindings/**
-      - binding.gyp
+  #   paths:
+  #     - grammar.js
+  #     - src/**
+  #     - test/**
+  #     - bindings/**
+  #     - binding.gyp
 
 concurrency:
   group: ${{github.workflow}}-${{github.ref}}
@@ -28,7 +29,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-14]
+        os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
