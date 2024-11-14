@@ -101,24 +101,24 @@ module.exports = grammar({
     break: $ => 'break',
 
     if_statement: $ => seq(
-      "if", field("condition", $._expression), "then",
+      'if', field('condition', $._expression), 'then',
       repeat($._statement),
       repeat($.elseif_block),
       optional($.else_block),
-      "end",
+      'end',
     ),
 
-    elseif_block: $ => seq("elseif", field("condition", $._expression), "then", repeat($._statement)),
-    else_block: $ => seq("else", repeat($._statement)),
+    elseif_block: $ => seq('elseif', field('condition', $._expression), 'then', repeat($._statement)),
+    else_block: $ => seq('else', repeat($._statement)),
 
     numeric_for_statement: $ => seq(
-      "for", field("variable", $.identifier), "=", field("initializer", $._expression),
-      ",", field("target", $._expression),
-      optional(seq(",", field("step", $._expression))), field("body", alias($.do_statement, $.for_body)),
+      'for', field('variable', $.identifier), '=', field('initializer', $._expression),
+      ',', field('target', $._expression),
+      optional(seq(',', field('step', $._expression))), field('body', alias($.do_statement, $.for_body)),
     ),
 
     generic_for_statement: $ => seq(
-      "for", field("variable", list($.identifier)), "in", field("iterator", list($._expression)), field("body", alias($.do_statement, $.for_body)),
+      'for', field('variable', list($.identifier)), 'in', field('iterator', list($._expression)), field('body', alias($.do_statement, $.for_body)),
     ),
 
     _for_statement: $ => choice(
@@ -127,18 +127,18 @@ module.exports = grammar({
     ),
 
     while_statement: $ => seq(
-      "while", field("condition", $._expression), alias($.do_statement, $.while_body),
+      'while', field('condition', $._expression), alias($.do_statement, $.while_body),
     ),
 
     repeat_statement: $ => seq(
-      "repeat", repeat($._statement),
-      "until", field("condition", $._expression),
+      'repeat', repeat($._statement),
+      'until', field('condition', $._expression),
     ),
 
     do_statement: $ => seq(
-      "do",
+      'do',
       repeat($._statement),
-      "end",
+      'end',
     ),
 
     _expression: $ => choice(
@@ -159,11 +159,11 @@ module.exports = grammar({
       $.parenthesized_expression,
     ),
 
-    parenthesized_expression: $ => seq("(", $._expression, ")"),
+    parenthesized_expression: $ => seq('(', $._expression, ')'),
 
     unary_op: $ => prec.left(prec_op.unary, seq(
-      field("op", alias(choice('not', '#', '-', '~'), $.op)),
-      field("right", $._expression),
+      field('op', alias(choice('not', '#', '-', '~'), $.op)),
+      field('right', $._expression),
     )),
 
     bin_op: $ => choice(
@@ -188,37 +188,37 @@ module.exports = grammar({
         ['//', prec_op.mult],
         ['%', prec_op.mult],
       ].map(([operator, precedence]) => prec.left(precedence, seq(
-        field("left", $._expression),
-        field("op", alias(operator, $.op)),
-        field("right", $._expression),
+        field('left', $._expression),
+        field('op', alias(operator, $.op)),
+        field('right', $._expression),
       ))),
       ...[
         ['..', prec_op.concat],
         ['^', prec_op.power],
       ].map(([operator, precedence]) => prec.right(precedence, seq(
-        field("left", $._expression),
-        field("op", alias(operator, $.op)),
-        field("right", $._expression),
+        field('left', $._expression),
+        field('op', alias(operator, $.op)),
+        field('right', $._expression),
       ))),
       prec.right(prec_op.is, seq(
-        field("left", $._expression),
-        field("op", alias("is", $.op)),
-        field("right", $._type),
+        field('left', $._expression),
+        field('op', alias('is', $.op)),
+        field('right', $._type),
       )),
     ),
 
     type_cast: $ => prec.right(prec_op.as, seq(
       $._expression,
-      "as",
+      'as',
       choice($._type, $.type_tuple),
     )),
 
-    type_tuple: $ => prec(10, seq("(", list($._type), ")")),
-    type_union: $ => prec.left(prec_type_op.union, seq($._type, "|", $._type)),
+    type_tuple: $ => prec(10, seq('(', list($._type), ')')),
+    type_union: $ => prec.left(prec_type_op.union, seq($._type, '|', $._type)),
 
     var_declarator: $ => seq(
-      field("name", $.identifier),
-      optional(seq("<", field("attribute", alias($.identifier, $.attribute)), ">")),
+      field('name', $.identifier),
+      optional(seq('<', field('attribute', alias($.identifier, $.attribute)), '>')),
     ),
 
     var_declarators: $ => list(alias($.var_declarator, $.var)),
@@ -227,23 +227,23 @@ module.exports = grammar({
 
     var_declaration: $ => seq(
       $.scope,
-      field("declarators", $.var_declarators),
-      optional(field("type_annotation", $.type_annotation)),
-      optional(seq("=", field("initializers", $.expressions))),
+      field('declarators', $.var_declarators),
+      optional(field('type_annotation', $.type_annotation)),
+      optional(seq('=', field('initializers', $.expressions))),
     ),
 
     _type_def: $ => seq(
-      "type",
-      field("name", $.identifier),
-      "=",
-      field("value", choice(
+      'type',
+      field('name', $.identifier),
+      '=',
+      field('value', choice(
         $._type, $._newtype,
       )),
     ),
 
     type_declaration: $ => choice(
       seq(
-        field("scope", $.scope),
+        field('scope', $.scope),
         $._type_def,
       ),
       $.record_declaration,
@@ -254,7 +254,7 @@ module.exports = grammar({
     assignment_variables: $ => list(alias($._var, $.var)),
 
     var_assignment: $ => seq(
-      field("variables", $.assignment_variables), "=", field("expressions", $.expressions),
+      field('variables', $.assignment_variables), '=', field('expressions', $.expressions),
     ),
 
     _prefix_expression: $ => prec(10, choice(
@@ -262,148 +262,148 @@ module.exports = grammar({
       $.function_call,
       $.parenthesized_expression,
     )),
-    method_index: $ => seq($._prefix_expression, ":", field("key", $.identifier)),
+    method_index: $ => seq($._prefix_expression, ':', field('key', $.identifier)),
     arguments: $ => choice(
-      seq("(", optional(list($._expression)), ")"),
+      seq('(', optional(list($._expression)), ')'),
       $.string,
       $.table_constructor,
     ),
     function_call: $ => prec(10, seq(
-      field("called_object", choice(
+      field('called_object', choice(
         $._prefix_expression,
         $.method_index,
       )),
-      field("arguments", $.arguments),
+      field('arguments', $.arguments),
     )),
 
     table_entry: $ => choice(
-      seq("[", field("expr_key", $._expression), "]", "=", field("value", $._expression)),
+      seq('[', field('expr_key', $._expression), ']', '=', field('value', $._expression)),
       prec(1, seq(
-        field("key", $.identifier),
-        field("type", optional(seq(":", $._type))),
-        "=",
-        field("value", $._expression),
+        field('key', $.identifier),
+        field('type', optional(seq(':', $._type))),
+        '=',
+        field('value', $._expression),
       )),
-      prec(1, field("value", $._expression)),
+      prec(1, field('value', $._expression)),
     ),
 
     table_constructor: $ => seq(
-      "{",
-      optional(list($.table_entry, choice(",", ";"))),
-      optional(choice(",", ";")),
-      "}",
+      '{',
+      optional(list($.table_entry, choice(',', ';'))),
+      optional(choice(',', ';')),
+      '}',
     ),
 
     function_name: $ => seq(
-      field("base", $.identifier),
+      field('base', $.identifier),
       choice(
         seq(
-          repeat(seq(".", field("entry", $.identifier))),
-          seq(":", field("method", $.identifier)),
+          repeat(seq('.', field('entry', $.identifier))),
+          seq(':', field('method', $.identifier)),
         ),
-        repeat1(seq(".", field("entry", $.identifier))),
+        repeat1(seq('.', field('entry', $.identifier))),
       ),
     ),
 
-    scope: $ => field("scope", choice("local", "global")),
+    scope: $ => field('scope', choice('local', 'global')),
 
     function_statement: $ => choice(
       seq(
         $.scope,
-        "function",
-        field("name", $.identifier),
-        field("signature", $.function_signature),
-        field("body", $.function_body),
+        'function',
+        field('name', $.identifier),
+        field('signature', $.function_signature),
+        field('body', $.function_body),
       ),
       seq(
-        "function",
-        field("name", $.function_name),
-        field("signature", $.function_signature),
-        field("body", $.function_body),
+        'function',
+        field('name', $.function_name),
+        field('signature', $.function_signature),
+        field('body', $.function_body),
       ),
     ),
 
     macroexp_statement: $ => seq(
-      "local",
+      'local',
       $._macroexp_def,
     ),
 
     _macroexp_def: $ => seq(
-      "macroexp",
-      field("name", $.identifier),
-      field("signature", alias($.function_signature, $.macroexp_signature)),
-      field("body", $.macroexp_body),
+      'macroexp',
+      field('name', $.identifier),
+      field('signature', alias($.function_signature, $.macroexp_signature)),
+      field('body', $.macroexp_body),
     ),
 
     macroexp_body: $ => seq(
       $.return_statement,
-      "end",
+      'end',
     ),
 
-    variadic_type: $ => prec(prec_type_op.index - 1, seq($._type, "...")),
-    _type_list_maybe_vararg: $ => seq(list($._type), optional(seq(",", $.variadic_type))),
+    variadic_type: $ => prec(prec_type_op.index - 1, seq($._type, '...')),
+    _type_list_maybe_vararg: $ => seq(list($._type), optional(seq(',', $.variadic_type))),
     return_type: $ => choice(
       $.variadic_type,
       prec.dynamic(1, $._type_list_maybe_vararg),
-      prec.dynamic(10, seq("(", $._type_list_maybe_vararg, ")")),
+      prec.dynamic(10, seq('(', $._type_list_maybe_vararg, ')')),
     ),
 
     _partypelist: $ => list(alias($._partype, $.arg)),
-    _partype: $ => seq(optional(seq(field("name", $.identifier), ":")), field("type", $._type)),
+    _partype: $ => seq(optional(seq(field('name', $.identifier), ':')), field('type', $._type)),
     _parnamelist: $ => list(alias($._parname, $.arg)),
     _parname: $ => seq(
-      field("name", $.identifier),
-      optional(field("optional_marker", $.optional_marker)),
-      optional(seq(":", field("type", $._type))),
+      field('name', $.identifier),
+      optional(field('optional_marker', $.optional_marker)),
+      optional(seq(':', field('type', $._type))),
     ),
-    typeargs: $ => seq("<", list($.identifier), ">"),
+    typeargs: $ => seq('<', list($.identifier), '>'),
 
     anon_function: $ => seq(
-      "function",
-      field("signature", $.function_signature),
-      field("body", $.function_body),
+      'function',
+      field('signature', $.function_signature),
+      field('body', $.function_body),
     ),
 
-    optional_marker: $ => "?",
+    optional_marker: $ => '?',
 
-    _annotated_var_arg: $ => seq("...", ":", field("type", $._type)),
-    signature_arguments: $ => seq("(",
+    _annotated_var_arg: $ => seq('...', ':', field('type', $._type)),
+    signature_arguments: $ => seq('(',
       optional(choice(
         $._parnamelist,
         seq(
           $._parnamelist,
-          ",",
+          ',',
           alias($._annotated_var_arg, $.varargs),
         ),
         alias($._annotated_var_arg, $.varargs),
       )),
-      ")",
+      ')',
     ),
 
     function_signature: $ => seq(
-      field("typeargs", optional($.typeargs)),
-      field("arguments", alias($.signature_arguments, $.arguments)),
-      optional(seq(":", field("return_type", $.return_type))),
+      field('typeargs', optional($.typeargs)),
+      field('arguments', alias($.signature_arguments, $.arguments)),
+      optional(seq(':', field('return_type', $.return_type))),
     ),
 
     function_body: $ => seq(
       repeat($._statement),
-      "end",
+      'end',
     ),
 
     record_field: $ => choice(
       seq(
-        field("key", $.identifier),
-        ":", field("type", $._type),
+        field('key', $.identifier),
+        ':', field('type', $._type),
       ),
       seq(
-        "[", field("key", $.string), "]",
-        ":", field("type", $._type),
+        '[', field('key', $.string), ']',
+        ':', field('type', $._type),
       ),
       // TODO: there has to be a way around doing this, but I can't figure it out
-      ...["type", "record", "interface", "enum", "userdata", "metamethod"].map((reserved_id) => seq(
-        field("key", alias(reserved_id, $.identifier)),
-        ":", field("type", $._type),
+      ...['type', 'record', 'interface', 'enum', 'userdata', 'metamethod'].map((reserved_id) => seq(
+        field('key', alias(reserved_id, $.identifier)),
+        ':', field('type', $._type),
       )),
     ),
 
@@ -418,35 +418,35 @@ module.exports = grammar({
     ),
 
     metamethod_annotation: $ => seq(
-      "metamethod", field("name", $.identifier), ":", field("type", $._type),
+      'metamethod', field('name', $.identifier), ':', field('type', $._type),
     ),
 
     record_body: $ => seq(
       optional(seq(
-        field("is_types", seq("is", list($._type))),
-        optional(field("where", seq("where", $._expression))),
+        field('is_types', seq('is', list($._type))),
+        optional(field('where', seq('where', $._expression))),
       )),
-      optional(seq("{", alias($._type, $.record_array_type), "}")),
+      optional(seq('{', alias($._type, $.record_array_type), '}')),
       repeat(choice(
         $._record_entry,
-        alias("userdata", $.userdata),
-        field("metamethod", alias($.metamethod_annotation, $.metamethod)),
+        alias('userdata', $.userdata),
+        field('metamethod', alias($.metamethod_annotation, $.metamethod)),
       )),
-      "end",
+      'end',
     ),
 
     _record_def: $ => seq(
-      "record",
-      field("name", $.identifier),
-      field("typeargs", optional($.typeargs)),
-      field("record_body", $.record_body),
+      'record',
+      field('name', $.identifier),
+      field('typeargs', optional($.typeargs)),
+      field('record_body', $.record_body),
     ),
 
     _interface_def: $ => seq(
-      "interface",
-      field("name", $.identifier),
-      field("typeargs", optional($.typeargs)),
-      field("interface_body", alias($.record_body, $.interface_body)),
+      'interface',
+      field('name', $.identifier),
+      field('typeargs', optional($.typeargs)),
+      field('interface_body', alias($.record_body, $.interface_body)),
     ),
 
     interface_declaration: $ => seq(
@@ -461,13 +461,13 @@ module.exports = grammar({
 
     enum_body: $ => seq(
       repeat($.string),
-      "end",
+      'end',
     ),
 
     _enum_def: $ => seq(
-      "enum",
-      field("name", $.identifier),
-      field("enum_body", $.enum_body),
+      'enum',
+      field('name', $.identifier),
+      field('enum_body', $.enum_body),
     ),
 
     enum_declaration: $ => seq(
@@ -476,19 +476,19 @@ module.exports = grammar({
     ),
 
     anon_interface: $ => seq(
-      "interface",
+      'interface',
       optional($.typeargs),
-      field("interface_body", alias($.record_body, $.interface_body)),
+      field('interface_body', alias($.record_body, $.interface_body)),
     ),
 
     anon_record: $ => seq(
-      "record",
+      'record',
       optional($.typeargs),
-      field("record_body", $.record_body),
+      field('record_body', $.record_body),
     ),
 
     _anon_enum: $ => seq(
-      "enum",
+      'enum',
       $.enum_body,
     ),
 
@@ -499,7 +499,7 @@ module.exports = grammar({
     ),
 
     type_annotation: $ => seq(
-      ":",
+      ':',
       list($._type),
     ),
 
@@ -509,71 +509,71 @@ module.exports = grammar({
       $.table_type,
       $.function_type,
       $.type_union,
-      seq("(", $._type, ")"),
+      seq('(', $._type, ')'),
     )),
 
     typearg_params: $ => prec.right(1000, seq(
-      "<", list($._type), ">",
+      '<', list($._type), '>',
     )),
 
     type_index: $ => prec.right(prec_type_op.index, seq(
-      choice($.identifier, $.type_index), ".", $.identifier,
+      choice($.identifier, $.type_index), '.', $.identifier,
       optional(alias($.typearg_params, $.typeargs)),
     )),
 
     simple_type: $ => prec.right(1000, seq(
-      field("name", $.identifier),
+      field('name', $.identifier),
       optional(alias($.typearg_params, $.typeargs)),
     )),
 
     table_type: $ => seq(
-      "{",
+      '{',
       choice(
-        field("value_type", $._type),
+        field('value_type', $._type),
         seq(
-          field("key_type", $._type),
-          ":",
-          field("value_type", $._type),
+          field('key_type', $._type),
+          ':',
+          field('value_type', $._type),
         ),
         seq(
-          field("tuple_type", $._type),
-          repeat1(seq(",", field("tuple_type", $._type))),
+          field('tuple_type', $._type),
+          repeat1(seq(',', field('tuple_type', $._type))),
         ),
       ),
-      "}",
+      '}',
     ),
 
     function_type_args: $ => seq(
-      "(",
+      '(',
       optional(choice(
         seq(
           $._partypelist,
-          optional(seq(",", alias($._annotated_var_arg, $.varargs))),
+          optional(seq(',', alias($._annotated_var_arg, $.varargs))),
         ),
         alias($._annotated_var_arg, $.varargs),
       )),
-      ")",
+      ')',
     ),
 
     function_type: $ => prec.right(1, seq(
-      "function",
-      field("typeargs", optional($.typeargs)),
+      'function',
+      field('typeargs', optional($.typeargs)),
       optional(seq(
-        field("arguments", alias($.function_type_args, $.arguments)),
+        field('arguments', alias($.function_type_args, $.arguments)),
         optional(seq(
-          ":",
-          field("return_type", $.return_type),
+          ':',
+          field('return_type', $.return_type),
         )),
       )),
     )),
 
-    goto: $ => seq("goto", $.identifier),
+    goto: $ => seq('goto', $.identifier),
 
     index: $ => prec(1, seq(
       $._prefix_expression,
       choice(
-        field("key", seq(".", $.identifier)),
-        field("expr_key", seq("[", $._expression, "]")),
+        field('key', seq('.', $.identifier)),
+        field('expr_key', seq('[', $._expression, ']')),
       ),
     )),
 
@@ -582,14 +582,14 @@ module.exports = grammar({
       $.index,
     )),
 
-    varargs: $ => "...",
+    varargs: $ => '...',
     identifier: $ => /[a-zA-Z_][a-zA-Z_0-9]*/,
     number: $ => choice(
       /\d+(\.\d+)?(e\d+)?/i,
       /\.\d+(e\d+)?/i,
       /0x[0-9a-fA-F]+(\.[0-9a-fA-F]+)?(p\d+)?/,
     ),
-    boolean: $ => choice("true", "false"),
+    boolean: $ => choice('true', 'false'),
 
     _short_string_content: $ => alias(repeat1(choice(
       $.format_specifier,
@@ -606,15 +606,15 @@ module.exports = grammar({
 
     string: $ => prec(2, choice(
       seq(
-        field("start", alias($._short_string_start, "short_string_start")),
-        field("content", optional($._short_string_content)),
-        field("end", alias($._short_string_end, "short_string_end")),
+        field('start', alias($._short_string_start, 'short_string_start')),
+        field('content', optional($._short_string_content)),
+        field('end', alias($._short_string_end, 'short_string_end')),
       ),
 
       seq(
-        field("start", alias($._long_string_start, "long_string_start")),
-        field("content", optional($._long_string_content)),
-        field("end", alias($._long_string_end, "long_string_end")),
+        field('start', alias($._long_string_start, 'long_string_start')),
+        field('content', optional($._long_string_content)),
+        field('end', alias($._long_string_end, 'long_string_end')),
       ),
     )),
 
@@ -642,11 +642,11 @@ module.exports = grammar({
         /[abfnrtvz"'\\]/,
         seq('x', /[0-9a-fA-F]{2}/),
         seq('d', /[0-7]{3}/),
-        seq("u{", /[0-9a-fA-F]{1,8}/, '}'),
+        seq('u{', /[0-9a-fA-F]{1,8}/, '}'),
       ),
     ))),
 
-    nil: $ => "nil",
+    nil: $ => 'nil',
   },
 });
 
