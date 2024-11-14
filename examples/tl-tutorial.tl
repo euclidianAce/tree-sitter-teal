@@ -432,7 +432,7 @@ local function mysort<A>(arr: {A}, cmp?: Comparator<A>)
 end
 
 
-f: function(function(? string):(number, number), number)
+local f: function(function(? string):(number, number), number)
 
 
 local function allwords(): (function(): string)
