@@ -1,18 +1,25 @@
 [package]
 name = "tree-sitter-teal"
 description = "Tree sitter parser for Teal, a typed dialect of Lua."
-version = "0.0.4"
+version = "0.1.0"
 authors = ["euclidianAce"]
 license = "MIT"
 readme = "README.md"
 keywords = ["incremental", "parsing", "tree-sitter", "teal"]
-categories = ["parsing", "text-editors"]
+categories = ["parser-implementations", "parsing", "text-editors"]
 repository = "https://github.com/tree-sitter/tree-sitter-teal"
 edition = "2021"
 autoexamples = false
 
 build = "bindings/rust/build.rs"
-include = ["bindings/rust/*", "grammar.js", "queries/*", "src/*", "tree-sitter.json"]
+include = [
+  "bindings/rust/*",
+  "grammar.js",
+  "queries/*",
+  "src/*",
+  "tree-sitter.json",
+  "LICENSE",
+]
 
 [lib]
 path = "bindings/rust/lib.rs"
@@ -21,7 +28,7 @@ path = "bindings/rust/lib.rs"
 tree-sitter-language = "0.1"
 
 [build-dependencies]
-cc = "1.1.22"
+cc = "1.2"
 
 [dev-dependencies]
-tree-sitter = "0.24.4"
+tree-sitter = "0.25.3"

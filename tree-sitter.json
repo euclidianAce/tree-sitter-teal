@@ -11,7 +11,7 @@
     }
   ],
   "metadata": {
-    "version": "0.0.4",
+    "version": "0.1.0",
     "license": "MIT",
     "description": "Tree sitter parser for Teal, a typed dialect of Lua.",
     "authors": [
@@ -29,6 +29,7 @@
     "node": true,
     "python": true,
     "rust": true,
-    "swift": true
+    "swift": true,
+    "zig": true
   }
 }
