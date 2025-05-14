@@ -3645,6 +3645,56 @@
     }
   },
   {
+    "type": "typearg",
+    "named": true,
+    "fields": {
+      "constraint": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": "function_type",
+            "named": true
+          },
+          {
+            "type": "simple_type",
+            "named": true
+          },
+          {
+            "type": "table_type",
+            "named": true
+          },
+          {
+            "type": "type_index",
+            "named": true
+          },
+          {
+            "type": "type_union",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "typeargs",
     "named": true,
     "fields": {},
@@ -3654,10 +3704,6 @@
       "types": [
         {
           "type": "function_type",
-          "named": true
-        },
-        {
-          "type": "identifier",
           "named": true
         },
         {
@@ -3674,6 +3720,10 @@
         },
         {
           "type": "type_union",
+          "named": true
+        },
+        {
+          "type": "typearg",
           "named": true
         }
       ]
@@ -4260,7 +4310,8 @@
   },
   {
     "type": "comment",
-    "named": true
+    "named": true,
+    "extra": true
   },
   {
     "type": "do",

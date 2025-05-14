@@ -238,7 +238,7 @@ end
     name: (identifier)
     signature: (function_signature
       typeargs: (typeargs
-        (identifier))
+        (typearg name: (identifier)))
       arguments: (arguments
         (arg
           name: (identifier)

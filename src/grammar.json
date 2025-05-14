@@ -2768,6 +2768,44 @@
         }
       ]
     },
+    "typearg": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "name",
+              "content": {
+                "type": "SYMBOL",
+                "name": "identifier"
+              }
+            },
+            {
+              "type": "STRING",
+              "value": "is"
+            },
+            {
+              "type": "FIELD",
+              "name": "constraint",
+              "content": {
+                "type": "SYMBOL",
+                "name": "_type"
+              }
+            }
+          ]
+        }
+      ]
+    },
     "typeargs": {
       "type": "SEQ",
       "members": [
@@ -2780,7 +2818,7 @@
           "members": [
             {
               "type": "SYMBOL",
-              "name": "identifier"
+              "name": "typearg"
             },
             {
               "type": "REPEAT",
@@ -2793,7 +2831,7 @@
                   },
                   {
                     "type": "SYMBOL",
-                    "name": "identifier"
+                    "name": "typearg"
                   }
                 ]
               }
@@ -4723,5 +4761,6 @@
     "_parnamelist",
     "_type_list_maybe_vararg"
   ],
-  "supertypes": []
+  "supertypes": [],
+  "reserved": {}
 }

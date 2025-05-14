@@ -356,7 +356,11 @@ module.exports = grammar({
       optional(field('optional_marker', $.optional_marker)),
       optional(seq(':', field('type', $._type))),
     ),
-    typeargs: $ => seq('<', list($.identifier), '>'),
+    typearg: $ => choice(
+      field('name', $.identifier),
+      seq(field('name', $.identifier), 'is', field('constraint', $._type))
+    ),
+    typeargs: $ => seq('<', list($.typearg), '>'),
 
     anon_function: $ => seq(
       'function',

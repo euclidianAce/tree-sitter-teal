@@ -9,8 +9,15 @@ end
 
 ---
 
-(program (return_statement
-  (anon_function (function_signature (typeargs (identifier)) (arguments)) (function_body))))
+(program
+  (return_statement
+    (anon_function
+      signature: (function_signature
+        typeargs: (typeargs
+          (typearg
+            name: (identifier)))
+        arguments: (arguments))
+        body: (function_body))))
 
 ==============================
 Generic named function
@@ -25,7 +32,9 @@ end
 (program (function_statement
   name: (identifier)
   signature: (function_signature
-    typeargs: (typeargs (identifier))
+    typeargs: (typeargs
+      (typearg
+        name: (identifier)))
     arguments: (arguments))
     body: (function_body)))
 
@@ -44,11 +53,32 @@ end
     name: (identifier)
     signature: (function_signature
       typeargs: (typeargs
-        (identifier)
-        (identifier)
-        (identifier)
-        (identifier)
-        (identifier)
-        (identifier))
+        (typearg name: (identifier))
+        (typearg name: (identifier))
+        (typearg name: (identifier))
+        (typearg name: (identifier))
+        (typearg name: (identifier))
+        (typearg name: (identifier)))
+      arguments: (arguments))
+    body: (function_body)))
+
+==============================
+Typearg with is clause
+==============================
+
+local function foo<A is B>()
+end
+
+------------------------------
+
+(program
+  (function_statement
+    name: (identifier)
+    signature: (function_signature
+      typeargs: (typeargs
+        (typearg
+          name: (identifier)
+          constraint: (simple_type
+            name: (identifier))))
       arguments: (arguments))
     body: (function_body)))

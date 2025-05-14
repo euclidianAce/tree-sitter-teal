@@ -129,7 +129,7 @@ end
     name: (identifier)
     value: (anon_interface
       (typeargs
-        (identifier))
+        (typearg name: (identifier)))
       interface_body: (interface_body
         (field
           key: (identifier)
@@ -311,7 +311,7 @@ end
       (interface_declaration
         name: (identifier)
         typeargs: (typeargs
-          (identifier))
+          (typearg name: (identifier)))
         interface_body: (interface_body)))))
 
 ================================================================================
