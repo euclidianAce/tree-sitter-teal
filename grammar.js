@@ -574,7 +574,7 @@ module.exports = grammar({
     goto: $ => seq('goto', $.identifier),
 
     index: $ => prec(1, seq(
-      $._prefix_expression,
+      field('indexed_object', $._prefix_expression),
       choice(
         field('key', seq('.', $.identifier)),
         field('expr_key', seq('[', $._expression, ']')),

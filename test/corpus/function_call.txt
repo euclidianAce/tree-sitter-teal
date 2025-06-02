@@ -68,7 +68,7 @@ foo.bar()
 (program
   (function_call
     called_object: (index
-      (identifier)
+      indexed_object: (identifier)
       key: (identifier))
     arguments: (arguments)))
 
@@ -83,7 +83,7 @@ foo[bar]()
 (program
   (function_call
     called_object: (index
-      (identifier)
+      indexed_object: (identifier)
       expr_key: (identifier))
     arguments: (arguments)))
 
@@ -98,8 +98,8 @@ foo.bar.baz()
 (program
   (function_call
     called_object: (index
-      (index
-        (identifier)
+      indexed_object: (index
+        indexed_object: (identifier)
         key: (identifier))
       key: (identifier))
     arguments: (arguments)))

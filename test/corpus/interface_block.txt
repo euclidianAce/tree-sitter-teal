@@ -381,6 +381,6 @@ end
       is_types: (simple_type
         name: (identifier))
       where: (index
-        (identifier)
+        indexed_object: (identifier)
         key: (identifier)))))
 

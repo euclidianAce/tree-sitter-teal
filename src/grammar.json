@@ -4236,8 +4236,12 @@
         "type": "SEQ",
         "members": [
           {
-            "type": "SYMBOL",
-            "name": "_prefix_expression"
+            "type": "FIELD",
+            "name": "indexed_object",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_prefix_expression"
+            }
           },
           {
             "type": "CHOICE",

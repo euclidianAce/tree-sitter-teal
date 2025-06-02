@@ -1617,6 +1617,28 @@
           }
         ]
       },
+      "indexed_object": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "function_call",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "index",
+            "named": true
+          },
+          {
+            "type": "parenthesized_expression",
+            "named": true
+          }
+        ]
+      },
       "key": {
         "multiple": true,
         "required": false,
@@ -1631,28 +1653,6 @@
           }
         ]
       }
-    },
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "function_call",
-          "named": true
-        },
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "index",
-          "named": true
-        },
-        {
-          "type": "parenthesized_expression",
-          "named": true
-        }
-      ]
     }
   },
   {

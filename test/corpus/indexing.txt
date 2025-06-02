@@ -155,10 +155,10 @@ local a = b[c].d.e[f]:g()
       (function_call
         called_object: (method_index
           (index
-            (index
-              (index
-                (index
-                  (identifier)
+            indexed_object: (index
+              indexed_object: (index
+                indexed_object: (index
+                  indexed_object: (identifier)
                   expr_key: (identifier))
                 key: (identifier))
               key: (identifier))
