@@ -232,14 +232,15 @@ module.exports = grammar({
       optional(seq('=', field('initializers', $.expressions))),
     ),
 
-    _type_def: $ => seq(
+    _type_def: $ => prec(1, seq(
       'type',
       field('name', $.identifier),
+      field('typeargs', optional($.typeargs)),
       '=',
       field('value', choice(
         $._type, $._newtype,
       )),
-    ),
+    )),
 
     type_declaration: $ => choice(
       seq(

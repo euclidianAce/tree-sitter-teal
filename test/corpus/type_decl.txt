@@ -1,0 +1,70 @@
+==============================
+local type
+==============================
+
+local type A = function(integer): integer
+
+---
+
+(program
+  (type_declaration
+    name: (identifier)
+    value: (function_type
+      arguments: (arguments
+        (arg
+          type: (simple_type
+            name: (identifier))))
+      return_type: (return_type
+        (simple_type
+          name: (identifier))))))
+
+==============================
+Generic local type
+==============================
+
+local type A < B > = function(B): B
+
+---
+
+(program
+  (type_declaration
+    name: (identifier)
+    typeargs: (typeargs
+      (typearg
+        name: (identifier)))
+    value: (function_type
+      arguments: (arguments
+        (arg
+          type: (simple_type
+            name: (identifier))))
+      return_type: (return_type
+        (simple_type
+          name: (identifier))))))
+
+==============================
+Generic local type with constraints
+==============================
+
+local type A<B, C is D> = function(B, C)
+
+---
+
+(program
+  (type_declaration
+    name: (identifier)
+    typeargs: (typeargs
+      (typearg
+        name: (identifier))
+      (typearg
+        name: (identifier)
+        constraint: (simple_type
+          name: (identifier))))
+    value: (function_type
+      arguments: (arguments
+        (arg
+          type: (simple_type
+            name: (identifier)))
+        (arg
+          type: (simple_type
+            name: (identifier)))))))
+

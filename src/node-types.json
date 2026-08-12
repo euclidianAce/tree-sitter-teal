@@ -3489,6 +3489,16 @@
           }
         ]
       },
+      "typeargs": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "typeargs",
+            "named": true
+          }
+        ]
+      },
       "value": {
         "multiple": true,
         "required": false,
@@ -3739,6 +3749,16 @@
         "types": [
           {
             "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "typeargs": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "typeargs",
             "named": true
           }
         ]
