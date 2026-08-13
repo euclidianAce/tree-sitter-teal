@@ -282,3 +282,69 @@ local foo: function(): string...
           (variadic_type
             (simple_type
               name: (identifier))))))))
+
+
+================================================================================
+Function of function with unnamed optional argument and multiple returns
+================================================================================
+
+local f: function(function(? string):(number, number), number)
+
+--------------------------------------------------------------------------------
+
+(program
+  (var_declaration
+    (var_declarators
+      (var
+        (identifier)))
+    (type_annotation
+      (function_type
+        (arguments
+          (arg
+            (function_type
+              (arguments
+                (arg
+                  (optional_marker)
+                  (simple_type
+                    (identifier))))
+              (return_type
+                (simple_type
+                  (identifier))
+                (simple_type
+                  (identifier)))))
+          (arg
+            (simple_type
+              (identifier))))))))
+
+================================================================================
+Function of function with named optional argument and multiple returns
+================================================================================
+
+local f: function(function(thing?: string):(number, number), number)
+
+--------------------------------------------------------------------------------
+
+(program
+  (var_declaration
+    (var_declarators
+      (var
+        (identifier)))
+    (type_annotation
+      (function_type
+        (arguments
+          (arg
+            (function_type
+              (arguments
+                (arg
+                  (identifier)
+                  (optional_marker)
+                  (simple_type
+                    (identifier))))
+              (return_type
+                (simple_type
+                  (identifier))
+                (simple_type
+                  (identifier)))))
+          (arg
+            (simple_type
+              (identifier))))))))

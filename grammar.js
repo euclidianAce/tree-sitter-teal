@@ -350,7 +350,17 @@ module.exports = grammar({
     ),
 
     _partypelist: $ => list(alias($._partype, $.arg)),
-    _partype: $ => seq(optional(seq(field('name', $.identifier), ':')), field('type', $._type)),
+    _partype: $ => seq(
+      optional(choice(
+        seq(
+          field('name', $.identifier),
+          optional(field('optional_marker', $.optional_marker)),
+          ':'
+        ),
+        field('optional_marker', $.optional_marker),
+      )),
+      field('type', $._type)
+    ),
     _parnamelist: $ => list(alias($._parname, $.arg)),
     _parname: $ => seq(
       field('name', $.identifier),

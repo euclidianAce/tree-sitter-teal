@@ -81,3 +81,19 @@ global x <const>, y <const>, z <const> = 1, 2, 3
       (number)
       (number)
       (number))))
+
+================================================================================
+Local declaration with annotation of 'function'
+================================================================================
+
+local my_func: function
+
+--------------------------------------------------------------------------------
+
+(program
+  (var_declaration
+    (var_declarators
+      (var
+        (identifier)))
+    (type_annotation
+      (function_type))))
