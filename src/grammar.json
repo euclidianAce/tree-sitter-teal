@@ -2363,7 +2363,7 @@
         }
       ]
     },
-    "function_name": {
+    "table_function_name": {
       "type": "SEQ",
       "members": [
         {
@@ -2381,7 +2381,7 @@
               "type": "SEQ",
               "members": [
                 {
-                  "type": "REPEAT",
+                  "type": "REPEAT1",
                   "content": {
                     "type": "SEQ",
                     "members": [
@@ -2401,43 +2401,48 @@
                   }
                 },
                 {
-                  "type": "SEQ",
+                  "type": "CHOICE",
                   "members": [
                     {
-                      "type": "STRING",
-                      "value": ":"
+                      "type": "SEQ",
+                      "members": [
+                        {
+                          "type": "STRING",
+                          "value": ":"
+                        },
+                        {
+                          "type": "FIELD",
+                          "name": "method",
+                          "content": {
+                            "type": "SYMBOL",
+                            "name": "identifier"
+                          }
+                        }
+                      ]
                     },
                     {
-                      "type": "FIELD",
-                      "name": "method",
-                      "content": {
-                        "type": "SYMBOL",
-                        "name": "identifier"
-                      }
+                      "type": "BLANK"
                     }
                   ]
                 }
               ]
             },
             {
-              "type": "REPEAT1",
-              "content": {
-                "type": "SEQ",
-                "members": [
-                  {
-                    "type": "STRING",
-                    "value": "."
-                  },
-                  {
-                    "type": "FIELD",
-                    "name": "entry",
-                    "content": {
-                      "type": "SYMBOL",
-                      "name": "identifier"
-                    }
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": ":"
+                },
+                {
+                  "type": "FIELD",
+                  "name": "method",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "identifier"
                   }
-                ]
-              }
+                }
+              ]
             }
           ]
         }
@@ -2511,8 +2516,17 @@
               "type": "FIELD",
               "name": "name",
               "content": {
-                "type": "SYMBOL",
-                "name": "function_name"
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "identifier"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "table_function_name"
+                  }
+                ]
               }
             },
             {

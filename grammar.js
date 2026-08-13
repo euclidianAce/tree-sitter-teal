@@ -309,14 +309,14 @@ module.exports = grammar({
       '}',
     ),
 
-    function_name: $ => seq(
+    table_function_name: $ => seq(
       field('base', $.identifier),
       choice(
         seq(
-          repeat(seq('.', field('entry', $.identifier))),
-          seq(':', field('method', $.identifier)),
+          repeat1(seq('.', field('entry', $.identifier))),
+          optional(seq(':', field('method', $.identifier))),
         ),
-        repeat1(seq('.', field('entry', $.identifier))),
+        seq(':', field('method', $.identifier))
       ),
     ),
 
@@ -332,7 +332,7 @@ module.exports = grammar({
       ),
       seq(
         'function',
-        field('name', $.function_name),
+        field('name', choice($.identifier, $.table_function_name)),
         field('signature', $.function_signature),
         field('body', $.function_body),
       ),

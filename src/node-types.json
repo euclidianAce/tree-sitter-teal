@@ -1113,42 +1113,6 @@
     }
   },
   {
-    "type": "function_name",
-    "named": true,
-    "fields": {
-      "base": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      },
-      "entry": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      },
-      "method": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
     "type": "function_signature",
     "named": true,
     "fields": {
@@ -1203,11 +1167,11 @@
         "required": true,
         "types": [
           {
-            "type": "function_name",
+            "type": "identifier",
             "named": true
           },
           {
-            "type": "identifier",
+            "type": "table_function_name",
             "named": true
           }
         ]
@@ -3225,6 +3189,42 @@
           },
           {
             "type": "varargs",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "table_function_name",
+    "named": true,
+    "fields": {
+      "base": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "entry": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "method": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
             "named": true
           }
         ]

@@ -43,9 +43,12 @@ end
 
 --------------------------------------------------------------------------------
 
-; TODO: https://github.com/tree-sitter/tree-sitter/issues/3071
 (program
-  (ERROR (identifier)))
+  (function_statement
+    name: (identifier)
+    signature: (function_signature
+      arguments: (arguments))
+    body: (function_body)))
 
 ================================================================================
 A function that actually does something
@@ -212,7 +215,7 @@ end
 
 (program
   (function_statement
-    name: (function_name
+    name: (table_function_name
       base: (identifier)
       entry: (identifier))
     signature: (function_signature
@@ -230,7 +233,7 @@ end
 
 (program
   (function_statement
-    name: (function_name
+    name: (table_function_name
       base: (identifier)
       method: (identifier))
     signature: (function_signature
@@ -439,3 +442,53 @@ end
           type: (simple_type
             name: (identifier)))))
     body: (function_body)))
+
+================================================================================
+Uninitialized local
+================================================================================
+
+local my_func: function
+
+--------------------------------------------------------------------------------
+
+(program
+  (var_declaration
+    declarators: (var_declarators
+                   (var name: (identifier)))
+    type_annotation: (type_annotation
+                       (function_type))))
+
+================================================================================
+Initialization of local via `function <name>` syntax
+================================================================================
+
+local my_func: function
+function my_func(x: integer): integer
+  return 2 * x
+end
+
+--------------------------------------------------------------------------------
+
+(program
+  (var_declaration
+    declarators: (var_declarators
+                   (var name: (identifier)))
+    type_annotation: (type_annotation
+                       (function_type)))
+  (function_statement
+    name: (identifier)
+    signature: (function_signature
+      arguments: (arguments
+        (arg
+          name: (identifier)
+          type: (simple_type
+            name: (identifier))))
+      return_type: (return_type
+        (simple_type
+          name: (identifier))))
+    body: (function_body
+      (return_statement
+        (bin_op
+          left: (number)
+          op: (op)
+          right: (identifier))))))

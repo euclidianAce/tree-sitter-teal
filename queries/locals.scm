@@ -11,7 +11,10 @@
 
 (anon_function) @scope
 ((function_statement
-  (function_name) @definition.function) @scope
+  (table_function_name) @definition.function) @scope
+  (#set! definition.function.scope "parent"))
+((function_statement
+  name: (identifier) @definition.function) @scope
   (#set! definition.function.scope "parent"))
 
 (program) @scope
