@@ -68,3 +68,14 @@ local type A<B, C is D> = function(B, C)
           type: (simple_type
             name: (identifier)))))))
 
+==============================
+global existential type
+==============================
+
+global type A
+
+---
+
+(program
+  (type_declaration
+    name: (identifier)))

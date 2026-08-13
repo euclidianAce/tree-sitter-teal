@@ -3476,7 +3476,7 @@
         ]
       },
       "scope": {
-        "multiple": true,
+        "multiple": false,
         "required": false,
         "types": [
           {

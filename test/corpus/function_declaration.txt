@@ -414,3 +414,28 @@ end
           optional_marker: (optional_marker)
           type: (simple_type name: (identifier)))))
     body: (function_body)))
+
+================================================================================
+Argument with constrained typearg
+================================================================================
+
+local function foo<T is Foo>(t: T)
+end
+
+--------------------------------------------------------------------------------
+
+(program
+  (function_statement
+    name: (identifier)
+    signature: (function_signature
+      typeargs: (typeargs
+        (typearg
+          name: (identifier)
+          constraint: (simple_type
+            name: (identifier))))
+      arguments: (arguments
+        (arg
+          name: (identifier)
+          type: (simple_type
+            name: (identifier)))))
+    body: (function_body)))

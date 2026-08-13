@@ -1875,6 +1875,81 @@
         ]
       }
     },
+    "_global_existential_type": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "FIELD",
+          "name": "scope",
+          "content": {
+            "type": "STRING",
+            "value": "global"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "type"
+        },
+        {
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "typeargs",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "typeargs"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          }
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "="
+                },
+                {
+                  "type": "FIELD",
+                  "name": "value",
+                  "content": {
+                    "type": "CHOICE",
+                    "members": [
+                      {
+                        "type": "SYMBOL",
+                        "name": "_type"
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "_newtype"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        }
+      ]
+    },
     "type_declaration": {
       "type": "CHOICE",
       "members": [
@@ -1885,8 +1960,8 @@
               "type": "FIELD",
               "name": "scope",
               "content": {
-                "type": "SYMBOL",
-                "name": "scope"
+                "type": "STRING",
+                "value": "local"
               }
             },
             {
@@ -1894,6 +1969,10 @@
               "name": "_type_def"
             }
           ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_global_existential_type"
         },
         {
           "type": "SYMBOL",

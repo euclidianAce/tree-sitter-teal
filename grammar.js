@@ -242,11 +242,25 @@ module.exports = grammar({
       )),
     )),
 
+    _global_existential_type: $ => seq(
+      field('scope', 'global'),
+      'type',
+      field('name', $.identifier),
+      field('typeargs', optional($.typeargs)),
+      optional(seq(
+        '=',
+        field('value', choice(
+          $._type, $._newtype,
+        )),
+      ))
+    ),
+
     type_declaration: $ => choice(
       seq(
-        field('scope', $.scope),
+        field('scope', "local"),
         $._type_def,
       ),
+      $._global_existential_type,
       $.record_declaration,
       $.interface_declaration,
       $.enum_declaration,
