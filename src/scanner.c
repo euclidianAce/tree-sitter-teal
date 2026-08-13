@@ -95,7 +95,7 @@ unsigned tree_sitter_teal_external_scanner_serialize(void *payload, char *buffer
     return sizeof(State);
 }
 
-void tree_sitter_teal_external_scanner_deserialize(void *payload, const char *buffer, unsigned length) {
+void tree_sitter_teal_external_scanner_deserialize(void *payload, char const *buffer, unsigned length) {
     if (length < sizeof(State))
         return;
     memcpy(payload, buffer, sizeof(State));
@@ -180,7 +180,7 @@ static inline bool is_ascii_whitespace(uint32_t chr) {
     }
 }
 
-bool tree_sitter_teal_external_scanner_scan(void *payload, TSLexer *lexer, const bool *valid_symbols) {
+bool tree_sitter_teal_external_scanner_scan(void *payload, TSLexer *lexer, bool const *valid_symbols) {
     State *state = payload;
     if (lexer->eof(lexer))
         return false;
