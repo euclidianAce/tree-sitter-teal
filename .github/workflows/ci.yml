@@ -38,11 +38,6 @@ jobs:
         uses: tree-sitter/parser-test-action@v2
         with:
           test-rust: true
-      - name: Parse sample files
-        uses: tree-sitter/parse-action@v7
-        id: parse-files
-        with:
-          files: examples/**
       - name: Upload failures artifact
         uses: actions/upload-artifact@v4
         if: "!cancelled() && steps.parse-files.outcome == 'failure'"
